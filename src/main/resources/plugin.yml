@@ -1,0 +1,6 @@
+name: WhiteEggCore
+version: 1.0.0
+main: com.github.niwaniwa.we.core.WhiteEggCore
+commands:
+  whiteeggcore:
+  toggle:
