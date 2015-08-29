@@ -41,9 +41,10 @@ public class WhiteEggToggleCommandEvent extends Event implements Cancellable {
 	}
 
 	public boolean setKey(String key){
-		if(ToggleSettings.getToggleSettings().containsKey(key)){
-			this.togglekey = key;
-			return true;
+		for(ToggleSettings t : ToggleSettings.getList()){
+			if(t.getToggles().containsKey(key)){
+				this.togglekey = key;
+			}
 		}
 		return false;
 	}
@@ -61,6 +62,10 @@ public class WhiteEggToggleCommandEvent extends Event implements Cancellable {
 	@Override
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -58,20 +59,16 @@ public abstract class WhiteEggAPI {
 
 	public abstract WhitePlayer getPlayer(Player player);
 
-	/**
-	 * toggleコマンドに新たな設定を追加します
-	 * @param key key
-	 * @param value デフォルトの値
-	 * @return 成功したか
-	 */
-	public abstract boolean registerToggleType(String key, Object value);
 
 	/**
-	 * toggleコマンドに新たな設定を追加します
-	 * @param value key、デフォルトの設定
-	 * @return 成功したか
+	 * 新たな設定を追加します
+	 * @param plugin プラグイン
+	 * @param permission Permission
+	 * @param toggle 設定内容
+	 * @param isDefault デフォルトで表示させるか(true = permissionが無効)
+	 * @return
 	 */
-	public abstract boolean registerToggleType(Map<String, Object> value);
+	public abstract <T extends JavaPlugin> boolean registerToggle(T plugin, String permission, Map<String,Object> toggle, boolean isDefault, boolean hide, boolean add);
 
 	public abstract boolean useDataBase();
 }

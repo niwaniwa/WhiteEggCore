@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction;
 
-public class Title extends Util{
+public class Title extends Mini{
 
 	String mainTitle;
 	String subTitle;

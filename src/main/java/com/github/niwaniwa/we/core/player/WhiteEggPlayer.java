@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
@@ -27,7 +26,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private static WhiteEggAPI api = WhiteEggCore.getAPI();
 
 	private Player player;
-	private Map<String, Object> toggle = new HashMap<>();
+	private List<ToggleSettings> toggle = new ArrayList<>();
 	private List<Rank> ranks = new ArrayList<>();
 	private boolean isVanish;
 	private TwitterManager twitter;
@@ -37,8 +36,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 	protected WhiteEggPlayer(Player player){
 		this.player = player;
 		this.isVanish = false;
-		this.toggle.putAll(ToggleSettings.getToggleSettings());
 		this.twitter = new TwitterManager();
+		this.toggle.addAll(ToggleSettings.getList());
 	}
 
 	@Override
@@ -116,53 +115,6 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.isVanish = b;
 	}
 
-	@Override
-	public boolean isBanned() {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void setBanned(boolean paramBoolean) {
-		player.setBanned(paramBoolean);
-	}
-
-	@Override
-	public boolean isWhitelisted() {
-		return player.isWhitelisted();
-	}
-
-	@Override
-	public void setWhitelisted(boolean paramBoolean) {
-		player.setWhitelisted(paramBoolean);
-	}
-
-	@Override
-	public long getFirstPlayed() {
-		return player.getFirstPlayed();
-	}
-
-	@Override
-	public long getLastPlayed() {
-		return player.getLastPlayed();
-	}
-
-	@Override
-	public boolean hasPlayedBefore() {
-		return player.hasPlayedBefore();
-	}
-
-	@Override
-	public Location getBedSpawnLocation() {
-		return player.getBedSpawnLocation();
-	}
-
-	@Override
-	public void setOp(boolean paramBoolean) {
-		player.setOp(paramBoolean);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean saveVariable(JSONObject json) {
@@ -184,6 +136,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public boolean reload() {
+
 		return this.load();
 	}
 
@@ -223,10 +176,12 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new HashMap<>();
-		result.put("name", this.getName());
-		result.put("uuid", this.getUniqueId().toString());
-		result.put("rank", this.getRanks());
-		result.put("isvanish", this.isVanish);
+		Map<String, Object> player = new HashMap<>();
+		player.put("name", this.getName());
+		player.put("uuid", this.getUniqueId().toString());
+		player.put("rank", this.getRanks());
+		player.put("isvanish", this.isVanish);
+		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
 		return result;
 	}
@@ -244,7 +199,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	@Override
-	public Map<String, Object> getToggleSettings() {
+	public List<ToggleSettings> getToggleSettings() {
 		return toggle;
 	}
 

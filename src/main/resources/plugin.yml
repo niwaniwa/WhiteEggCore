@@ -4,3 +4,29 @@ main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
   toggle:
+  head:
+permissions:
+  whiteegg.*:
+    description: Gives access to all WhiteEggPlugins
+    children:
+      whiteegg.core.*: true
+      whiteegg.core.command.*: true
+      whiteegg.core.command.toggle: true
+      whiteegg.owner: true
+      whiteegg.moderator: false
+  whiteegg.core.*:
+    description: Gives access to all WhiteEggCore
+    children:
+      whiteegg.core.command.*: true
+      whiteegg.core.command.toggle: true
+  whiteegg.core.command.*:
+    description: Gives access to all WhiteEggCore commands
+    children:
+      whiteegg.core.command.toggle: true
+  whiteegg.core.command.toggle:
+    description: Gives access to all toggle command
+    default: true
+  whiteegg.owner:
+    description: Owner permission
+  whiteegg.moderator:
+    description: Moderator permission

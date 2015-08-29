@@ -1,45 +1,128 @@
 package com.github.niwaniwa.we.core.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.UUID;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 import org.bukkit.Bukkit;
-import org.bukkit.World;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 
-public abstract class Util {
+public class Util {
 
-	abstract public void send(Player player);
+	private Util(){}
 
-	protected IChatBaseComponent build(String source){
-		return ChatSerializer.a("{\"text\": \""+source+"\"}");
+	public static void copyFileFromJar(File target, File jarFile, String path){
+
+		if(!jarFile.exists()){return;}
+
+		BufferedWriter writer = null;
+
+		BufferedReader reader = null;
+
+		JarFile jar = null;
+
+		try {
+
+			if(!path.contains(".")){
+				new File(target, "/"+path).mkdirs();
+				return;
+			}
+
+			jar = new JarFile(jarFile);
+			JarEntry entry = jar.getJarEntry(path);
+
+			reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
+
+			if(!target.exists()){
+				target.mkdirs();
+			}
+
+			writer = new BufferedWriter
+					(new OutputStreamWriter
+							(new FileOutputStream
+									(new File(target,
+											path.split("/")[path.split("/").length - 1]))));
+
+			String s;
+
+			while((s = reader.readLine()) != null){
+				writer.write(s);
+				writer.newLine();
+			}
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+
+				if(writer != null){
+					writer.close();
+				}
+
+				if(reader != null){
+					reader.close();
+				}
+
+				if(jar != null){
+					jar.close();
+				}
+
+			} catch (IOException e){}
+		}
+
 	}
 
-	protected CraftPlayer cast(Player p){
+	public static void sendParticle(Player player, Effect effect,
+			float x, float y, float z, float speed, int amount){
 
-		if (!(p instanceof Player)) {return null;}
+		@SuppressWarnings("deprecation")
+		PacketPlayOutWorldEvent packet = new PacketPlayOutWorldEvent(
+				effect.getId(), new BlockPosition(x, y, z), 1, false);
 
-		return (CraftPlayer) p;
+		CraftPlayer c = (CraftPlayer) player;
+
+		c.getHandle().playerConnection.sendPacket(packet);
+
 	}
 
-	public static <T extends Util> void permissionBroadcast(String prm, T t){
-		for(Player p : Bukkit.getOnlinePlayers()){
-			if(p.hasPermission(prm)){
-				t.send(p);
+	public static void circle(Player player,Location loc,EnumParticle particle,double Radius,double height) {
+		for(float i=0;i<360;i=(float) (i+0.5)){
+			((CraftWorld) player.getWorld()).getHandle().a(particle , loc.getX()+Math.sin(Math.toRadians(i))*Radius, loc.getY()+height, loc.getZ()+Math.cos(Math.toRadians(i))*Radius, 1, 0, 0, 0, 0);
+		}
+	}
+
+	public static Player getOnlinePlayer(UUID uuid){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			if(player.getUniqueId().equals(uuid)){
+				return player;
 			}
 		}
-	}
-	public static <T extends Util> void worldBroadcast(World world, T t){
-		for(Player p : world.getPlayers()){
-			t.send(p);
-		}
+		return null;
 	}
 
-	public static <T extends Util> void serverBroadcast(T t){
-		for(Player p : Bukkit.getOnlinePlayers()){
-			t.send(p);
+	public static Player getOnlinePlayer(String name){
+		for(Player player : Bukkit.getOnlinePlayers()){
+			if(player.getName().equals(name)){
+				return player;
+			}
 		}
+		return null;
 	}
 
 }

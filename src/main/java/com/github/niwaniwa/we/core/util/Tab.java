@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 
-public class Tab  extends Util {
+public class Tab  extends Mini {
 
 	String header;
 	String footer;

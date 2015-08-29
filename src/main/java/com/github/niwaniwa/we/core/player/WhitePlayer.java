@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.permissions.Permission;
 
+import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 
@@ -52,6 +53,6 @@ public interface WhitePlayer extends OfflineWhitePlayer, ConfigurationSerializab
 
 	public abstract TwitterManager getTwitterManager();
 
-	public abstract Map<String, Object> getToggleSettings();
+	public abstract List<ToggleSettings> getToggleSettings();
 
 }
