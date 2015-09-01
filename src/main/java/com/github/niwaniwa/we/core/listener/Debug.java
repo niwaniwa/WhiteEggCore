@@ -22,6 +22,7 @@ public class Debug implements Listener {
 		}
 	}
 
+	/** **/
 	@EventHandler
 	public void onToggle(WhiteEggToggleCommandEvent event){
 //		System.out.println("key : " + event.getKey());

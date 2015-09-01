@@ -6,8 +6,9 @@ import java.util.UUID;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
+import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -68,7 +69,8 @@ public abstract class WhiteEggAPI {
 	 * @param isDefault デフォルトで表示させるか(true = permissionが無効)
 	 * @return
 	 */
-	public abstract <T extends JavaPlugin> boolean registerToggle(T plugin, String permission, Map<String,Object> toggle, boolean isDefault, boolean hide, boolean add);
+	public abstract boolean registerToggle(Plugin plugin, ToggleType type, String permission,
+			String custam, Map<String, Object> toggles, boolean isHide);
 
 	public abstract boolean useDataBase();
 }

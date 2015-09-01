@@ -1,5 +1,6 @@
 package com.github.niwaniwa.we.core.twitter;
 
+import java.util.Date;
 import java.util.Map;
 
 import twitter4j.Twitter;
@@ -19,20 +20,30 @@ public class TwitterManager {
 	private final String consumerSecret = "kJe421gJVRSR2g3ifdiaQWLbsEwtHJ6GtsymW5VwA8SNt3xnvn";
 
 	public TwitterManager() {
+		System.out.println(new Date().getTime() + " - new Twitter");
 		this.twitter = new TwitterFactory().getInstance();
+		System.out.println(new Date().getTime() + " - set consumerKey, consumerSecret");
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		try {
-			this.request = twitter.getOAuthRequestToken();
-		} catch (TwitterException e) {
-			e.printStackTrace();
-		}
+		System.out.println(new Date().getTime() + " - get OAuth Request Token");
+
+		System.out.println(new Date().getTime() + " - twitter manager end");
 	}
 
 	public String getOAuthRequestURL(){
 		return request.getAuthorizationURL() == null ? "§c不具合が発生しているため現在利用できません" : request.getAuthorizationURL();
 	}
 
+	public boolean OAuthRequestURL(){
+		try {
+			this.request = twitter.getOAuthRequestToken();
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 	public boolean OAuthRequest(String pin){
+		if(this.request == null){ return false; }
 		try{
 		if(pin.length() > 0){
 			access = twitter.getOAuthAccessToken(request, pin);

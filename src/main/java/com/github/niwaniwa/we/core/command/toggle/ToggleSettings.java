@@ -5,127 +5,149 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
-import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 
-public class ToggleSettings {
+public class ToggleSettings implements Cloneable {
 
 	private static List<ToggleSettings> list = new ArrayList<>();
 
-	private JavaPlugin plugin;
+	private Plugin p;
+	private ToggleType type;
+	private String permission;
 	private String name;
-	private TogglePermission type;
-	private Map<String, Object> toggles;
+	private Map<String, Object> toggles = new HashMap<>();
 	private boolean isHide;
 
-	public <T extends JavaPlugin> ToggleSettings(T plugin,String customName, TogglePermission type, Map<String, Object> toggles, boolean hide) {
-		this.plugin = plugin;
-		this.name = customName;
+	public ToggleSettings(Plugin plugin, ToggleType type, String permission, String custam, Map<String, Object> toggles, boolean isHide) {
+		this.p = plugin;
 		this.type = type;
-		this.isHide = hide;
-		this.toggles = new HashMap<>();
-		if(toggles != null){
-			this.toggles.putAll(toggles);
-		}
+		this.permission = permission;
+		this.name = custam;
+		this.toggles = toggles;
+		this.isHide = isHide;
 	}
 
-	public <T extends JavaPlugin> ToggleSettings(T plugin, TogglePermission type, Map<String, Object> toggles, boolean hide) {
-		this(plugin, plugin.getName(), type, toggles, hide);
+	public void add(){
+		list.add(this);
 	}
 
-	public <T extends JavaPlugin> ToggleSettings(T plugin, TogglePermission type) {
-		this(plugin, plugin.getName(), type, null, false);
+	public Plugin getPlugin(){
+		return p;
 	}
 
-	public <T extends JavaPlugin> ToggleSettings(T plugin, String customName, TogglePermission type) {
-		this(plugin, customName, type, null, false);
-	}
-
-	public JavaPlugin getPlugin(){
-		return plugin;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	public TogglePermission getType(){
+	public ToggleType getType(){
 		return type;
+	}
+
+	public String getToggleName(){
+		return name;
 	}
 
 	public Map<String, Object> getToggles(){
 		return toggles;
 	}
 
-	public boolean add(String key, Object value){
-		if(toggles.containsKey(key)){ return false; }
-		this.toggles.put(key, value);
-		return true;
+	public String getPermission() {
+		return permission;
 	}
 
-	public boolean remove(String key){
-		if(!toggles.containsKey(key)){ return false; }
-		this.toggles.remove(key);
-		return true;
+	public void setPermission(String permission) {
+		this.permission = permission;
 	}
 
-	public void add(boolean add){
-		if(!add){ list.add(this); }
-		for(ToggleSettings t : list){
-			if(t.getPlugin().getName().equalsIgnoreCase(this.getName())){
-				t.getToggles().putAll(this.getToggles());
-			}
-		}
-	}
-
-	public static List<ToggleSettings> getList(){
-		return list;
-	}
-
-	public static ToggleSettings getDefault(List<ToggleSettings> to){
-		ToggleSettings toggle = new ToggleSettings(null, "default", new TogglePermission("", true));
-		for(ToggleSettings t : to){
-			if(t.getType().isDefault()){
-				for(String key : t.getToggles().keySet()){
-					toggle.add(key, t.getToggles().get(key));
-				}
-			}
-		}
-		return toggle;
-	}
-
-	public static ToggleSettings getDefault(){
-		return getDefault(list);
-	}
-
-	public static List<ToggleSettings> getPluginSettings(List<ToggleSettings> to){
-		List<ToggleSettings> toggles = new ArrayList<>();
-		for(ToggleSettings t : to){
-			if(!t.getType().isDefault()){
-				toggles.add(t);
-			}
-		}
-		return toggles;
-	}
-
-	public boolean isHide() {
+	public boolean isHide(){
 		return isHide;
 	}
 
-	public void setHide(boolean isHide) {
-		this.isHide = isHide;
+	protected void setPlugin(Plugin p){
+		this.p = p;
 	}
 
-	public Object get(WhitePlayer player, String key, JavaPlugin p){
-		for(ToggleSettings t : player.getToggleSettings()){
-			if(t.getPlugin().getName().equals(p)){
-				if(!player.hasPermission(t.getType().getPermission())){ return null; }
-				if(t.isHide()){ return null; }
-				for(String k : t.getToggles().keySet()){
-					if(!k.equalsIgnoreCase(key)){ continue; }
-					Object value = t.getToggles().get(k);
-					return value;
+	public void setName(String name){
+		this.name = name;
+	}
+
+	protected void setType(ToggleType type){
+		this.type = type;
+	}
+
+	public void setHide(boolean b){
+		this.isHide = b;
+	}
+
+	public ToggleSettings clone() {
+		ToggleSettings t = null;
+		try {
+			t = (ToggleSettings) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		t.setHide(this.isHide());
+		t.setType(getType());
+		t.setPlugin(getPlugin());
+		t.getToggles().putAll(t.getToggles());
+		t.setPermission(getPermission());
+		return t;
+	}
+
+	public static List<ToggleSettings> getList() {
+		return list;
+	}
+
+	public static List<ToggleSettings> getPluginSetting(List<ToggleSettings> l){
+		List<ToggleSettings> result = new ArrayList<>();
+		for(ToggleSettings toggle : l){
+			if(toggle.getType().equals(ToggleType.PLUGIN)){
+				result.add(toggle);
+			}
+			continue;
+		}
+		return result;
+	}
+
+	public static List<ToggleSettings> getDefaltSetting(List<ToggleSettings> l){
+		List<ToggleSettings> result = new ArrayList<>();
+		for(ToggleSettings toggle : l){
+			if(toggle.getType().equals(ToggleType.DEFAULT)){
+				result.add(toggle);
+			}
+			continue;
+		}
+		return result;
+	}
+
+	public static List<ToggleSettings> getModeratorSetting(List<ToggleSettings> l){
+		List<ToggleSettings> result = new ArrayList<>();
+		for(ToggleSettings toggle : l){
+			if(toggle.getType().equals(ToggleType.MODERATOR)){
+				result.add(toggle);
+			}
+			continue;
+		}
+		return result;
+	}
+
+	public static List<ToggleSettings> getServerSetting(List<ToggleSettings> l){
+		List<ToggleSettings> result = new ArrayList<>();
+		for(ToggleSettings toggle : l){
+			if(toggle.getType().equals(ToggleType.SERVER)){
+				result.add(toggle);
+			}
+			continue;
+		}
+		return result;
+	}
+
+	public static ToggleSettings getSetting(List<ToggleSettings> ts, ToggleSettings t){
+
+		for(ToggleSettings toggle : ts){
+			if(toggle.getPlugin().equals(t.getPlugin())){
+				if(toggle.getToggleName().equals(t.getToggleName())){
+					if(toggle.getType().equals(t.getType())){
+						return toggle;
+					}
 				}
 			}
 		}

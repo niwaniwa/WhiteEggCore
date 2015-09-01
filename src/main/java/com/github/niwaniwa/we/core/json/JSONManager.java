@@ -23,13 +23,11 @@ public class JSONManager {
 	}
 
 	/**
-	 * local
-	 *
-	 * @param file
-	 *            file path
-	 * @param json
-	 *            json
-	 * @return isComplete
+	 * localにファイルを保存します
+	 * @param path 保存フォルダ
+	 * @param file ファイル名
+	 * @param json json
+	 * @return 成功したか
 	 * @throws IOException
 	 */
 	public boolean writeJSON(File path, String file, JSONObject json) throws IOException {

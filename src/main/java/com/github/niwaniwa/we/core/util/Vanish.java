@@ -14,7 +14,7 @@ public class Vanish {
 		if(player.isVanish()){return false;}
 
 		for(Player p : Bukkit.getOnlinePlayers()){
-			if(!p.hasPermission("whiteegg.core.player.vanish")){
+			if(!p.hasPermission("whiteegg.moderator")){
 				p.hidePlayer(player.getPlayer());
 			}
 		}

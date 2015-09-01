@@ -21,6 +21,8 @@ public interface WhitePlayer extends OfflineWhitePlayer, ConfigurationSerializab
 
 	public abstract void sendMessage(String message);
 
+	public abstract void sendMessage(String message, boolean replaceColorCode);
+
 	public abstract List<Rank> getRanks();
 
 	public abstract boolean addRank(Rank rank);

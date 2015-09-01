@@ -22,7 +22,7 @@ public class WhitePlayerFactory {
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
-		players.add(white); // 必要なさそう?
+		players.add(white);
 		return white;
 	}
 

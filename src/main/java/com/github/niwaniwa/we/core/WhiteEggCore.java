@@ -10,9 +10,9 @@ import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
-import com.github.niwaniwa.we.core.command.toggle.TogglePermission;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
+import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
@@ -54,7 +54,7 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerCommands();
 		this.registerListener();
 		WhitePlayerFactory.reload();
-		registerToggle();
+		this.registerToggle();
 	}
 
 	private void registerCommands(){
@@ -68,14 +68,10 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void registerToggle(){
-		Map<String, Object> map = new HashMap<>();
-		map.put("chat", true);
-		map.put("loginmsg", true);
-		ToggleSettings t = new ToggleSettings(this, "default", new TogglePermission("", true), map, false);
-		t.add(false);
-		Map<String, Object> moderator = new HashMap<>();
-		moderator.put("isvanish", true);
-		api.registerToggle(this, "whiteegg.core.command.moderator", moderator, false, true, true);
+		Map<String, Object> result = new HashMap<>();
+		result.put("test", "okok");
+		ToggleSettings toggle = new ToggleSettings(instance, ToggleType.DEFAULT, "whiteegg", "toggle", result, false);
+		toggle.add();
 	}
 
 }

@@ -9,11 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.toggle.TogglePermission;
-import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
+import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayerImpl;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -88,10 +87,10 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 	}
 
 	@Override
-	public <T extends JavaPlugin> boolean registerToggle(T plugin, String permission, Map<String,Object> toggle, boolean isDefault, boolean hide, boolean add) {
-		ToggleSettings t = new ToggleSettings(plugin, new TogglePermission(permission, isDefault), toggle, hide);
-		t.add(add);
-		return true;
+	public boolean registerToggle(Plugin plugin, ToggleType type, String permission, String custam,
+			Map<String, Object> toggles, boolean isHide) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
 	}
 
 	@Override

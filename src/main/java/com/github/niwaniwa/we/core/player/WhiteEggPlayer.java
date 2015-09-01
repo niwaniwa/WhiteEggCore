@@ -3,6 +3,7 @@ package com.github.niwaniwa.we.core.player;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Vanish;
 
+import net.md_5.bungee.api.ChatColor;
 import net.sf.json.JSONObject;
 
 public class WhiteEggPlayer implements WhitePlayer {
@@ -37,7 +39,17 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.player = player;
 		this.isVanish = false;
 		this.twitter = new TwitterManager();
-		this.toggle.addAll(ToggleSettings.getList());
+		this.setting();
+	}
+
+	private void setting(){
+		Date d = new Date();
+		System.out.println("開始 " + d.getTime());
+		for(ToggleSettings t : ToggleSettings.getList()){
+			toggle.add(t.clone());
+			System.out.println(d.getTime());
+		}
+		System.out.println("終了 " + d.getTime());
 	}
 
 	@Override
@@ -62,7 +74,12 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public void sendMessage(String message) {
-		player.sendMessage(message);
+		this.sendMessage(message, true);
+	}
+
+	@Override
+	public void sendMessage(String message, boolean replaceColorCode) {
+		player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 	}
 
 	@Override
@@ -177,13 +194,15 @@ public class WhiteEggPlayer implements WhitePlayer {
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new HashMap<>();
 		Map<String, Object> player = new HashMap<>();
+		Map<String, Object> w = new HashMap<>();
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.getRanks());
 		player.put("isvanish", this.isVanish);
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
-		return result;
+		w.put("WhiteEggPlayer", result);
+		return w;
 	}
 
 	private Map<String, Object> serializeTwitter() {
@@ -201,6 +220,11 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public List<ToggleSettings> getToggleSettings() {
 		return toggle;
+	}
+
+	@Override
+	public String toString() {
+		return this.serialize().toString();
 	}
 
 }
