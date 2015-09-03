@@ -64,7 +64,6 @@ public class MessageManager {
 
 	public static LanguageType getLanguage(Player player){
 		try{
-
 			Object o = player.getClass().getMethod("getHandle").invoke(player);
 			String s = (String) getValue(o, "locale");
 			return LanguageType.valueOf(s);

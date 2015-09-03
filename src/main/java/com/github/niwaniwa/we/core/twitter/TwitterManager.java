@@ -1,6 +1,5 @@
 package com.github.niwaniwa.we.core.twitter;
 
-import java.util.Date;
 import java.util.Map;
 
 import twitter4j.Twitter;
@@ -13,20 +12,15 @@ public class TwitterManager {
 
 	private Twitter twitter;
 
-	public AccessToken access = null;
+	private AccessToken access = null;
 	private RequestToken request = null;
 
 	private final String consumerKey = "xdpZ0YJbxMLs89c1TdKOFV7dB";
 	private final String consumerSecret = "kJe421gJVRSR2g3ifdiaQWLbsEwtHJ6GtsymW5VwA8SNt3xnvn";
 
 	public TwitterManager() {
-		System.out.println(new Date().getTime() + " - new Twitter");
 		this.twitter = new TwitterFactory().getInstance();
-		System.out.println(new Date().getTime() + " - set consumerKey, consumerSecret");
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		System.out.println(new Date().getTime() + " - get OAuth Request Token");
-
-		System.out.println(new Date().getTime() + " - twitter manager end");
 	}
 
 	public String getOAuthRequestURL(){
@@ -56,6 +50,7 @@ public class TwitterManager {
 
 	public boolean tweet(String tweet){
 		if(access == null){ return false; }
+		if(tweet.length() >= 140){ return false; }
 		try {
 			twitter.updateStatus(tweet);
 		} catch (TwitterException e) {

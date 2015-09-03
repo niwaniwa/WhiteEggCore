@@ -14,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
-import com.github.niwaniwa.we.core.player.OfflineWhitePlayerImpl;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -59,7 +58,7 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 	public OfflineWhitePlayer getOfflinePlayer(String name) {
 		@SuppressWarnings("deprecation")
 		OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-		return new OfflineWhitePlayerImpl(offline);
+		return WhitePlayerFactory.newInstance((Player) offline);
 	}
 
 	@Override

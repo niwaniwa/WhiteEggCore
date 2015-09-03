@@ -7,7 +7,7 @@ public enum ToggleType {
 	DEFAULT("default"),
 	PLUGIN("plugin");
 
-	private String type;
+	private final String type;
 
 	private ToggleType(String type){
 		this.type = type;

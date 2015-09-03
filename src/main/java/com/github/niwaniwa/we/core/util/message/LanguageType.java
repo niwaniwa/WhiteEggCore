@@ -71,7 +71,7 @@ public enum LanguageType {
 	zh_CN("zh_CN"),
 	zh_TW("zh_TW");
 
-	private String type;
+	private final String type;
 
 	private LanguageType(String type) {
 		this.type = type;

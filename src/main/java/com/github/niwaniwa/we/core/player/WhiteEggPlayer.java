@@ -3,7 +3,6 @@ package com.github.niwaniwa.we.core.player;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import com.github.niwaniwa.we.core.util.Vanish;
 
 import net.md_5.bungee.api.ChatColor;
 import net.sf.json.JSONObject;
+import twitter4j.auth.AccessToken;
 
 public class WhiteEggPlayer implements WhitePlayer {
 
@@ -43,13 +43,9 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	private void setting(){
-		Date d = new Date();
-		System.out.println("開始 " + d.getTime());
 		for(ToggleSettings t : ToggleSettings.getList()){
 			toggle.add(t.clone());
-			System.out.println(d.getTime());
 		}
-		System.out.println("終了 " + d.getTime());
 	}
 
 	@Override
@@ -132,19 +128,13 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.isVanish = b;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean saveVariable(JSONObject json) {
 		this.isVanish = json.getBoolean("isvanish");
-		if (json instanceof Map) {
-			Map<String, Object> twitter;
-			try{
-			twitter = (Map<String, Object>) json;
-			} catch (ClassCastException cast){
-				cast.printStackTrace();
-				return false;
-			}
-			this.twitter.setAccessToken(TwitterManager.toAccesToken(twitter));
+		if(!String.valueOf(json.get("twitter")).equalsIgnoreCase("null")){
+			JSONObject tw = json.getJSONObject("twitter");
+			this.getTwitterManager().setAccessToken(
+					new AccessToken(tw.getString("accesstoken"), tw.getString("accesstokensecret")));
 		}
 		return false;
 	}

@@ -8,7 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class WhiteEggHeadCommand implements CommandExecutor {
+import com.github.niwaniwa.we.core.player.WhitePlayer;
+
+public class WhiteEggHeadCommand extends AbstractWhiteEggCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -29,6 +31,18 @@ public class WhiteEggHeadCommand implements CommandExecutor {
 		player.getInventory().addItem(is);
 		// message
 		return true;
+	}
+
+	@Override
+	public void sendUsing(WhitePlayer sender) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public String getPermission() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 }

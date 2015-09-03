@@ -1,6 +1,5 @@
 package com.github.niwaniwa.we.core.event;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -17,7 +16,7 @@ public class WhiteEggToggleCommandEvent extends Event implements Cancellable {
 	private Object toggleValue;
 	private boolean cancelled = false;
 
-	public WhiteEggToggleCommandEvent(CommandSender sender, String togglekey, Object toggleValue) {
+	public WhiteEggToggleCommandEvent(Player sender, String togglekey, Object toggleValue) {
 		this.player = (Player) sender;
 		this.togglekey = togglekey;
 		this.toggleValue = toggleValue;

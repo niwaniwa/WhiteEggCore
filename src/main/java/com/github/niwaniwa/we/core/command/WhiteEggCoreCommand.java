@@ -6,8 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggCoreCommand implements CommandExecutor {
+public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -25,6 +26,18 @@ public class WhiteEggCoreCommand implements CommandExecutor {
 		sender.sendMessage(" : Author : " + WhiteEggCore.getInstance().getDescription().getAuthors().get(0));
 		sender.sendMessage(" : Running Minecraft Version : " + Bukkit.getVersion());
 		sender.sendMessage("§7 ----- ----- ----- ----- -----");
+	}
+
+	@Override
+	public void sendUsing(WhitePlayer sender) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public String getPermission() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 }

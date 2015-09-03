@@ -5,6 +5,8 @@ commands:
   whiteeggcore:
   toggle:
   head:
+  reload:
+  twitter:
 permissions:
   whiteegg.*:
     description: Gives access to all WhiteEggPlugins
@@ -13,7 +15,7 @@ permissions:
       whiteegg.core.command.*: true
       whiteegg.core.command.toggle: true
       whiteegg.owner: true
-      whiteegg.moderator: false
+      whiteegg.moderator: true
   whiteegg.core.*:
     description: Gives access to all WhiteEggCore
     children:

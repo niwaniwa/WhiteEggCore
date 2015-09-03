@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
+import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class ToggleSettings implements Cloneable {
 
@@ -25,7 +26,11 @@ public class ToggleSettings implements Cloneable {
 		this.type = type;
 		this.permission = permission;
 		this.name = custam;
-		this.toggles = toggles;
+		if(toggles != null){
+			for(String key : toggles.keySet()){
+				this.toggles.put(key, toggles.get(key));
+			}
+		}
 		this.isHide = isHide;
 	}
 
@@ -78,17 +83,8 @@ public class ToggleSettings implements Cloneable {
 	}
 
 	public ToggleSettings clone() {
-		ToggleSettings t = null;
-		try {
-			t = (ToggleSettings) super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		t.setHide(this.isHide());
-		t.setType(getType());
-		t.setPlugin(getPlugin());
-		t.getToggles().putAll(t.getToggles());
-		t.setPermission(getPermission());
+		ToggleSettings t = new ToggleSettings(this.getPlugin(),
+				this.getType(), this.getPermission(), this.getToggleName(), this.getToggles(), this.isHide());
 		return t;
 	}
 
@@ -152,6 +148,41 @@ public class ToggleSettings implements Cloneable {
 			}
 		}
 		return null;
+	}
+
+	public static boolean contains(String key){
+		for(ToggleSettings t : list){
+			for(String k : t.getToggles().keySet()){
+				if(k.equalsIgnoreCase(key)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static Object getValue(WhitePlayer player, String key){
+		if(!contains(key)){ return null; }
+		for(ToggleSettings t : player.getToggleSettings()){
+			for(String k : t.getToggles().keySet()){
+				if(k.equalsIgnoreCase(key)){
+					return t.getToggles().get(key);
+				}
+			}
+		}
+		return null;
+	}
+
+	public static boolean set(WhitePlayer player, String key, Object value){
+		for(ToggleSettings t : player.getToggleSettings()){
+			for(String k : t.getToggles().keySet()){
+				if(k.equalsIgnoreCase(key)){
+					t.getToggles().put(key, value);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }
