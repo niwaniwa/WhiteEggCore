@@ -15,8 +15,8 @@ public class TwitterManager {
 	private AccessToken access = null;
 	private RequestToken request = null;
 
-	private final String consumerKey = "xdpZ0YJbxMLs89c1TdKOFV7dB";
-	private final String consumerSecret = "kJe421gJVRSR2g3ifdiaQWLbsEwtHJ6GtsymW5VwA8SNt3xnvn";
+	private final String consumerKey = "Xwmw20C6XCyLqETJM1rnZyJEB";
+	private final String consumerSecret = "ljhzU4PIhJyBOtk7zUkthbeouwDAONsPMQhrmpZd2peBmSLie1";
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
@@ -24,10 +24,13 @@ public class TwitterManager {
 	}
 
 	public String getOAuthRequestURL(){
-		return request.getAuthorizationURL() == null ? "§c不具合が発生しているため現在利用できません" : request.getAuthorizationURL();
+		if(this.request == null){
+			this.OAuthRequest();
+		}
+		return request.getAuthorizationURL();
 	}
 
-	public boolean OAuthRequestURL(){
+	protected boolean OAuthRequest(){
 		try {
 			this.request = twitter.getOAuthRequestToken();
 		} catch (TwitterException e) {
@@ -37,6 +40,7 @@ public class TwitterManager {
 	}
 
 	public boolean OAuthRequest(String pin){
+		if(this.access != null){ return false; }
 		if(this.request == null){ return false; }
 		try{
 		if(pin.length() > 0){
@@ -70,6 +74,10 @@ public class TwitterManager {
 
 	public AccessToken getAccessToken(){
 		return access;
+	}
+
+	public RequestToken getRequestToken(){
+		return request;
 	}
 
 	public boolean setAccessToken(AccessToken access){

@@ -3,10 +3,13 @@ version: 1.0.0
 main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
+    aliases: wbc
   toggle:
   head:
   reload:
-  twitter:
+  tweet:
+    aliases: tw
+  register:
 permissions:
   whiteegg.*:
     description: Gives access to all WhiteEggPlugins

@@ -85,6 +85,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public boolean addRank(Rank rank) {
+		if(ranks.contains(rank)){ return false; }
 		return ranks.add(rank);
 	}
 
@@ -129,14 +130,31 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	@Override
-	public boolean saveVariable(JSONObject json) {
-		this.isVanish = json.getBoolean("isvanish");
+	public boolean saveVariable(JSONObject j) {
+		JSONObject json = j.getJSONObject("WhitePlayer");
+		JSONObject player = json.getJSONObject("player");
+		this.isVanish = player.getBoolean("isvanish");
 		if(!String.valueOf(json.get("twitter")).equalsIgnoreCase("null")){
 			JSONObject tw = json.getJSONObject("twitter");
 			this.getTwitterManager().setAccessToken(
 					new AccessToken(tw.getString("accesstoken"), tw.getString("accesstokensecret")));
 		}
-		return false;
+		this.setToggle(player);
+		return true;
+	}
+
+	private void setToggle(JSONObject json){
+		this.getToggleSettings().clear();
+		JSONObject t = json.getJSONObject("toggles");
+		for(Object key : t.keySet()){
+			JSONObject toggleJ = t.getJSONObject(String.valueOf(key));
+			ToggleSettings instance = ToggleSettings.deserialize(toggleJ);
+			if(instance == null){ continue; }
+			if(!ToggleSettings.a(instance)){
+				continue;
+			}
+			this.getToggleSettings().add(instance);
+		}
 	}
 
 	private JSONManager jm = new JSONManager();
@@ -156,7 +174,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		// local
 		JSONObject json = null;
 		try {
-			json = jm.getJSON(new File(path + this.getUniqueId().toString() + ".json"));
+			json = jm.getJSON(new File(path + "/" + this.getUniqueId().toString() + ".json"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -185,13 +203,18 @@ public class WhiteEggPlayer implements WhitePlayer {
 		Map<String, Object> result = new HashMap<>();
 		Map<String, Object> player = new HashMap<>();
 		Map<String, Object> w = new HashMap<>();
+		Map<String, Object> t = new HashMap<>();
+		for(ToggleSettings to : getToggleSettings()){
+			t.put(to.getPlugin().getName(), to.serialize());
+		}
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.getRanks());
 		player.put("isvanish", this.isVanish);
+		player.put("toggles", t);
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
-		w.put("WhiteEggPlayer", result);
+		w.put("WhitePlayer", result);
 		return w;
 	}
 

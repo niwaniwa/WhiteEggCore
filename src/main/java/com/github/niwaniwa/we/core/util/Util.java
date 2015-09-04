@@ -7,6 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -17,10 +21,12 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
+import net.sf.json.JSONObject;
 
 public class Util {
 
@@ -123,6 +129,38 @@ public class Util {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 要学習
+	 * @throws IOException
+	 *
+	**/
+	public static Map<String, Object> toMap(String str) throws IOException{
+		Properties props = new Properties();
+		props.load(new StringReader(str.substring(1, str.length() - 1).replace(", ", "\n")));
+		Map<String, Object> map = new HashMap<>();
+		for (Map.Entry<Object, Object> e : props.entrySet()) {
+			map.put((String)e.getKey(), e.getValue());
+		}
+		return map;
+	}
+
+	public static Plugin getPlugin(String str){
+		for(Plugin p : Bukkit.getPluginManager().getPlugins()){
+			if(p.getName().equalsIgnoreCase(str)){
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public static Map<String, Object> toMap(JSONObject j){
+		Map<String, Object> map = new HashMap<>();
+		for(Object o : j.keySet()){
+			map.put(String.valueOf(o), j.get(o));
+		}
+		return map;
 	}
 
 }

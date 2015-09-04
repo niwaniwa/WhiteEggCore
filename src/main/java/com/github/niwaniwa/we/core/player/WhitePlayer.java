@@ -3,7 +3,6 @@ package com.github.niwaniwa.we.core.player;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.permissions.Permission;
 
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
@@ -17,7 +16,7 @@ import net.sf.json.JSONObject;
  * @author KokekoKko_
  *
  */
-public interface WhitePlayer extends OfflineWhitePlayer, ConfigurationSerializable {
+public interface WhitePlayer extends OfflineWhitePlayer {
 
 	public abstract void sendMessage(String message);
 

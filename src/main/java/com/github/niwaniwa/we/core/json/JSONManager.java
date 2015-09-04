@@ -51,35 +51,18 @@ public class JSONManager {
 	 * @throws IOException
 	 */
 	public JSONObject getJSON(File file) throws IOException {
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		if (file.isDirectory()) {
-			return null;
-		}
-
-		if (!file.getName().endsWith(".json")) {
-			return null;
-		}
-
+		if (!file.exists()) { return null; }
+		if (file.isDirectory()) { return null; }
+		if (!file.getName().endsWith(".json")) { return null; }
 		BufferedReader reader = new BufferedReader(new FileReader(file));
-
 		StringBuilder b = new StringBuilder();
-
 		String str = reader.readLine();
 		while (str != null) {
 			b.append(str);
 			str = reader.readLine();
 		}
-
 		reader.close();
-
-		if (b.length() == 0) {
-			return null;
-		}
-
+		if (b.length() == 0) { return null; }
 		return JSONObject.fromObject(b.toString());
 
 	}

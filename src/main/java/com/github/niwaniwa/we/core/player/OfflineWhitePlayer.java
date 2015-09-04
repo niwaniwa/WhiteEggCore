@@ -2,9 +2,10 @@ package com.github.niwaniwa.we.core.player;
 
 import java.util.UUID;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
-public interface OfflineWhitePlayer {
+public interface OfflineWhitePlayer extends ConfigurationSerializable {
 
 	public abstract String getName();
 

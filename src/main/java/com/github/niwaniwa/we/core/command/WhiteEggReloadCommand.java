@@ -47,11 +47,9 @@ public class WhiteEggReloadCommand extends AbstractWhiteEggCommand implements Co
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-
 		if(!sender.hasPermission(permission)){
 			return null;
 		}
-
 		List<String> list = new ArrayList<>();
 
 		if (args.length == 1) {

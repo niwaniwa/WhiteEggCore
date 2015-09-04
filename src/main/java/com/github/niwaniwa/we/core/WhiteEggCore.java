@@ -17,6 +17,7 @@ import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
+import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
@@ -72,7 +73,8 @@ public class WhiteEggCore extends JavaPlugin {
 		this.getCommand("toggle").setExecutor(new WhiteEggToggleCommand());
 		this.getCommand("head").setExecutor(new WhiteEggHeadCommand());
 		this.getCommand("reload").setExecutor(new WhiteEggReloadCommand());
-		this.getCommand("twitter").setExecutor(new WhiteEggTwitterCommand());
+		this.getCommand("tweet").setExecutor(new WhiteEggTwitterCommand());
+		this.getCommand("register").setExecutor(new WhiteEggTwitterRegisterCommand());
 	}
 
 	private void registerListener(){
@@ -82,7 +84,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private void register(){
 		Map<String, Object> result = new HashMap<>();
-		result.put("chat", "off");
+		result.put("loginmsg", "true");
 		ToggleSettings toggle = new ToggleSettings(instance, ToggleType.DEFAULT, "whiteegg", "toggle", result, false);
 		toggle.add();
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");

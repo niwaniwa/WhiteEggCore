@@ -9,6 +9,8 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+
 import net.sf.json.JSONObject;
 
 public class WhitePlayerFactory {
@@ -22,6 +24,7 @@ public class WhitePlayerFactory {
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
+		white.reload();
 		players.add(white);
 		return white;
 	}
@@ -30,7 +33,7 @@ public class WhitePlayerFactory {
 	 * instance
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
-	 * @return T
+	 * @return T 指定したクラスのinstance
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends WhitePlayer> T newInstance(Class<T> clazz, Player player){
@@ -85,8 +88,8 @@ public class WhitePlayerFactory {
 
 	public static void reload(){
 		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
-		for(Player p : Bukkit.getOnlinePlayers()){
-			WhitePlayerFactory.newInstance(p).reload();
+		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
+			p.reload();
 		}
 	}
 

@@ -32,6 +32,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements C
 			sb.append(str+ " ");
 		}
 		WhiteEggTweetEvent event = new WhiteEggTweetEvent(player, sb.toString());
+//		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()){
 
 			return true;

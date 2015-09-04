@@ -17,4 +17,13 @@ public enum ToggleType {
 		return type;
 	}
 
+	public static ToggleType get(String name){
+		for(ToggleType type : ToggleType.values()){
+			if(type.getType().equals(name)){
+				return type;
+			}
+		}
+		return ToggleType.DEFAULT;
+	}
+
 }
