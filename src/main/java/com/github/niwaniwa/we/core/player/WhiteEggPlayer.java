@@ -17,9 +17,11 @@ import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.json.JSONManager;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
+import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.Vanish;
 
 import net.md_5.bungee.api.ChatColor;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import twitter4j.auth.AccessToken;
 
@@ -139,6 +141,15 @@ public class WhiteEggPlayer implements WhitePlayer {
 			this.getTwitterManager().setAccessToken(
 					new AccessToken(tw.getString("accesstoken"), tw.getString("accesstokensecret")));
 		}
+		if(player.get("rank") != null){
+			JSONArray rank = (JSONArray) player.get("rank");
+			for(int i = 0; i < rank.size(); i++){
+				if(!(rank.get(i) instanceof JSONObject)){ continue; }
+				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank.get(i)));
+				if(r == null){ continue; }
+				this.addRank(r);
+			}
+		}
 		this.setToggle(player);
 		return true;
 	}
@@ -148,7 +159,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		JSONObject t = json.getJSONObject("toggles");
 		for(Object key : t.keySet()){
 			JSONObject toggleJ = t.getJSONObject(String.valueOf(key));
-			ToggleSettings instance = ToggleSettings.deserialize(toggleJ);
+			ToggleSettings instance = ToggleSettings.deserializeJ(toggleJ);
 			if(instance == null){ continue; }
 			if(!ToggleSettings.a(instance)){
 				continue;

@@ -1,6 +1,8 @@
 package com.github.niwaniwa.we.core.command;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.util.message.MessageManager;
 
 public abstract class AbstractWhiteEggCommand {
 
@@ -8,6 +10,8 @@ public abstract class AbstractWhiteEggCommand {
 	public final String msgPrefix = "§7[§bWEC§7]§r";
 	public final String logPrefix = "[WEC]";
 	public final String commandMessageKey = "whiteegg.command";
+
+	public final MessageManager msg = WhiteEggCore.getMessageManager();
 
 	public abstract void sendUsing(WhitePlayer sender);
 

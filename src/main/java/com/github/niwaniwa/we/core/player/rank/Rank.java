@@ -2,6 +2,7 @@ package com.github.niwaniwa.we.core.player.rank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 
@@ -19,7 +20,6 @@ public class Rank {
 		this.rankName = name;
 		this.property = property;
 		this.setPermission(permission);
-		Rank.ranks.add(this);
 	}
 
 	public Rank(String prefix, String name, RankProperty property,String permission){
@@ -60,6 +60,18 @@ public class Rank {
 
 	public static List<Rank> getRanks(){
 		return ranks;
+	}
+
+	public static Rank parserRank(Map<String, Object> o){
+		Rank rank = new Rank(String.valueOf(o.get("prefix")), String.valueOf(o.get("name")),
+				RankProperty.valueOf(String.valueOf(o.get("property"))),
+				String.valueOf(o.get("permission")));
+		for(Rank r : ranks){
+			if(r.equals(rank)){
+				return r;
+			}
+		}
+		return null;
 	}
 
 }

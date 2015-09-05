@@ -21,6 +21,7 @@ import com.github.niwaniwa.we.core.util.Util;
 public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements CommandExecutor, TabCompleter {
 
 	private final String permission = commandPermission + ".toggle";
+	private final String cmdPath = commandMessageKey + ".toggle";
 
 	public WhiteEggToggleCommand() {
 		WhiteEggCore.getInstance().getCommand("toggle").setTabCompleter(this);
@@ -103,7 +104,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements Co
 		Bukkit.getPluginManager().callEvent(event);
 		if(!ToggleSettings.contains(event.getKey())){
 			// message
-			player.sendMessage("keyがない...");
+			player.sendMessage(msg.getMessage(player, cmdPath + ".notkey", "", true));
 			return true;
 		}
 		if(!event.isCancelled()){

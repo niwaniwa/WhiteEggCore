@@ -214,7 +214,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return this.serialize().toString();
 	}
 
-	public static ToggleSettings deserialize(Map<String, Object> map) throws IOException{
+	public ToggleSettings deserialize(Map<String, Object> map) throws IOException{
 		Map<String, Object> map2 = Util.toMap(String.valueOf(map.get("togglesettings")));
 		Plugin p = Bukkit.getPluginManager().getPlugin(String.valueOf(map2.get("plugin")));
 		if(p == null){ return null; }
@@ -228,7 +228,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return toggle;
 	}
 
-	public static ToggleSettings deserialize(JSONObject json){
+	public static ToggleSettings deserializeJ(JSONObject json){
 		JSONObject j = json.getJSONObject("togglesettings");
 		Plugin p = Util.getPlugin(j.getString("plugin"));
 		if(p == null){ return null; }
