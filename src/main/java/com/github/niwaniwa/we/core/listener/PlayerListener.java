@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
+import com.github.niwaniwa.we.core.player.SubAccount;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -26,6 +27,7 @@ public class PlayerListener implements Listener {
 				}
 			}
 		}
+		SubAccount.determine(player);
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)

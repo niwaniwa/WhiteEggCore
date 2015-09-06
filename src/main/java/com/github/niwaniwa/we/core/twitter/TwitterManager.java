@@ -1,7 +1,5 @@
 package com.github.niwaniwa.we.core.twitter;
 
-import java.util.Map;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -85,12 +83,6 @@ public class TwitterManager {
 		this.access = access;
 		twitter.setOAuthAccessToken(access);
 		return true;
-	}
-
-	public static AccessToken toAccesToken(Map<String, Object> map){
-		if(map.get("Token") == null){ return null; }
-		if(map.get("TokenSecret") == null);
-		return new AccessToken(String.valueOf(map.get("Token")), String.valueOf(map.get("TokenSecret")));
 	}
 
 }

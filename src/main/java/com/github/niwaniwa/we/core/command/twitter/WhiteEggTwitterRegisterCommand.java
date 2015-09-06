@@ -29,11 +29,11 @@ public class WhiteEggTwitterRegisterCommand implements CommandExecutor {
 		}
 		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
 		TwitterManager tw = player.getTwitterManager();
+		if(tw.getAccessToken() != null){
+			//
+			return true;
+		}
 		if(args.length == 0){
-			if(tw.getAccessToken() != null){
-				//
-				return true;
-			}
 			// message
 			this.sendURL(player);
 		} else if(args.length == 1){
@@ -52,6 +52,7 @@ public class WhiteEggTwitterRegisterCommand implements CommandExecutor {
 	}
 
 	private void sendURL(WhitePlayer p){
+		// 要修正
 		List<ChatFormat> f = new ArrayList<ChatFormat>();
 		f.add(ChatFormat.BOLD);
 		Clickable click = new Clickable("Click -->", ChatColor.GOLD, f);

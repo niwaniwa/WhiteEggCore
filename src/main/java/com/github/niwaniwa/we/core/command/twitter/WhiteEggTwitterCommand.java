@@ -1,5 +1,6 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +33,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements C
 			sb.append(str+ " ");
 		}
 		WhiteEggTweetEvent event = new WhiteEggTweetEvent(player, sb.toString());
-//		Bukkit.getPluginManager().callEvent(event);
+		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()){
 
 			return true;

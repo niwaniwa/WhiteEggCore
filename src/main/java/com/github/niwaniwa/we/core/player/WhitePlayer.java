@@ -1,5 +1,6 @@
 package com.github.niwaniwa.we.core.player;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 
@@ -55,5 +56,7 @@ public interface WhitePlayer extends OfflineWhitePlayer {
 	public abstract TwitterManager getTwitterManager();
 
 	public abstract List<ToggleSettings> getToggleSettings();
+
+	public abstract InetSocketAddress getAddress();
 
 }

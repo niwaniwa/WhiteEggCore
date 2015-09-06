@@ -2,12 +2,15 @@ package com.github.niwaniwa.we.core.player;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
@@ -32,6 +35,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private Player player;
 	private List<ToggleSettings> toggle = new ArrayList<>();
 	private List<Rank> ranks = new ArrayList<>();
+	private SubAccount accounts;
 	private boolean isVanish;
 	private TwitterManager twitter;
 	// not use database
@@ -42,6 +46,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.isVanish = false;
 		this.twitter = new TwitterManager();
 		this.setting();
+		this.accounts = new SubAccount();
 	}
 
 	private void setting(){
@@ -129,6 +134,18 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public void setVanish(boolean b) {
 		this.isVanish = b;
+	}
+
+	protected void addAccount(WhitePlayer player){
+		if(player.equals(this)){ return; }
+		if(accounts.contains(player)){ return; }
+		accounts.add(player);
+	}
+
+	protected void removeAccount(WhitePlayer player){
+		if(player.equals(this)){ return; }
+		if(!accounts.contains(player)){ return; }
+		accounts.remove(player);
 	}
 
 	@Override
@@ -223,6 +240,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("rank", this.getRanks());
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", t);
+		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
+		player.put("address", this.getAddress());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
 		w.put("WhitePlayer", result);
@@ -249,6 +268,15 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public String toString() {
 		return this.serialize().toString();
+	}
+
+	@Override
+	public InetSocketAddress getAddress() {
+		return player.getAddress();
+	}
+
+	public SubAccount getAccounts(){
+		return accounts;
 	}
 
 }
