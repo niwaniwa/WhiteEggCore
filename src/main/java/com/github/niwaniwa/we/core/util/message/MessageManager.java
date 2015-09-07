@@ -1,15 +1,22 @@
 package com.github.niwaniwa.we.core.util.message;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 
 public class MessageManager {
 
@@ -24,11 +31,15 @@ public class MessageManager {
 		this(new File(string));
 	}
 
+	@Deprecated
+	public MessageManager() {
+	}
+
 	public String getMessage(LanguageType lang, String key, String prefix, boolean replaceColorCode){
-		if(langs.isEmpty()){ return null; }
-		if(langs.get(lang) == null){ return null; }
+		if(langs.isEmpty()){ return ""; }
+		if(langs.get(lang) == null){ return ""; }
 		YamlConfiguration yaml = langs.get(lang);
-		if(yaml.getString(key) == null){ return null; }
+		if(yaml.getString(key) == null){ return ""; }
 		String string = prefix + yaml.getString(key);
 		if(replaceColorCode){
 			string = ChatColor.translateAlternateColorCodes('&', string);
@@ -37,20 +48,35 @@ public class MessageManager {
 	}
 
 	public <T extends WhitePlayer> String getMessage(T player, String key, String prefix, boolean replaceColorCode){
-		return this.getMessage(getLanguage(player), key, prefix, replaceColorCode);
+		return getMessage(getLanguage(player), key, prefix, replaceColorCode);
 	}
 
-	public boolean loadLangFile(){
-		if(!path.exists()){ return false; }
+	public String getMessage(CommandSender sender, String key, String prefix, boolean replaceColorCode){
+		if(!(sender instanceof Player)){
+			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
+		}
+		return getMessage(WhitePlayerFactory.newInstance((Player) sender), key, prefix, replaceColorCode);
+	}
+
+	public boolean loadLangFile() throws FileNotFoundException, IOException, InvalidConfigurationException{
 		Map<LanguageType, YamlConfiguration> result = new HashMap<>();
 		for(LanguageType type : LanguageType.values()){
-			File langF = new File(path + "/" + type.getString());
+			File langF = new File(path + "/" + type.getString() + ".yml");
 			if(!langF.exists()){ continue; }
-			result.put(type, YamlConfiguration.loadConfiguration(langF));
+			YamlConfiguration yaml = new YamlConfiguration();
+			yaml.load(langF);
+			result.put(type, yaml);
 			continue;
 		}
 		if(result.isEmpty()){ return false; }
 		langs.putAll(result);
+		return true;
+	}
+
+	public boolean loadLangFile(LanguageType type, BufferedReader buffer) throws IOException, InvalidConfigurationException{
+		YamlConfiguration yaml = new YamlConfiguration();
+		yaml.load(buffer);
+		langs.put(type, yaml);
 		return true;
 	}
 

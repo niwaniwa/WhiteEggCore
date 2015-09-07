@@ -16,10 +16,10 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class JSONManager {
+public class JsonManager {
 
 
-	public JSONManager() {
+	public JsonManager() {
 	}
 
 	/**

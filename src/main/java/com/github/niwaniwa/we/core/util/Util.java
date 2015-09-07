@@ -44,6 +44,7 @@ public class Util {
 			}
 			jar = new JarFile(jarFile);
 			JarEntry entry = jar.getJarEntry(path);
+			if(entry != null){
 			reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
 			if(!target.exists()){
 				target.mkdirs();
@@ -57,6 +58,7 @@ public class Util {
 			while((s = reader.readLine()) != null){
 				writer.write(s);
 				writer.newLine();
+			}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -136,6 +138,19 @@ public class Util {
 			map.put(String.valueOf(o), j.get(o));
 		}
 		return map;
+	}
+
+	public String build(String[] strings, int start) {
+		if (strings.length >= start + 1) {
+			String str = strings[start];
+			if (strings.length >= start + 2) {
+				for (int i = start + 1; i < strings.length; i++) {
+					str = str + " " + strings[i];
+				}
+			}
+			return str;
+		}
+		return null;
 	}
 
 }

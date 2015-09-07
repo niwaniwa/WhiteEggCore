@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -18,13 +19,20 @@ import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
 
-public class WhiteEggTwitterRegisterCommand implements CommandExecutor {
+public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCommand implements CommandExecutor {
+
+	private final String key = commandMessageKey + ".twitter.register";
+	private final String permission = commandPermission + ".twitter.register";
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
 		if(!(sender instanceof Player)){
-			// console
+			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
+			return true;
+		}
+		if(!sender.hasPermission(permission)){
+			sender.sendMessage(msg.getMessage(get(sender), error_Permission, "", true));
 			return true;
 		}
 		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
@@ -42,9 +50,11 @@ public class WhiteEggTwitterRegisterCommand implements CommandExecutor {
 				return true;
 			}
 			if(tw.OAuthRequest(args[0])){
+				sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true));
 				// success
 				return true;
 			}
+			sender.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
 			// failure
 			return true;
 		}
@@ -61,6 +71,21 @@ public class WhiteEggTwitterRegisterCommand implements CommandExecutor {
 		extra.setHoverEvent(HoverEventType.SHOW_TEXT, "§bTwitter OAuth Request URL");
 		click.addExtra(extra);
 		click.send(p.getPlayer());
+	}
+
+	@Override
+	public void sendUsing(WhitePlayer sender) {
+		sender.sendMessage("&7----- &6/tweet &7-----");
+		sender.sendMessage("&6/register &f: &7"
+				+ msg.getMessage(sender, key + ".using.description_1", "", true));
+		sender.sendMessage("&6/register <pin> &f: &7"
+				+ msg.getMessage(sender, key + ".using.description_2", "", true));
+	}
+
+	@Override
+	public String getPermission() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 }

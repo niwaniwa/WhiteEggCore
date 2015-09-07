@@ -2,3 +2,12 @@ whiteegg:
   command:
     console: "&cMinecraft内から実行してください。"
     notfound: "&cプレイヤーが見つかりません。"
+    notpermission: "&c権限がありません。"
+    head:
+      using:
+        description: "指定したプレイヤーの頭を取得します。"
+    tweet:
+      register:
+        using:
+          description_1: "アプリ提携をします。"
+          description_2: "Twitterにて表示されたPinを入力します。"

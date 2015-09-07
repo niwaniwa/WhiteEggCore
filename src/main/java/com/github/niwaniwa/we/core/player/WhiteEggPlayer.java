@@ -17,7 +17,7 @@ import org.bukkit.permissions.Permission;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
-import com.github.niwaniwa.we.core.json.JSONManager;
+import com.github.niwaniwa.we.core.json.JsonManager;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
@@ -185,7 +185,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		}
 	}
 
-	private JSONManager jm = new JSONManager();
+	private JsonManager jm = new JsonManager();
 
 	@Override
 	public boolean reload() {
