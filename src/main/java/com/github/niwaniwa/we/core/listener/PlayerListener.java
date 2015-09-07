@@ -3,6 +3,7 @@ package com.github.niwaniwa.we.core.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -38,6 +39,11 @@ public class PlayerListener implements Listener {
 			}
 		}
 		event.setJoinMessage("");
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onCommand(PlayerCommandPreprocessEvent event){
+//		String command = event.getMessage().split(" ")[0].replaceAll("/", "");
 	}
 
 }

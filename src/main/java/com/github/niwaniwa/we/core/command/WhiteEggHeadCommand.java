@@ -25,7 +25,7 @@ public class WhiteEggHeadCommand extends AbstractWhiteEggCommand implements Comm
 		Player player = (Player) sender;
 
 		ItemStack is = new ItemStack(Material.SKULL_ITEM,  (short) 3);
-		SkullMeta meta = (SkullMeta) is;
+		SkullMeta meta = (SkullMeta) is.getItemMeta();
 		meta.setOwner(args[0]);
 		is.setItemMeta(meta);
 		player.getInventory().addItem(is);

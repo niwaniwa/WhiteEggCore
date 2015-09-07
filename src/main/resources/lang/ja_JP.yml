@@ -1,0 +1,4 @@
+whiteegg:
+  command:
+    console: "&cMinecraft内から実行してください。"
+    notfound: "&cプレイヤーが見つかりません。"

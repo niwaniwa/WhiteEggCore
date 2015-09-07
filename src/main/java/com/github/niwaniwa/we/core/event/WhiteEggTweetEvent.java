@@ -31,8 +31,7 @@ public class WhiteEggTweetEvent extends Event implements Cancellable {
 
 	@Override
 	public HandlerList getHandlers() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		return handlers;
 	}
 
 	public WhitePlayer getPlayer() {

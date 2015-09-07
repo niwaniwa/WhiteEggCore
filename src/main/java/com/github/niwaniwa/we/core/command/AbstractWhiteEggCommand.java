@@ -10,8 +10,10 @@ public abstract class AbstractWhiteEggCommand {
 	public final String msgPrefix = "§7[§bWEC§7]§r";
 	public final String logPrefix = "[WEC]";
 	public final String commandMessageKey = "whiteegg.command";
+	public final String error_Console = commandMessageKey + ".console";
+	public final String error_Permission = commandMessageKey + ".notpermission";
 
-	public final MessageManager msg = WhiteEggCore.getMessageManager();
+	protected final MessageManager msg = WhiteEggCore.getMessageManager();
 
 	public abstract void sendUsing(WhitePlayer sender);
 

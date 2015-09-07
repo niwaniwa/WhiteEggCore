@@ -35,7 +35,8 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements Comm
 		sender.sendMessage(" : Version : " + WhiteEggCore.getInstance().getDescription().getVersion());
 		sender.sendMessage(" : Use Library : " + "1.8.8-R0.1 Spigot");
 		sender.sendMessage(" : Author : KokekoKko_");
-		sender.sendMessage(" : Running CraftBukkit Version : " + Bukkit.getVersion());
+		sender.sendMessage(" : Server Version : " + Bukkit.getVersion());
+		sender.sendMessage(" : Bukkit Version : " + Bukkit.getBukkitVersion());
 		sender.sendMessage("§7 ----- ----- ----- ----- -----");
 	}
 

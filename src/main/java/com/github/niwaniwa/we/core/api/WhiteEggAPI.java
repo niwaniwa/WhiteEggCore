@@ -58,6 +58,11 @@ public abstract class WhiteEggAPI {
 	 */
 	public abstract WhitePlayer getPlayer(UUID uuid);
 
+	/**
+	 * プレイヤーを取得します
+	 * @param player プレイヤー
+	 * @return WhitePlayer
+	 */
 	public abstract WhitePlayer getPlayer(Player player);
 
 

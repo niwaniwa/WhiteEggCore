@@ -242,6 +242,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("toggles", t);
 		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
 		player.put("address", this.getAddress());
+		player.put("account", this.getAccounts().get());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
 		w.put("WhitePlayer", result);

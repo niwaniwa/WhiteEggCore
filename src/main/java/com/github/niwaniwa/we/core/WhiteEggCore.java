@@ -42,6 +42,7 @@ public class WhiteEggCore extends JavaPlugin {
 		pm = Bukkit.getPluginManager();
 		this.set();
 		WhitePlayerFactory.reload();
+		versionCheck();
 	}
 
 	@Override
@@ -64,7 +65,6 @@ public class WhiteEggCore extends JavaPlugin {
 	private void set(){
 		this.registerCommands();
 		this.registerListener();
-		WhitePlayerFactory.reload();
 		this.register();
 	}
 
@@ -89,6 +89,17 @@ public class WhiteEggCore extends JavaPlugin {
 		toggle.add();
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
 		r.add();
+	}
+
+	private void versionCheck(){
+		String packageName = getServer().getClass().getPackage().getName();
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+		if(!version.equalsIgnoreCase("v1_8_R3")){
+			getLogger().warning("Unsupported CraftBukkit Version >_< : " + version);
+			getLogger().warning("Please use 1.8.X");
+			pm.disablePlugin(instance);
+			return;
+		}
 	}
 
 }

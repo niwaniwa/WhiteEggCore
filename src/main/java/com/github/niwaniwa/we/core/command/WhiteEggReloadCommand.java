@@ -26,7 +26,7 @@ public class WhiteEggReloadCommand extends AbstractWhiteEggCommand implements Co
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		// reload message
 		if(!sender.hasPermission(permission)){
-			// msh
+			// msg
 			return true;
 		}
 		Bukkit.reload();

@@ -33,65 +33,40 @@ public class Util {
 	private Util(){}
 
 	public static void copyFileFromJar(File target, File jarFile, String path){
-
 		if(!jarFile.exists()){return;}
-
 		BufferedWriter writer = null;
-
 		BufferedReader reader = null;
-
 		JarFile jar = null;
-
 		try {
-
 			if(!path.contains(".")){
 				new File(target, "/"+path).mkdirs();
 				return;
 			}
-
 			jar = new JarFile(jarFile);
 			JarEntry entry = jar.getJarEntry(path);
-
 			reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
-
 			if(!target.exists()){
 				target.mkdirs();
 			}
-
 			writer = new BufferedWriter
 					(new OutputStreamWriter
 							(new FileOutputStream
 									(new File(target,
 											path.split("/")[path.split("/").length - 1]))));
-
 			String s;
-
 			while((s = reader.readLine()) != null){
 				writer.write(s);
 				writer.newLine();
 			}
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-
-				if(writer != null){
-					writer.close();
-				}
-
-				if(reader != null){
-					reader.close();
-				}
-
-				if(jar != null){
-					jar.close();
-				}
-
+				if(writer != null){ writer.close(); }
+				if(reader != null){ reader.close(); }
+				if(jar != null){ jar.close(); }
 			} catch (IOException e){}
 		}
-
 	}
 
 	public static void sendParticle(Player player, Effect effect,
