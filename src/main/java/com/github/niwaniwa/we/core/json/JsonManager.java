@@ -36,6 +36,10 @@ public class JsonManager {
 		PrintWriter pw = new PrintWriter(bw);
 		pw.write(json.toString());
 		pw.close();
+		return true;
+	}
+
+	public boolean writeJSON(File path, String file, JSONObject json, boolean backup) throws IOException {
 
 		return true;
 	}

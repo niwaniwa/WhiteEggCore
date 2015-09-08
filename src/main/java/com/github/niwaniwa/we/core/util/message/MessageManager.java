@@ -93,9 +93,7 @@ public class MessageManager {
 			Object o = player.getClass().getMethod("getHandle").invoke(player);
 			String s = (String) getValue(o, "locale");
 			return LanguageType.valueOf(s);
-
 		} catch(Exception e) {}
-
 		return LanguageType.en_US;
 	}
 

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -17,12 +15,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
+import com.github.niwaniwa.we.core.bridge.LunaChatBridge;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggReloadCommand;
-import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
-import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.listener.Debug;
@@ -41,6 +38,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static MessageManager msg;
 	private static LanguageType type;
 	private PluginManager pm;
+	private LunaChatBridge lunaChat;
 
 	@Override
 	public void onEnable(){
@@ -70,11 +68,16 @@ public class WhiteEggCore extends JavaPlugin {
 		return msg;
 	}
 
+	public static LanguageType getType() {
+		return type;
+	}
+
 	private void set(){
 		this.settingLanguage();
 		this.registerCommands();
 		this.registerListener();
 		this.register();
+		this.settingBridge();
 		type = LanguageType.en_US;
 	}
 
@@ -119,10 +122,6 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void register(){
-		Map<String, Object> result = new HashMap<>();
-		result.put("loginmsg", "true");
-		ToggleSettings toggle = new ToggleSettings(instance, ToggleType.DEFAULT, "whiteegg", "toggle", result, false);
-		toggle.add();
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
 		r.add();
 	}
@@ -138,15 +137,6 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
-	@Override
-	public File getFile() {
-		return super.getFile();
-	}
-
-	public static LanguageType getType() {
-		return type;
-	}
-
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
 			if(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/" + type.getString() + ".yml").exists()){
@@ -156,6 +146,21 @@ public class WhiteEggCore extends JavaPlugin {
 					new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
 					WhiteEggCore.getInstance().getFile(), "lang/"+type.getString()+".yml");
 		}
+	}
+
+	private void settingBridge(){
+		if(Bukkit.getPluginManager().getPlugin("LunaChat") == null){ return; }
+		LunaChatBridge luna = LunaChatBridge.load(Bukkit.getPluginManager().getPlugin("LunaChat"));
+		this.lunaChat = luna;
+	}
+
+	@Override
+	public File getFile() {
+		return super.getFile();
+	}
+
+	public LunaChatBridge getLunaChat() {
+		return lunaChat;
 	}
 
 }

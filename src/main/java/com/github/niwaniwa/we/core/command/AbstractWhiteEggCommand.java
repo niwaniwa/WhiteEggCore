@@ -24,6 +24,7 @@ public abstract class AbstractWhiteEggCommand {
 	public abstract String getPermission();
 
 	protected WhitePlayer get(CommandSender sender){
+		if(!(sender instanceof Player)){ return null; }
 		return WhitePlayerFactory.newInstance((Player) sender);
 	}
 

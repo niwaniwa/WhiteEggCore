@@ -23,6 +23,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -140,7 +141,7 @@ public class Util {
 		return map;
 	}
 
-	public String build(String[] strings, int start) {
+	public static String build(String[] strings, int start) {
 		if (strings.length >= start + 1) {
 			String str = strings[start];
 			if (strings.length >= start + 2) {
@@ -151,6 +152,11 @@ public class Util {
 			return str;
 		}
 		return null;
+	}
+
+	public static String replaceColorCode(String s){
+		if(s == null){ return null; }
+		return ChatColor.translateAlternateColorCodes('&', s);
 	}
 
 }

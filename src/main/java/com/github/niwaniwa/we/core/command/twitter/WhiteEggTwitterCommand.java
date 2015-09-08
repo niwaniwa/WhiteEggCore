@@ -13,19 +13,26 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 
 public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements CommandExecutor {
 
-	public WhiteEggTwitterCommand() {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
+	private final String key = commandMessageKey + ".twitter";
+	private final String permission = commandPermission + ".twitter";
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!(sender instanceof Player)){
-			// message
+			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
+			return true;
+		} else if(!sender.hasPermission(permission)){
+			get(sender).sendMessage(msg.getMessage(get(sender), error_Permission, "", true));
 			return true;
 		}
 		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
 		if(args.length == 0){
 			this.sendUsing(player);
+			return true;
+		}
+		if(player.getTwitterManager().getAccessToken() == null){
+			player.sendMessage(
+					msg.getMessage(player, key + "notAcccess", msgPrefix, true));
 			return true;
 		}
 		StringBuilder sb = new StringBuilder();
@@ -35,10 +42,15 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements C
 		WhiteEggTweetEvent event = new WhiteEggTweetEvent(player, sb.toString());
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()){
-
 			return true;
 		}
-		return player.getTwitterManager().tweet(event.getTweet());
+
+		if(player.getTwitterManager().tweet(event.getTweet())){
+			player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
+			return true;
+		}
+		player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
+		return true;
 	}
 
 	@Override
@@ -48,8 +60,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements C
 
 	@Override
 	public String getPermission() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		return permission;
 	}
 
 }

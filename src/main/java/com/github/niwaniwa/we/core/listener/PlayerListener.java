@@ -6,8 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.SubAccount;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
@@ -29,16 +27,6 @@ public class PlayerListener implements Listener {
 			}
 		}
 		SubAccount.determine(player);
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onHighJoin(PlayerJoinEvent event){
-		for (WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()) {
-			if (Boolean.parseBoolean(String.valueOf(ToggleSettings.getValue(p, "loginmsg")))) {
-				p.sendMessage(event.getJoinMessage());
-			}
-		}
-		event.setJoinMessage("");
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)

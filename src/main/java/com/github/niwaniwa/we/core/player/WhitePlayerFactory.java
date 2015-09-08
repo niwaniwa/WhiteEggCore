@@ -76,13 +76,10 @@ public class WhitePlayerFactory {
 
 	public static void saveAll(){
 		if(Bukkit.getOnlinePlayers().size() != 0){
+			System.out.println("Saving players (WhiteEgg)");
 			for(Player p : Bukkit.getOnlinePlayers()){
 				WhitePlayerFactory.newInstance(p).save();
 			}
-		}
-		System.out.println("Saving players (WhiteEgg)");
-		for(WhitePlayer p : players){
-			p.save();
 		}
 	}
 
