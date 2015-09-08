@@ -4,8 +4,6 @@ import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.permissions.Permission;
-
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -17,11 +15,7 @@ import net.sf.json.JSONObject;
  * @author KokekoKko_
  *
  */
-public interface WhitePlayer extends OfflineWhitePlayer {
-
-	public abstract void sendMessage(String message);
-
-	public abstract void sendMessage(String message, boolean replaceColorCode);
+public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	public abstract List<Rank> getRanks();
 
@@ -32,10 +26,6 @@ public interface WhitePlayer extends OfflineWhitePlayer {
 	public abstract boolean isVanish();
 
 	public abstract boolean isOp();
-
-	public abstract boolean hasPermission(String permission);
-
-	public abstract boolean hasPermission(Permission permission);
 
 	public abstract boolean vanish();
 

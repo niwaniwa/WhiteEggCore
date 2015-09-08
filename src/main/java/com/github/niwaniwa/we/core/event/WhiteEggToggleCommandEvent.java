@@ -17,7 +17,7 @@ public class WhiteEggToggleCommandEvent extends Event implements Cancellable {
 	private boolean cancelled = false;
 
 	public WhiteEggToggleCommandEvent(Player sender, String togglekey, Object toggleValue) {
-		this.player = (Player) sender;
+		this.player = sender;
 		this.togglekey = togglekey;
 		this.toggleValue = toggleValue;
 	}

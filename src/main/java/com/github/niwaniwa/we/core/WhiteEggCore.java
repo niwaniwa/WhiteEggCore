@@ -15,10 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
-import com.github.niwaniwa.we.core.bridge.LunaChatBridge;
-import com.github.niwaniwa.we.core.command.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
-import com.github.niwaniwa.we.core.command.WhiteEggReloadCommand;
+import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
@@ -38,7 +36,6 @@ public class WhiteEggCore extends JavaPlugin {
 	private static MessageManager msg;
 	private static LanguageType type;
 	private PluginManager pm;
-	private LunaChatBridge lunaChat;
 
 	@Override
 	public void onEnable(){
@@ -77,7 +74,6 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerCommands();
 		this.registerListener();
 		this.register();
-		this.settingBridge();
 		type = LanguageType.en_US;
 	}
 
@@ -85,7 +81,6 @@ public class WhiteEggCore extends JavaPlugin {
 		this.getCommand("whiteeggcore").setExecutor(new WhiteEggCoreCommand());
 		this.getCommand("toggle").setExecutor(new WhiteEggToggleCommand());
 		this.getCommand("head").setExecutor(new WhiteEggHeadCommand());
-		this.getCommand("reload").setExecutor(new WhiteEggReloadCommand());
 		this.getCommand("tweet").setExecutor(new WhiteEggTwitterCommand());
 		this.getCommand("register").setExecutor(new WhiteEggTwitterRegisterCommand());
 	}
@@ -102,6 +97,7 @@ public class WhiteEggCore extends JavaPlugin {
 		} catch (IOException | InvalidConfigurationException e1) {
 			e1.printStackTrace();
 		}
+		msg.replaceDefaultLanguage(true);
 		if(!msg.getLangs().isEmpty()){ return; }
 		JarFile jar = null;
 		BufferedReader buffer = null;
@@ -148,19 +144,10 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
-	private void settingBridge(){
-		if(Bukkit.getPluginManager().getPlugin("LunaChat") == null){ return; }
-		LunaChatBridge luna = LunaChatBridge.load(Bukkit.getPluginManager().getPlugin("LunaChat"));
-		this.lunaChat = luna;
-	}
 
 	@Override
 	public File getFile() {
 		return super.getFile();
-	}
-
-	public LunaChatBridge getLunaChat() {
-		return lunaChat;
 	}
 
 }

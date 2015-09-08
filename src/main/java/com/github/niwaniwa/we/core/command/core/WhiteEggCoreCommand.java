@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.command;
+package com.github.niwaniwa.we.core.command.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements CommandExecutor, TabCompleter {
@@ -25,6 +26,10 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements Comm
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0){
 			this.sendVersion(sender);
+			return true;
+		}
+		if(args[0].equalsIgnoreCase("reload")){
+			new WhiteEggReloadCommand().runCommand(get(sender), cmd, args);
 			return true;
 		}
 		return true;

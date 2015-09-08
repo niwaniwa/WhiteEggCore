@@ -61,6 +61,20 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	@Override
+	public String getPrefix() {
+		StringBuilder sb = new StringBuilder();
+		for(Rank r : getRanks()){
+			sb.append(r.getPrefix());
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getFullName() {
+		return getPrefix() + getName();
+	}
+
+	@Override
 	public Player getPlayer() {
 		return player;
 	}
