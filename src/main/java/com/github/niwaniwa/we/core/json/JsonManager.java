@@ -40,7 +40,13 @@ public class JsonManager {
 	}
 
 	public boolean writeJSON(File path, String file, JSONObject json, boolean backup) throws IOException {
-
+		if(backup){
+			File f = new File(path, file);
+			if(f.exists()){
+				f.renameTo(new File(path, file + "_old"));
+			}
+		}
+		writeJSON(path, file, json);
 		return true;
 	}
 

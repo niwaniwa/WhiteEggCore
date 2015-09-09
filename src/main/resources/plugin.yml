@@ -6,7 +6,6 @@ commands:
     aliases: wbc
   toggle:
   head:
-  reload:
   tweet:
     aliases: tw
   register:

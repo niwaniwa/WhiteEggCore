@@ -44,8 +44,8 @@ public abstract class WhiteEggAPI {
 
 	/**
 	 *
-	 * @param name
-	 * @return
+	 * @param name プレイヤー名
+	 * @return WhitePlayer
 	 * @deprecated {@link #getPlayer(Player)}
 	 */
 	public abstract WhitePlayer getPlayer(String name);
@@ -72,7 +72,7 @@ public abstract class WhiteEggAPI {
 	 * @param permission Permission
 	 * @param toggle 設定内容
 	 * @param isDefault デフォルトで表示させるか(true = permissionが無効)
-	 * @return
+	 * @return 成功したか
 	 */
 	public abstract boolean registerToggle(Plugin plugin, ToggleType type, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide);

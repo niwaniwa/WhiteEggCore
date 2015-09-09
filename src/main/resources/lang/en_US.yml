@@ -1,6 +1,6 @@
 whiteegg:
   command:
-    console: "&cMinecraft内から実行してください。"
+    console: "&cPlease "
     notfound: "&cPlayer doesn't exist or is offline!"
     notpermission: "&c権限がありません。"
     head:

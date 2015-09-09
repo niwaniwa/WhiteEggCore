@@ -2,30 +2,27 @@ package com.github.niwaniwa.we.core.command.twitter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
 import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 
-public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand implements CommandExecutor {
+public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand {
 
 	private final String key = commandMessageKey + ".twitter";
 	private final String permission = commandPermission + ".twitter";
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof Player)){
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
+		if(!(sender instanceof WhitePlayer)){
 			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
 			return true;
 		} else if(!sender.hasPermission(permission)){
-			get(sender).sendMessage(msg.getMessage(get(sender), error_Permission, "", true));
+			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
-		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
+		WhitePlayer player = (WhitePlayer) sender;
 		if(args.length == 0){
 			this.sendUsing(player);
 			return true;

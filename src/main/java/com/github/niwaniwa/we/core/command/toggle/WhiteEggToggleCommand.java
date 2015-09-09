@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
@@ -14,11 +13,11 @@ import org.bukkit.util.StringUtil;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
 import com.github.niwaniwa.we.core.event.WhiteEggToggleCommandEvent;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.util.Util;
 
-public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements CommandExecutor, TabCompleter {
+public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements TabCompleter {
 
 	private final String permission = commandPermission + ".toggle";
 	private final String cmdPath = commandMessageKey + ".toggle";
@@ -28,8 +27,8 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements Co
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof Player)){
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
+		if(!(sender instanceof WhitePlayer)){
 			// console
 			return true;
 		}
@@ -37,7 +36,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements Co
 			// message
 			return true;
 		}
-		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
+		WhitePlayer player = (WhitePlayer) sender;
 		if(args.length == 0){
 			this.sendInformation(player);
 			return true;
@@ -63,7 +62,6 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCommand implements Co
 	private void sendInformation(WhitePlayer player){
 		List<ToggleSettings> t = player.getToggleSettings();
 		List<ToggleSettings> d = ToggleSettings.getList();
-		player.sendMessage("&7 ----- &6Settings &7-----");
 		if(player.isOp()){
 			player.sendMessage("&7 ----- &bServer Settings &7-----");
 			for(ToggleSettings toggle : ToggleSettings.getServerSetting(d)){

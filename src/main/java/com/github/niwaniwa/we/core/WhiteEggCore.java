@@ -4,17 +4,23 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.command.WhiteEggCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
@@ -22,6 +28,8 @@ import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
@@ -77,17 +85,29 @@ public class WhiteEggCore extends JavaPlugin {
 		type = LanguageType.en_US;
 	}
 
-	private void registerCommands(){
-		this.getCommand("whiteeggcore").setExecutor(new WhiteEggCoreCommand());
-		this.getCommand("toggle").setExecutor(new WhiteEggToggleCommand());
-		this.getCommand("head").setExecutor(new WhiteEggHeadCommand());
-		this.getCommand("tweet").setExecutor(new WhiteEggTwitterCommand());
-		this.getCommand("register").setExecutor(new WhiteEggTwitterRegisterCommand());
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		WhiteCommandSender whiteCommandSender;
+		if(sender instanceof Player){
+			whiteCommandSender = WhitePlayerFactory.newInstance((Player) sender);
+		} else {
+			whiteCommandSender = new WhiteConsoleSender();
+		}
+		return WhiteEggCommandHandler.onCommand(whiteCommandSender, command, label, args);
 	}
 
 	private void registerListener(){
 		pm.registerEvents(new Debug(), this);
 		pm.registerEvents(new PlayerListener(), this);
+	}
+
+	private void registerCommands(){
+		WhiteEggCommandHandler handler = new WhiteEggCommandHandler();
+		handler.registerCommand("whiteeggcore", new WhiteEggCoreCommand());
+		handler.registerCommand("toggle", new WhiteEggToggleCommand());
+		handler.registerCommand("head", new WhiteEggHeadCommand());
+		handler.registerCommand("tweet", new WhiteEggTwitterCommand());
+		handler.registerCommand("register", new WhiteEggTwitterRegisterCommand());
 	}
 
 	private void settingLanguage(){
@@ -148,6 +168,10 @@ public class WhiteEggCore extends JavaPlugin {
 	@Override
 	public File getFile() {
 		return super.getFile();
+	}
+
+	public Map<String, AbstractWhiteEggCommand> getCommands(){
+		return WhiteEggCommandHandler.getCommans();
 	}
 
 }

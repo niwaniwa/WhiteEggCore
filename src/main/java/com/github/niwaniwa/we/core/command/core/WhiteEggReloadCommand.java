@@ -14,22 +14,22 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 	private final String parentCommand = "whiteeggcore";
 
 	@Override
-	public void runCommand(WhiteCommandSender player, Command cmd, String[] args) {
-		if(!player.hasPermission(permission)){
-			player.sendMessage(msg.getMessage(player, error_Permission, msgPrefix, true));
-			return;
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
+		if(!sender.hasPermission(permission)){
+			sender.sendMessage(msg.getMessage(sender, error_Permission, msgPrefix, true));
+			return true;
 		}
 		Bukkit.reload();
 		if(args.length >= 2){
 			if(args[1].equalsIgnoreCase("-b")){
 				Bukkit.broadcastMessage(msgPrefix + "§aReload complete.");
-				return;
+				return true;
 			}
 		}
 		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers())
 			if(p.isOp())
 				p.sendMessage(msgPrefix + "&aReload complete.");
-		return;
+		return true;
 	}
 
 	@Override

@@ -5,13 +5,10 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.clickable.ChatExtra;
 import com.github.niwaniwa.we.core.util.clickable.ChatFormat;
@@ -19,23 +16,23 @@ import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
 
-public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCommand implements CommandExecutor {
+public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCommand  {
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label,
 			String[] args) {
-		if(!(sender instanceof Player)){
+		if(!(sender instanceof WhitePlayer)){
 			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
 			return true;
 		}
 		if(!sender.hasPermission(permission)){
-			sender.sendMessage(msg.getMessage(get(sender), error_Permission, "", true));
+			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
-		WhitePlayer player = WhitePlayerFactory.newInstance((Player) sender);
+		WhitePlayer player = (WhitePlayer) sender;
 		TwitterManager tw = player.getTwitterManager();
 		if(tw.getAccessToken() != null){
 			//

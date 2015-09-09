@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements CommandExecutor, TabCompleter {
+public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements TabCompleter {
 
 	private final String permission = commandPermission + ".whiteegg";
 
@@ -23,19 +23,19 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements Comm
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0){
 			this.sendVersion(sender);
 			return true;
 		}
 		if(args[0].equalsIgnoreCase("reload")){
-			new WhiteEggReloadCommand().runCommand(get(sender), cmd, args);
+			new WhiteEggReloadCommand().onCommand(sender, cmd, label, args);
 			return true;
 		}
 		return true;
 	}
 
-	private void sendVersion(CommandSender sender){
+	private void sendVersion(WhiteCommandSender sender){
 		sender.sendMessage("§7 ----- §aWhiteEggCore §7-----");
 		sender.sendMessage(" : Version : " + WhiteEggCore.getInstance().getDescription().getVersion());
 		sender.sendMessage(" : Use Library : " + "1.8.8-R0.1 Spigot");

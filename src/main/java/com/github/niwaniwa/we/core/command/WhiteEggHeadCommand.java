@@ -2,34 +2,32 @@ package com.github.niwaniwa.we.core.command;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggHeadCommand extends AbstractWhiteEggCommand implements CommandExecutor {
+public class WhiteEggHeadCommand extends AbstractWhiteEggCommand {
 
 	private final String key = commandMessageKey + ".head";
 	private final String permission = commandPermission + ".head";
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof Player)){
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
+		if(!(sender instanceof WhitePlayer)){
 			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
 			return true;
 		}
 		if(!sender.hasPermission(permission)){
-			sender.sendMessage(msg.getMessage(get(sender), error_Permission, "", true));
+			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
 		if(args.length == 0){
-			this.sendUsing(get(sender));
+			this.sendUsing((WhitePlayer) sender);
 			return true;
 		}
-		WhitePlayer player = get(sender);
+		WhitePlayer player = (WhitePlayer) sender;
 		player.getPlayer().getInventory().addItem(getMobHead(args[0]));
 		player.sendMessage(msgPrefix + "&asuccessfull!");
 		return true;
