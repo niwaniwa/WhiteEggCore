@@ -19,8 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
-import com.github.niwaniwa.we.core.command.WhiteEggCommandHandler;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
@@ -91,9 +91,9 @@ public class WhiteEggCore extends JavaPlugin {
 		if(sender instanceof Player){
 			whiteCommandSender = WhitePlayerFactory.newInstance((Player) sender);
 		} else {
-			whiteCommandSender = new WhiteConsoleSender();
+			whiteCommandSender = new WhiteConsoleSender(true);
 		}
-		return WhiteEggCommandHandler.onCommand(whiteCommandSender, command, label, args);
+		return WhiteEggCoreCommandHandler.onCommand(whiteCommandSender, command, label, args);
 	}
 
 	private void registerListener(){
@@ -102,7 +102,7 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void registerCommands(){
-		WhiteEggCommandHandler handler = new WhiteEggCommandHandler();
+		WhiteEggCoreCommandHandler handler = new WhiteEggCoreCommandHandler();
 		handler.registerCommand("whiteeggcore", new WhiteEggCoreCommand());
 		handler.registerCommand("toggle", new WhiteEggToggleCommand());
 		handler.registerCommand("head", new WhiteEggHeadCommand());
@@ -126,9 +126,7 @@ public class WhiteEggCore extends JavaPlugin {
 			JarEntry entry = jar.getJarEntry("lang/ja_JP.yml");
 			buffer = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
 			msg.loadLangFile(LanguageType.ja_JP, buffer);
-		} catch (IOException e) {
-		} catch (InvalidConfigurationException e) {
-			e.printStackTrace();
+		} catch (InvalidConfigurationException | IOException e) {
 		} finally {
 			try{
 				if(jar != null){ jar.close(); }
@@ -170,8 +168,8 @@ public class WhiteEggCore extends JavaPlugin {
 		return super.getFile();
 	}
 
-	public Map<String, AbstractWhiteEggCommand> getCommands(){
-		return WhiteEggCommandHandler.getCommans();
+	public Map<String, AbstractWhiteEggCoreCommand> getCommands(){
+		return WhiteEggCoreCommandHandler.getCommans();
 	}
 
 }

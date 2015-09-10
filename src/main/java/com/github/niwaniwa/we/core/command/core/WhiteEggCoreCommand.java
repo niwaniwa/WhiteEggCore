@@ -10,11 +10,11 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggCoreCommand extends AbstractWhiteEggCommand implements TabCompleter {
+public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements TabCompleter {
 
 	private final String permission = commandPermission + ".whiteegg";
 

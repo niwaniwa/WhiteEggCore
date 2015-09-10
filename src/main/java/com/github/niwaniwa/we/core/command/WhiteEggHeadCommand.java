@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggHeadCommand extends AbstractWhiteEggCommand {
+public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand {
 
 	private final String key = commandMessageKey + ".head";
 	private final String permission = commandPermission + ".head";

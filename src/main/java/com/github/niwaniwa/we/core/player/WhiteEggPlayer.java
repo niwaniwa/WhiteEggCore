@@ -172,8 +172,14 @@ public class WhiteEggPlayer implements WhitePlayer {
 			this.getTwitterManager().setAccessToken(
 					new AccessToken(tw.getString("accesstoken"), tw.getString("accesstokensecret")));
 		}
-		if(player.get("rank") != null){
-			JSONArray rank = (JSONArray) player.get("rank");
+		this.setRank(player);
+		this.setToggle(player);
+		return true;
+	}
+
+	private void setRank(JSONObject j){
+		if(j.get("rank") != null){
+			JSONArray rank = (JSONArray) j.get("rank");
 			for(int i = 0; i < rank.size(); i++){
 				if(!(rank.get(i) instanceof JSONObject)){ continue; }
 				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank.get(i)));
@@ -181,8 +187,6 @@ public class WhiteEggPlayer implements WhitePlayer {
 				this.addRank(r);
 			}
 		}
-		this.setToggle(player);
-		return true;
 	}
 
 	private void setToggle(JSONObject json){

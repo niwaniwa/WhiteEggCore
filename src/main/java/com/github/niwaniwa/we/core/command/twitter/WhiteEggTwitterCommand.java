@@ -3,12 +3,12 @@ package com.github.niwaniwa.we.core.command.twitter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand {
+public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 
 	private final String key = commandMessageKey + ".twitter";
 	private final String permission = commandPermission + ".twitter";
@@ -29,7 +29,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCommand {
 		}
 		if(player.getTwitterManager().getAccessToken() == null){
 			player.sendMessage(
-					msg.getMessage(player, key + "notAcccess", msgPrefix, true));
+					msg.getMessage(player, key + ".notAcccess", msgPrefix, true));
 			return true;
 		}
 		StringBuilder sb = new StringBuilder();

@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCommand;
+import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -16,7 +16,7 @@ import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
 
-public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCommand  {
+public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand  {
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";

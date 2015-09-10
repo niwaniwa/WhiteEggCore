@@ -1,6 +1,6 @@
 package com.github.niwaniwa.we.core.command;
 
-public abstract class WhiteEggChildCommand extends AbstractWhiteEggCommand {
+public abstract class WhiteEggChildCommand extends AbstractWhiteEggCoreCommand {
 
 	public abstract String getParentCommand();
 

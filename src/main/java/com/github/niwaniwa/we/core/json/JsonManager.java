@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,29 +73,16 @@ public class JsonManager {
 		reader.close();
 		if (b.length() == 0) { return null; }
 		return JSONObject.fromObject(b.toString());
-
 	}
 
-	public  static <T> Map<String, Object> toMap(T o){
-
+	public  static Map<String, Object> toMap(Object o){
 		Map<String, Object> map = new HashMap<>();
-
 		if(!(o instanceof JSONObject)){
 			if(!(o instanceof JSONArray)){ return map; }
 		}
-
 		JSONObject json = (JSONObject) o;
-		@SuppressWarnings("unchecked")
-		Iterator<String> ite = json.keys();
-		while(ite.hasNext()){
-			String key = ite.next();
-			Object value = json.get(key);
-			if(value instanceof JSONArray){
-				value = toList((JSONArray) value);
-			} else if (value instanceof JSONObject) {
-				value = toMap((JSONObject) value);
-			}
-			map.put(key, value);
+		for(Object key : json.keySet()){
+			map.put(String.valueOf(key), json.get(key));
 		}
 		return map;
 	}

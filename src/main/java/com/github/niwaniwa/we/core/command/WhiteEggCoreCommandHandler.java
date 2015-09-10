@@ -7,13 +7,13 @@ import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 
-public class WhiteEggCommandHandler {
+public class WhiteEggCoreCommandHandler {
 
-	private static Map<String, AbstractWhiteEggCommand> commands = new HashMap<>();
+	private static Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
 
-	public WhiteEggCommandHandler(){}
+	public WhiteEggCoreCommandHandler(){}
 
-	public boolean registerCommand(String command, AbstractWhiteEggCommand instance){
+	public boolean registerCommand(String command, AbstractWhiteEggCoreCommand instance){
 		commands.put(command, instance);
 		return true;
 	}
@@ -31,7 +31,7 @@ public class WhiteEggCommandHandler {
 		return true;
 	}
 
-	public static Map<String, AbstractWhiteEggCommand> getCommans(){
+	public static Map<String, AbstractWhiteEggCoreCommand> getCommans(){
 		return commands;
 	}
 

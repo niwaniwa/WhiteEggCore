@@ -1,9 +1,17 @@
 package com.github.niwaniwa.we.core.player;
 
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 
 public class WhiteConsoleSender implements WhiteCommandSender {
+
+	boolean b = false;
+
+	public WhiteConsoleSender(boolean b) {
+		this.b = b;
+	}
 
 	@Override
 	public void sendMessage(String message) {
@@ -12,17 +20,17 @@ public class WhiteConsoleSender implements WhiteCommandSender {
 
 	@Override
 	public void sendMessage(String message, boolean replaceColorCode) {
-		System.out.println(ChatColor.translateAlternateColorCodes('&', message));
+		Logger.getGlobal().info(ChatColor.translateAlternateColorCodes('&', message));
 	}
 
 	@Override
 	public boolean hasPermission(String permission) {
-		return true;
+		return b;
 	}
 
 	@Override
 	public boolean hasPermission(Permission permission) {
-		return true;
+		return b;
 	}
 
 }
