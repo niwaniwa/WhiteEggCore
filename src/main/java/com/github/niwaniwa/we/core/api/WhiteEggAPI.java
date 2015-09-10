@@ -46,7 +46,7 @@ public abstract class WhiteEggAPI {
 	 *
 	 * @param name プレイヤー名
 	 * @return WhitePlayer
-	 * @deprecated {@link #getPlayer(Player)}
+	 *
 	 */
 	public abstract WhitePlayer getPlayer(String name);
 
@@ -54,7 +54,7 @@ public abstract class WhiteEggAPI {
 	 * uuidからオンラインプレイヤーを取得する
 	 * @param uuid
 	 * @return WhitePlayer
-	 * @deprecated {@link #getPlayer(Player)}
+	 * @deprecated
 	 */
 	public abstract WhitePlayer getPlayer(UUID uuid);
 
