@@ -49,4 +49,6 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	public abstract InetSocketAddress getAddress();
 
+	public abstract boolean clear();
+
 }

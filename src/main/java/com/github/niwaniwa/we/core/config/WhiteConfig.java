@@ -15,6 +15,7 @@ public class WhiteConfig {
 
 	File path;
 	String name;
+	YamlConfiguration yaml;
 
 	public WhiteConfig(File path, String fileName) {
 		this.path = path;
@@ -32,14 +33,19 @@ public class WhiteConfig {
 		}
 	}
 
-	public YamlConfiguration load(){
+	public boolean load(){
 		YamlConfiguration config = new YamlConfiguration();
 		try {
 			config.load(new File(path, "/" + name));
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return config;
+		return true;
+	}
+
+	public YamlConfiguration getConfig(){
+		return yaml;
 	}
 
 }

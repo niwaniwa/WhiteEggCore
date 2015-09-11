@@ -3,8 +3,12 @@ version: 1.0.0
 main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
+    description: admin command
+    permission: whiteegg.moderator
     aliases: wbc
   toggle:
+    aliases: to
+    permission: whiteegg.core.command.toggle
   head:
   tweet:
     aliases: tw
@@ -34,3 +38,5 @@ permissions:
     description: Owner permission
   whiteegg.moderator:
     description: Moderator permission
+    children:
+      whiteegg.core.command: true

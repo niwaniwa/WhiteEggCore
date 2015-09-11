@@ -259,7 +259,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", t);
 		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
-//		player.put("address", this.getAddress());
+		player.put("address", this.getAddress());
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
@@ -296,6 +296,14 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	public SubAccount getAccounts(){
 		return accounts;
+	}
+
+	@Override
+	public boolean clear() {
+		this.toggle.clear();
+		this.twitter = new TwitterManager();
+		this.ranks.clear();
+		return true;
 	}
 
 }

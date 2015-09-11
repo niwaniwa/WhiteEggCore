@@ -26,6 +26,7 @@ import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
+import com.github.niwaniwa.we.core.config.WhiteConfig;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
@@ -43,6 +44,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggAPI api;
 	private static MessageManager msg;
 	private static LanguageType type;
+	private static WhiteConfig config;
 	private PluginManager pm;
 
 	@Override
@@ -51,6 +53,9 @@ public class WhiteEggCore extends JavaPlugin {
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
+		saveDefaultConfig();
+		config = new WhiteConfig(instance.getDataFolder(), "config.yml");
+		config.load();
 		this.set();
 		WhitePlayerFactory.reload();
 		versionCheck();
@@ -75,6 +80,10 @@ public class WhiteEggCore extends JavaPlugin {
 
 	public static LanguageType getType() {
 		return type;
+	}
+
+	public static WhiteConfig getConf(){
+		return config;
 	}
 
 	private void set(){
@@ -119,13 +128,17 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 		msg.replaceDefaultLanguage(true);
 		if(!msg.getLangs().isEmpty()){ return; }
+		this.buffer(msg, LanguageType.ja_JP);
+	}
+
+	private void buffer(MessageManager msg, LanguageType type){
 		JarFile jar = null;
 		BufferedReader buffer = null;
 		try {
 			jar = new JarFile(getInstance().getFile());
-			JarEntry entry = jar.getJarEntry("lang/ja_JP.yml");
+			JarEntry entry = jar.getJarEntry("lang/" + type.getString() +".yml");
 			buffer = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
-			msg.loadLangFile(LanguageType.ja_JP, buffer);
+			msg.loadLangFile(type, buffer);
 		} catch (InvalidConfigurationException | IOException e) {
 		} finally {
 			try{

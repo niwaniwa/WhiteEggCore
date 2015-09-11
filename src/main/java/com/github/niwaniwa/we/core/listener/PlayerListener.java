@@ -3,8 +3,6 @@ package com.github.niwaniwa.we.core.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.github.niwaniwa.we.core.player.SubAccount;
@@ -12,6 +10,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
+
 
 public class PlayerListener implements Listener {
 
@@ -28,16 +27,6 @@ public class PlayerListener implements Listener {
 			}
 		}
 		SubAccount.determine(player);
-	}
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onCommand(PlayerCommandPreprocessEvent event){
-//		String command = event.getMessage().split(" ")[0].replaceAll("/", "");
-	}
-
-	@EventHandler
-	public void onChat(AsyncPlayerChatEvent event){
-
 	}
 
 }

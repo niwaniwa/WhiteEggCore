@@ -29,8 +29,7 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 			return true;
 		}
 		if(args[0].equalsIgnoreCase("reload")){
-			new WhiteEggReloadCommand().onCommand(sender, cmd, label, args);
-			return true;
+			return new WhiteEggReloadCommand().onCommand(sender, cmd, label, args);
 		}
 		return true;
 	}

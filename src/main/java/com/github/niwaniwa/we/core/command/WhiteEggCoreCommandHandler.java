@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.command.Command;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 
 public class WhiteEggCoreCommandHandler {
@@ -23,6 +24,10 @@ public class WhiteEggCoreCommandHandler {
 	}
 
 	public static boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
+		if(WhiteEggCore.getConf().getConfig().getBoolean("lock")){
+			sender.sendMessage("&cプラグインはロックされています");
+			return true;
+		}
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
 				return commands.get(key).onCommand(sender, cmd, label, args);
