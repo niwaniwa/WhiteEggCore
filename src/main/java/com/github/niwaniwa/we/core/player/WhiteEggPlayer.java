@@ -164,7 +164,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public boolean saveVariable(JSONObject j) {
-		JSONObject json = j.getJSONObject("WhitePlayer");
+		JSONObject json = j.getJSONObject("WhiteEggPlayer");
 		JSONObject player = json.getJSONObject("player");
 		this.isVanish = player.getBoolean("isvanish");
 		if(!String.valueOf(json.get("twitter")).equalsIgnoreCase("null")){
@@ -235,13 +235,29 @@ public class WhiteEggPlayer implements WhitePlayer {
 			// sql
 			return true;
 		}
-		JSONObject json = JSONObject.fromObject(this.serialize());
+		JSONObject json = unionJson();
 		try {
 			jm.writeJSON(path, this.getUniqueId().toString() + ".json", json);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	private JSONObject unionJson(){
+		JSONObject from = null;
+		try {
+			from = jm.getJSON(new File(path, this.getUniqueId().toString() + ".json"));
+		} catch (IOException e) {
+		}
+		JSONObject json = JSONObject.fromObject(this.serialize());
+		if(from == null){ return json; }
+		for(Object key : from.keySet()){
+			if(!String.valueOf(key).equalsIgnoreCase("WhiteEggPlayer")){
+				json.put(key, from.get(key));
+			}
+		}
+		return json;
 	}
 
 	@Override
@@ -263,7 +279,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
-		w.put("WhitePlayer", result);
+		w.put("WhiteEggPlayer", result);
 		return w;
 	}
 
