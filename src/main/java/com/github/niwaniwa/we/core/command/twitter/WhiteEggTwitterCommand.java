@@ -7,6 +7,7 @@ import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.util.message.LanguageType;
 
 public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 
@@ -58,6 +59,16 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 	@Override
 	public String getPermission() {
 		return permission;
+	}
+
+	@Override
+	public String description() {
+		return msg.getMessage(LanguageType.en_US, key + ".description", "", true);
+	}
+
+	@Override
+	public String description(WhiteCommandSender sender) {
+		return msg.getMessage(sender, key + ".description", "", true);
 	}
 
 }

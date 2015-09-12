@@ -15,6 +15,7 @@ import com.github.niwaniwa.we.core.util.clickable.ChatFormat;
 import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
+import com.github.niwaniwa.we.core.util.message.LanguageType;
 
 public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand  {
 
@@ -81,8 +82,17 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 
 	@Override
 	public String getPermission() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		return permission;
+	}
+
+	@Override
+	public String description() {
+		return msg.getMessage(LanguageType.en_US, key + ".description", "", true);
+	}
+
+	@Override
+	public String description(WhiteCommandSender sender) {
+		return msg.getMessage(sender, key + ".description", "", true);
 	}
 
 }

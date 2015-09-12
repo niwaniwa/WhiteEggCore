@@ -14,6 +14,10 @@ public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggComman
 
 	public abstract boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args);
 
+	public abstract String description();
+
+	public abstract String description(WhiteCommandSender sender);
+
 	protected MessageManager msg = WhiteEggCore.getMessageManager();
 
 }

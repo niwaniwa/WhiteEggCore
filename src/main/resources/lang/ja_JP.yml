@@ -1,16 +1,18 @@
 whiteegg:
   command:
-    console: "&cMinecraft内から実行してください。"
-    notfound: "&cプレイヤーが見つかりません。"
-    notpermission: "&c権限がありません。"
+    console: '&cMinecraft内から実行してください。'
+    notfound: '&cプレイヤーが見つかりません。'
+    notpermission: '&c権限がありません。'
     head:
       using:
-        description: "指定したプレイヤーの頭を取得します。"
+        description: '指定したプレイヤーの頭を取得します。'
     twitter:
-      notAcccess: "&cアプリ提携をしていないため実行できません。 &7: アプリ提携は/register"
-      successfull: "&aツイートを送信しました !"
-      failure: "&cツイートを送信することができませんでした。"
+      description: 'Twitter関連のコマンド'
+      notAcccess: '&cアプリ提携をしていないため実行できません。 &7: アプリ提携は/register'
+      successfull: '&aツイートを送信しました !'
+      failure: '&cツイートを送信することができませんでした。'
       register:
+        description: 'アプリ提携コマンド'
         using:
-          description_1: "アプリ提携をします。"
-          description_2: "Twitterにて表示されたPinを入力します。"
+          description_1: 'アプリ提携をします。'
+          description_2: 'Twitterにて表示されたPinを入力します。'

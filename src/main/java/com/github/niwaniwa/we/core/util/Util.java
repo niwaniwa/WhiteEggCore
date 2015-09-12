@@ -45,21 +45,18 @@ public class Util {
 			}
 			jar = new JarFile(jarFile);
 			JarEntry entry = jar.getJarEntry(path);
-			if(entry != null){
-			reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
-			if(!target.exists()){
-				target.mkdirs();
-			}
-			writer = new BufferedWriter
-					(new OutputStreamWriter
-							(new FileOutputStream
-									(new File(target,
-											path.split("/")[path.split("/").length - 1]))));
-			String s;
-			while((s = reader.readLine()) != null){
-				writer.write(s);
-				writer.newLine();
-			}
+			if (entry != null) {
+				reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
+				if (!target.exists()) {
+					target.mkdirs();
+				}
+				writer = new BufferedWriter(new OutputStreamWriter(
+						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1]))));
+				String s;
+				while ((s = reader.readLine()) != null) {
+					writer.write(s);
+					writer.newLine();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

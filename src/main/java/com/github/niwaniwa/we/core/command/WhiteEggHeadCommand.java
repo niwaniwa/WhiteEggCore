@@ -54,4 +54,16 @@ public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand {
 		return is;
 	}
 
+	@Override
+	public String description() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
+	public String description(WhiteCommandSender sender) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 }

@@ -26,7 +26,7 @@ import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
-import com.github.niwaniwa.we.core.config.WhiteConfig;
+import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
@@ -44,7 +44,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggAPI api;
 	private static MessageManager msg;
 	private static LanguageType type;
-	private static WhiteConfig config;
+	private static WhiteEggCoreConfig config;
 	private PluginManager pm;
 
 	@Override
@@ -53,9 +53,6 @@ public class WhiteEggCore extends JavaPlugin {
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
-		saveDefaultConfig();
-		config = new WhiteConfig(instance.getDataFolder(), "config.yml");
-		config.load();
 		this.set();
 		WhitePlayerFactory.reload();
 		versionCheck();
@@ -82,11 +79,14 @@ public class WhiteEggCore extends JavaPlugin {
 		return type;
 	}
 
-	public static WhiteConfig getConf(){
+	public static WhiteEggCoreConfig getConf(){
 		return config;
 	}
 
 	private void set(){
+		saveDefaultConfig();
+		config = new WhiteEggCoreConfig();
+		config.load();
 		this.settingLanguage();
 		this.registerCommands();
 		this.registerListener();
@@ -102,10 +102,11 @@ public class WhiteEggCore extends JavaPlugin {
 		} else {
 			whiteCommandSender = new WhiteConsoleSender(true);
 		}
-		return WhiteEggCoreCommandHandler.onCommand(whiteCommandSender, command, label, args);
+		return new WhiteEggCoreCommandHandler().onCommand(whiteCommandSender, command, label, args);
 	}
 
 	private void registerListener(){
+		if(config.isDisableListener()){ return; }
 		pm.registerEvents(new Debug(), this);
 		pm.registerEvents(new PlayerListener(), this);
 	}

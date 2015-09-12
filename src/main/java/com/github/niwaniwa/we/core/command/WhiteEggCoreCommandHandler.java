@@ -23,8 +23,8 @@ public class WhiteEggCoreCommandHandler {
 		commands.remove(name);
 	}
 
-	public static boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
-		if(WhiteEggCore.getConf().getConfig().getBoolean("lock")){
+	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
+		if(WhiteEggCore.getConf().isLock()){
 			sender.sendMessage("&cプラグインはロックされています");
 			return true;
 		}
@@ -33,6 +33,7 @@ public class WhiteEggCoreCommandHandler {
 				return commands.get(key).onCommand(sender, cmd, label, args);
 			}
 		}
+		sendCommands(sender);
 		return true;
 	}
 
@@ -40,4 +41,10 @@ public class WhiteEggCoreCommandHandler {
 		return commands;
 	}
 
+	private void sendCommands(WhiteCommandSender sender){
+		sender.sendMessage("&7----- &bWhiteEggCore &7-----");
+		for(String command : commands.keySet()){
+			sender.sendMessage("&6/" + command + " &f:" + commands.get(command).description(sender));
+		}
+	}
 }

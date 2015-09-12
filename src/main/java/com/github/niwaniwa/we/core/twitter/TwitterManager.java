@@ -85,4 +85,11 @@ public class TwitterManager {
 		return true;
 	}
 
+	public boolean reset(){
+		this.access = null;
+		this.twitter = new TwitterFactory().getInstance();
+		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		return true;
+	}
+
 }

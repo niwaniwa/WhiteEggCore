@@ -13,9 +13,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class WhiteConfig {
 
-	File path;
-	String name;
-	YamlConfiguration yaml;
+	protected File path;
+	protected String name;
+	protected YamlConfiguration yaml;
 
 	public WhiteConfig(File path, String fileName) {
 		this.path = path;
@@ -39,7 +39,15 @@ public class WhiteConfig {
 			config.load(new File(path, "/" + name));
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
-			return false;
+		}
+		return true;
+	}
+
+	public boolean save(){
+		try {
+			yaml.save(path + "/" + name);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return true;
 	}
