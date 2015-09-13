@@ -27,7 +27,10 @@ public class WhiteEggCoreConfig extends WhiteConfig {
 		useTwitter = yaml.getBoolean("useTwitter", true);
 		savePlayerData = yaml.getBoolean("savePlayerData", true);
 		disableListener = yaml.getBoolean("disableListener", false);
+	}
 
+	public void set(String key, Object value){
+		yaml.set(key, value);
 	}
 
 	public boolean isLock(){

@@ -32,14 +32,11 @@ public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand {
 		WhitePlayer player = (WhitePlayer) sender;
 		Map<WhitePlayer, WhitePlayer> replay = WhiteEggWhisperCommand.getPlayer();
 		if(!replay.containsKey(player)){
-			// message
+			player.sendMessage(msg.getMessage(player, key + ".notfound", msgPrefix, true));
 			return true;
 		}
 		WhitePlayer target = replay.get(player);
-		if(target == null){
-
-			return true;
-		}
+		if(target == null){ return true; }
 		String message = Util.build(args, 0);
 		target.sendMessage(replace(msg.getMessage(target, key + ".format", "", true), player, target, message));
 		player.sendMessage(replace(msg.getMessage(player, key + ".format", "", true), player, target, message));
