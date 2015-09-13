@@ -13,6 +13,8 @@ commands:
   tweet:
     aliases: tw
   register:
+  whisper:
+    aliases: [tell, message, m, t, w]
 permissions:
   whiteegg.*:
     description: Gives access to all WhiteEggPlugins

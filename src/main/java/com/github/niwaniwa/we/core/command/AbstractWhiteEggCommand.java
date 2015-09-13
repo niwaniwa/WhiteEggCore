@@ -1,12 +1,16 @@
 package com.github.niwaniwa.we.core.command;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public abstract class AbstractWhiteEggCommand {
 
-	public final String commandMessageKey = "whiteegg.command";
-	public final String error_Console = commandMessageKey + ".console";
-	public final String error_Permission = commandMessageKey + ".notpermission";
+	protected final String commandMessageKey = "whiteegg.command";
+	protected final String error_Console = commandMessageKey + ".console";
+	protected final String error_Permission = commandMessageKey + ".notpermission";
+	protected final String error_Player = commandMessageKey + ".notfound";
+	protected WhiteEggAPI api = WhiteEggCore.getAPI();
 
 	public abstract void sendUsing(WhitePlayer sender);
 

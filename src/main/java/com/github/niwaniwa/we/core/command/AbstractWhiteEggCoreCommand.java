@@ -8,13 +8,13 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 
 public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggCommand {
 
-	public final String commandPermission = "whiteegg.core.command";
-	public final String msgPrefix = "§7[§bWEC§7]§r";
-	public final String logPrefix = "[WEC]";
+	protected final String commandPermission = "whiteegg.core.command";
+	protected final String msgPrefix = "§7[§bWEC§7]§r";
+	protected final String logPrefix = "[WEC]";
 
 	public abstract boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args);
 
-	public abstract String description();
+	protected abstract String description();
 
 	public abstract String description(WhiteCommandSender sender);
 

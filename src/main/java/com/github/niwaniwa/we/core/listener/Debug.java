@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
 
 public class Debug implements Listener {
 
@@ -16,6 +17,12 @@ public class Debug implements Listener {
 			WhiteEggCore.getInstance().getLogger().info(
 					"-- " + event.getPlayer().getName() + "Join the game. --");
 		}
+	}
+
+	@EventHandler
+	public void onTweet(WhiteEggTweetEvent event){
+//		Logger l = WhiteEggCore.getInstance().getLogger();
+//		l.info("Tweet : " + event.getTweet());
 	}
 
 }

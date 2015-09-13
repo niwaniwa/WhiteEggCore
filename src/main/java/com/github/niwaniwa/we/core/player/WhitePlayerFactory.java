@@ -24,7 +24,6 @@ public class WhitePlayerFactory {
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
-		white.reload();
 		players.add(white);
 		return white;
 	}

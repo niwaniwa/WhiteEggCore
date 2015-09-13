@@ -6,6 +6,11 @@ import org.bukkit.event.HandlerList;
 
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
+/**
+ * Twitter tweet event
+ * @author niwaniwa
+ * Minecraft内で使用不可能な文字列を含む場合があります
+ */
 public class WhiteEggTweetEvent extends Event implements Cancellable {
 
 	private static final HandlerList handlers = new HandlerList();

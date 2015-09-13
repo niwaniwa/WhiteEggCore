@@ -19,6 +19,7 @@ import net.sf.json.JSONObject;
 public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
 	private static List<ToggleSettings> list = new ArrayList<>();
+	private static Map<String, Object> server = new HashMap<>();
 
 	private Plugin p;
 	private ToggleType type;
@@ -36,6 +37,9 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		if(toggles != null){
 			for(String key : toggles.keySet()){
 				this.toggles.put(key, toggles.get(key));
+			}
+			if(type == ToggleType.SERVER){
+				server.putAll(toggles);
 			}
 		}
 		this.isHide = isHide;
@@ -132,6 +136,10 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return result;
 	}
 
+	public static Map<String, Object> getServerSetting(){
+		return server;
+	}
+
 	public static List<ToggleSettings> getServerSetting(List<ToggleSettings> l){
 		List<ToggleSettings> result = new ArrayList<>();
 		for(ToggleSettings toggle : l){
@@ -184,6 +192,10 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		for(ToggleSettings t : player.getToggleSettings()){
 			for(String k : t.getToggles().keySet()){
 				if(k.equalsIgnoreCase(key)){
+					if(t.getType() == ToggleType.SERVER){
+						getServerSetting().put(key, value);
+						return true;
+					}
 					t.getToggles().put(key, value);
 					return true;
 				}

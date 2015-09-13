@@ -22,6 +22,8 @@ import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
+import com.github.niwaniwa.we.core.command.WhiteEggReplayCommand;
+import com.github.niwaniwa.we.core.command.WhiteEggWhisperCommand;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
@@ -118,6 +120,8 @@ public class WhiteEggCore extends JavaPlugin {
 		handler.registerCommand("head", new WhiteEggHeadCommand());
 		handler.registerCommand("tweet", new WhiteEggTwitterCommand());
 		handler.registerCommand("register", new WhiteEggTwitterRegisterCommand());
+		handler.registerCommand("whisper", new WhiteEggWhisperCommand());
+		handler.registerCommand("replay", new WhiteEggReplayCommand());
 	}
 
 	private void settingLanguage(){
