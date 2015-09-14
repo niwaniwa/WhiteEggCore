@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
@@ -24,6 +25,7 @@ import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.Vanish;
 
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_8_R3.Packet;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import twitter4j.auth.AccessToken;
@@ -203,6 +205,10 @@ public class WhiteEggPlayer implements WhitePlayer {
 		}
 	}
 
+	public boolean tweet(String... tweet){
+		return twitter.tweet(tweet);
+	}
+
 	private JsonManager jm = new JsonManager();
 
 	@Override
@@ -320,6 +326,12 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.twitter = new TwitterManager();
 		this.ranks.clear();
 		return true;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void sendPacket(Packet packet){
+		CraftPlayer craft = (CraftPlayer) player;
+		craft.getHandle().playerConnection.sendPacket(packet);
 	}
 
 }
