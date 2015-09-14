@@ -1,5 +1,13 @@
 package com.github.niwaniwa.we.core.twitter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.github.niwaniwa.we.core.WhiteEggCore;
+
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -12,6 +20,7 @@ public class TwitterManager {
 
 	private AccessToken access = null;
 	private RequestToken request = null;
+	private List<Status> tweets;
 
 	private final String consumerKey = "Xwmw20C6XCyLqETJM1rnZyJEB";
 	private final String consumerSecret = "ljhzU4PIhJyBOtk7zUkthbeouwDAONsPMQhrmpZd2peBmSLie1";
@@ -19,6 +28,7 @@ public class TwitterManager {
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		this.tweets = new ArrayList<>();
 	}
 
 	public String getOAuthRequestURL(){
@@ -50,17 +60,48 @@ public class TwitterManager {
 		return true;
 	}
 
+	private boolean isSuccessfull = true;
+
+	/**
+	 *  ツイートします
+	 * @param tweet 文字
+	 * @param tick ツイートするまでの待ち時間
+	 * @return ツイートが送信できたか
+	 */
+	public boolean tweet(final String tweet, int tick){
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					Status status = twitter.updateStatus(tweet);
+					if(status != null){
+						tweets.add(status);
+						isSuccessfull = true;
+					}
+				} catch (TwitterException e) {
+					isSuccessfull = false;
+				}
+			}
+		}.runTaskLater(WhiteEggCore.getInstance(), tick);
+		return isSuccessfull;
+	}
+
+	/**
+	 * ツイートします
+	 * @param tweet 文字
+	 * @return ツイートが送信できたか
+	 */
 	public boolean tweet(String tweet){
 		if(access == null){ return false; }
 		if(tweet.length() >= 140){ return false; }
-		try {
-			twitter.updateStatus(tweet);
-		} catch (TwitterException e) {
-			return false;
-		}
-		return true;
+		return tweet(tweet, 2);
 	}
 
+	/**
+	 * ツイートします
+	 * @param tweet 配列
+	 * @return ツイートが送信できたか
+	 */
 	public boolean tweet(String[] tweet){
 		if(tweet.length == 0){ return false; }
 		StringBuilder sb = new StringBuilder();
@@ -90,6 +131,14 @@ public class TwitterManager {
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
 		return true;
+	}
+
+	/**
+	 * プラグインが有効になってからのツイートを取得します
+	 * @return
+	 */
+	public List<Status> getTweet(){
+		return tweets;
 	}
 
 }
