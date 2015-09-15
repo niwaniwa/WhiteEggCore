@@ -10,7 +10,7 @@ public class Database {
 
 	private Database(String url, String user, String pass){
 		this.use = false;
-		if(url.startsWith("jcbc")){
+		if(url.startsWith("jcbc:")){
 			this.user = user;
 			this.pass = pass;
 			this.use = true;
@@ -35,6 +35,10 @@ public class Database {
 
 	public boolean use(){
 		return use;
+	}
+
+	public static Database getInstance(){
+		return database;
 	}
 
 }

@@ -22,8 +22,8 @@ public class TwitterManager {
 	private RequestToken request = null;
 	private List<Status> tweets;
 
-	private final String consumerKey = "Xwmw20C6XCyLqETJM1rnZyJEB";
-	private final String consumerSecret = "ljhzU4PIhJyBOtk7zUkthbeouwDAONsPMQhrmpZd2peBmSLie1";
+	private final String consumerKey = // app consumer key
+	private final String consumerSecret = // app consumer secret
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
@@ -50,13 +50,15 @@ public class TwitterManager {
 	public boolean OAuthRequest(String pin){
 		if(this.access != null){ return false; }
 		if(this.request == null){ return false; }
-		try{
-		if(pin.length() > 0){
-			access = twitter.getOAuthAccessToken(request, pin);
-		} else {
-			access = twitter.getOAuthAccessToken();
+		try {
+			if (pin.length() > 0) {
+				access = twitter.getOAuthAccessToken(request, pin);
+			} else {
+				access = twitter.getOAuthAccessToken();
+			}
+		} catch (Exception e) {
+			return false;
 		}
-		} catch (Exception e) {return false;}
 		return true;
 	}
 
