@@ -32,7 +32,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	/**  **/
-	private boolean contains(String tweet){
+	public boolean contains(String tweet){
 		return tweet.contains(URL_REGEX);
 	}
 

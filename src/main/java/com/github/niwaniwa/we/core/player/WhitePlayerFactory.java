@@ -24,7 +24,8 @@ public class WhitePlayerFactory {
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
-		players.add(white);
+		white.reload(); // 消すな
+		players.add(white); // あったほうがいい?
 		return white;
 	}
 
@@ -33,6 +34,7 @@ public class WhitePlayerFactory {
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
 	 * @return T 指定したクラスのinstance
+	 * @deprecated エラーが起こる可能性が高いので使わないでください
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends WhitePlayer> T newInstance(Class<T> clazz, Player player){

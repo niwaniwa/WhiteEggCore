@@ -47,6 +47,11 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 				//
 				return true;
 			}
+			if(args[0].equalsIgnoreCase("reset")){
+				tw.reset();
+				sender.sendMessage("りせっとしました");
+				return true;
+			}
 			if(tw.OAuthRequest(args[0])){
 				sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true));
 				// success
