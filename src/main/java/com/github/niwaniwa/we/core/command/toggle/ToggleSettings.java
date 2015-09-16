@@ -254,8 +254,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return toggle;
 	}
 
-	public static boolean a(ToggleSettings t){
-
+	public static boolean containsInstance(ToggleSettings t){
 		for(ToggleSettings s : list){
 			if(t.getPermission().equalsIgnoreCase(s.getPermission())
 					&& t.getPlugin().getName().equalsIgnoreCase(s.getPlugin().getName())

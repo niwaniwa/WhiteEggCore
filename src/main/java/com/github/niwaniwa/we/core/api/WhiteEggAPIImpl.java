@@ -85,6 +85,7 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 		return WhitePlayerFactory.newInstance(player);
 	}
 
+	@Deprecated
 	@Override
 	public boolean registerToggle(Plugin plugin, ToggleType type, String permission, String custam,
 			Map<String, Object> toggles, boolean isHide) {
@@ -94,7 +95,6 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 
 	@Override
 	public boolean useDataBase() {
-		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
 

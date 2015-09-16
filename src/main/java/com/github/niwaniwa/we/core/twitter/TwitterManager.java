@@ -3,10 +3,6 @@ package com.github.niwaniwa.we.core.twitter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.scheduler.BukkitRunnable;
-
-import com.github.niwaniwa.we.core.WhiteEggCore;
-
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -14,7 +10,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-public class TwitterManager {
+public abstract class TwitterManager {
 
 	private Twitter twitter;
 
@@ -47,6 +43,12 @@ public class TwitterManager {
 		return true;
 	}
 
+	public boolean check(String tweet){
+		if(this.access == null){ return false; }
+		if(tweet.length() >= 140){ return false; }
+		return true;
+	}
+
 	public boolean OAuthRequest(String pin){
 		if(this.access != null){ return false; }
 		if(this.request == null){ return false; }
@@ -62,56 +64,9 @@ public class TwitterManager {
 		return true;
 	}
 
-	private boolean isSuccessfull = true;
+	public abstract boolean tweet(String tweet);
 
-	/**
-	 *  ツイートします
-	 * @param tweet 文字
-	 * @param tick ツイートするまでの待ち時間
-	 * @return ツイートが送信できたか
-	 */
-	public boolean tweet(final String tweet, int tick){
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				try {
-					Status status = twitter.updateStatus(tweet);
-					if(status != null){
-						tweets.add(status);
-						isSuccessfull = true;
-					}
-				} catch (TwitterException e) {
-					isSuccessfull = false;
-				}
-			}
-		}.runTaskLater(WhiteEggCore.getInstance(), tick);
-		return isSuccessfull;
-	}
-
-	/**
-	 * ツイートします
-	 * @param tweet 文字
-	 * @return ツイートが送信できたか
-	 */
-	public boolean tweet(String tweet){
-		if(access == null){ return false; }
-		if(tweet.length() >= 140){ return false; }
-		return tweet(tweet, 2);
-	}
-
-	/**
-	 * ツイートします
-	 * @param tweet 配列
-	 * @return ツイートが送信できたか
-	 */
-	public boolean tweet(String[] tweet){
-		if(tweet.length == 0){ return false; }
-		StringBuilder sb = new StringBuilder();
-		for(String str : tweet){
-			sb.append(str+ " ");
-		}
-		return this.tweet(sb.toString());
-	}
+	public abstract boolean tweet(String[] tweet);
 
 	public AccessToken getAccessToken(){
 		return access;
@@ -142,5 +97,10 @@ public class TwitterManager {
 	public List<Status> getTweet(){
 		return tweets;
 	}
+
+	public Twitter getTwitter(){
+		return twitter;
+	}
+
 
 }

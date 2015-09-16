@@ -73,6 +73,7 @@ public abstract class WhiteEggAPI {
 	 * @param toggle 設定内容
 	 * @param isDefault デフォルトで表示させるか(true = permissionが無効)
 	 * @return 成功したか
+	 * @deprecated 使用しないでください
 	 */
 	public abstract boolean registerToggle(Plugin plugin, ToggleType type, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide);

@@ -20,6 +20,7 @@ import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.json.JsonManager;
 import com.github.niwaniwa.we.core.player.rank.Rank;
+import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.Vanish;
@@ -46,7 +47,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	protected WhiteEggPlayer(Player player){
 		this.player = player;
 		this.isVanish = false;
-		this.twitter = new TwitterManager();
+		this.twitter = new PlayerTwitterManager(this);
 		this.setting();
 		this.accounts = new SubAccount();
 	}
@@ -198,14 +199,12 @@ public class WhiteEggPlayer implements WhitePlayer {
 			JSONObject toggleJ = t.getJSONObject(String.valueOf(key));
 			ToggleSettings instance = ToggleSettings.deserializeJ(toggleJ);
 			if(instance == null){ continue; }
-			if(!ToggleSettings.a(instance)){
-				continue;
-			}
+			if(!ToggleSettings.containsInstance(instance)){ continue; }
 			this.getToggleSettings().add(instance);
 		}
 	}
 
-	public boolean tweet(String... tweet){
+	public boolean tweet(String[] tweet){
 		return twitter.tweet(tweet);
 	}
 
@@ -323,7 +322,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public boolean clear() {
 		this.toggle.clear();
-		this.twitter = new TwitterManager();
+		this.twitter = new PlayerTwitterManager(this);
 		this.ranks.clear();
 		return true;
 	}
