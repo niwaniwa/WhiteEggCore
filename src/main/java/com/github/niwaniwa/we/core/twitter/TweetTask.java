@@ -1,10 +1,12 @@
 package com.github.niwaniwa.we.core.twitter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
 
 import twitter4j.Status;
@@ -15,6 +17,7 @@ import twitter4j.TwitterException;
 public class TweetTask extends BukkitRunnable {
 
 	private static final String URL_REGEX = "https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";
+	private static final File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/temp/");
 
 	private TwitterManager twitter;
 	private String tweet;
@@ -92,6 +95,11 @@ public class TweetTask extends BukkitRunnable {
 
 	public String getTweet() {
 		return tweet;
+	}
+
+	public File readImage(){
+		if(!path.exists()){ return null; }
+		return null;
 	}
 
 }

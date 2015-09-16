@@ -13,7 +13,7 @@ whiteegg:
       failure: '&cツイートを送信することができませんでした。'
       register:
         description: 'アプリ提携コマンド'
-        using:
+        using: 
           description_1: 'アプリ提携をします。'
           description_2: 'Twitterにて表示されたPinを入力します。'
     whisper:

@@ -19,6 +19,11 @@ public class WhitePlayerFactory {
 
 	private static List<WhitePlayer> players = new ArrayList<>();
 
+	/**
+	 * プレイヤーのインスタンスを返します
+	 * @param player プレイヤー
+	 * @return プレイヤー
+	 */
 	public static WhitePlayer newInstance(Player player){
 		for(WhitePlayer p : players){
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
