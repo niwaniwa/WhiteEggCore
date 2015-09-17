@@ -93,6 +93,11 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
