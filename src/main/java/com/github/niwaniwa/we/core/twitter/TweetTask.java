@@ -36,16 +36,22 @@ public class TweetTask extends BukkitRunnable {
 
 	private TwitterManager twitter;
 	private String tweet;
-	private List<String> url = new ArrayList<>();;
+	private List<String> url = new ArrayList<>();
+	private List<Status> status = new ArrayList<>();
+	private List<File> medias = new ArrayList<>();
 	private boolean useMedia;
-	private List<Status> status;
 	private boolean successfull = false;
+	private int wait; // unnecessary
 
-	public TweetTask(TwitterManager twitter, String tweet){
+	public TweetTask(TwitterManager twitter, String tweet, int wait){
 		this.twitter = twitter;
 		checkURL(tweet);
 		useMedia = !url.isEmpty();
-		status = new ArrayList<>();
+		this.wait = wait;
+	}
+
+	public TweetTask(TwitterManager twitter, String tweet){
+		this(twitter, tweet, 2);
 	}
 
 	public void checkURL(String tweet){
@@ -66,8 +72,7 @@ public class TweetTask extends BukkitRunnable {
 	public void run() {
 		try {
 			tweet();
-		} catch (TwitterException e) {
-		}
+		} catch (TwitterException e) {}
 	}
 
 	public void tweet() throws TwitterException{
@@ -84,8 +89,10 @@ public class TweetTask extends BukkitRunnable {
 		if(s != null){
 			this.successfull = true;
 			status.add(s);
+			delete();
 			return;
 		}
+		delete();
 		this.successfull = false;
 	}
 
@@ -96,9 +103,18 @@ public class TweetTask extends BukkitRunnable {
 			File media = readImage(url);
 			if(media != null){
 				su = su.media(media);
+				medias.add(media);
 			}
 		}
 		return su;
+	}
+
+	private void delete(){
+		for(File f : medias){
+			if(f.exists()){
+				f.delete();
+			}
+		}
 	}
 
 	public boolean isSuccessfull() {
@@ -142,9 +158,7 @@ public class TweetTask extends BukkitRunnable {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(input);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {}
 		if(image == null){ return null; }
 		try {
 			ImageIO.write(image, extension, imagePath);
@@ -192,6 +206,18 @@ public class TweetTask extends BukkitRunnable {
 			continue;
 		}
 		return false;
+	}
+
+	public int getWait() {
+		return wait;
+	}
+
+	public List<File> getMedia() {
+		return medias;
+	}
+
+	public void setWait(int wait) {
+		this.wait = wait;
 	}
 
 }
