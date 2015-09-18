@@ -21,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 import net.md_5.bungee.api.ChatColor;
@@ -154,6 +155,10 @@ public class Util {
 	public static String replaceColorCode(String s){
 		if(s == null){ return null; }
 		return ChatColor.translateAlternateColorCodes('&', s);
+	}
+
+	public static void callEvent(Event event){
+		Bukkit.getPluginManager().callEvent(event);
 	}
 
 }

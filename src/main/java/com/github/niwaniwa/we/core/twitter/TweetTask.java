@@ -21,7 +21,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
+import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
+import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
+import com.github.niwaniwa.we.core.util.Util;
 
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -54,7 +56,7 @@ public class TweetTask extends BukkitRunnable {
 		this(twitter, tweet, 2);
 	}
 
-	public void checkURL(String tweet){
+	private void checkURL(String tweet){
 		final Matcher matcher = urlPattern
 				.matcher(tweet);
 		String toTweet = tweet;
@@ -70,30 +72,32 @@ public class TweetTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		try {
-			tweet();
-		} catch (TwitterException e) {}
+		tweet();
+		this.cancel();
 	}
 
-	public void tweet() throws TwitterException{
+	private void tweet() {
 		Twitter t = twitter.getTwitter();
 		if(twitter instanceof PlayerTwitterManager){
 			PlayerTwitterManager pt = (PlayerTwitterManager) twitter;
-			WhiteEggTweetEvent event = new WhiteEggTweetEvent(pt.getPlayer(), tweet);
-			if(event.isCancelled()){
-				return;
-			}
+			// call event
+			WhiteEggPreTweetEvent event = new WhiteEggPreTweetEvent(pt.getPlayer(), tweet);
+			Util.callEvent(event);
+			if(event.isCancelled()){ return; }
 			tweet = event.getTweet();
 		}
-		Status s = t.updateStatus(build());
-		if(s != null){
+		Status status = null;
+		try {
+			status = t.updateStatus(build());
+		} catch (TwitterException e) {}
+		if(status != null){
 			this.successfull = true;
-			status.add(s);
-			delete();
-			return;
+			this.status.add(status);
 		}
 		delete();
-		this.successfull = false;
+		// call event
+		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
+		Util.callEvent(event);
 	}
 
 	private StatusUpdate build(){
@@ -149,7 +153,7 @@ public class TweetTask extends BukkitRunnable {
 		return tweet;
 	}
 
-	public File readImage(String url){
+	private File readImage(String url){
 		if(!path.exists()){ path.mkdirs(); }
 		InputStream input = responce(url);
 		if(input == null){ return null; }
@@ -169,7 +173,7 @@ public class TweetTask extends BukkitRunnable {
 		return imagePath;
 	}
 
-	public InputStream responce(String url){
+	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
 		HttpClient client = create();
 		HttpGet httpGet = new HttpGet(url);

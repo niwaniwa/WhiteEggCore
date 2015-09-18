@@ -1,10 +1,8 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.event.WhiteEggTweetEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
@@ -37,14 +35,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 		for(String str : args){
 			sb.append(str+ " ");
 		}
-
-		WhiteEggTweetEvent event = new WhiteEggTweetEvent(player, sb.toString());
-		Bukkit.getPluginManager().callEvent(event);
-		if(event.isCancelled()){
-			return true;
-		}
-
-		if(player.getTwitterManager().tweet(event.getTweet())){
+		if(player.getTwitterManager().tweet(sb.toString())){
 			player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
 			return true;
 		}

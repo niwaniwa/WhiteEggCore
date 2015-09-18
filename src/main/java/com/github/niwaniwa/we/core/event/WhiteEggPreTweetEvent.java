@@ -11,7 +11,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
  * @author niwaniwa
  * Minecraft内で使用不可能な文字列を含む場合があります
  */
-public class WhiteEggTweetEvent extends Event implements Cancellable {
+public class WhiteEggPreTweetEvent extends Event implements Cancellable {
 
 	private static final HandlerList handlers = new HandlerList();
 
@@ -19,7 +19,7 @@ public class WhiteEggTweetEvent extends Event implements Cancellable {
 	private WhitePlayer player;
 	private String tweet;
 
-	public WhiteEggTweetEvent(WhitePlayer player, String tweet) {
+	public WhiteEggPreTweetEvent(WhitePlayer player, String tweet) {
 		this.player = player;
 		this.tweet = tweet;
 	}
