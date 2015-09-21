@@ -74,7 +74,7 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 	public WhitePlayer getPlayer(UUID uuid) {
 		Player player = Util.getOnlinePlayer(uuid);
 		if(player == null){
-			WhitePlayer white = WhitePlayerFactory.newInstance((Player) Bukkit.getOfflinePlayer(uuid));
+			WhitePlayer white = WhitePlayerFactory.newInstance((Player) Bukkit.getPlayer(uuid));
 			return white;
 		}
 		return WhitePlayerFactory.newInstance(player);

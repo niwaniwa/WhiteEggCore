@@ -30,7 +30,7 @@ public class WhitePlayerFactory {
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
 		white.reload(); // 消すな
-		players.add(white); // あったほうがいい?
+		players.add(white);
 		return white;
 	}
 
@@ -63,7 +63,8 @@ public class WhitePlayerFactory {
 	 * 型を指定したクラスへ変換する
 	 * @param from 変換前のinstance
 	 * @param to 変換後のクラス
-	 * @return 変換したinstance
+	 * @return 指定したクラスのinstance(データ引き継ぎ)
+	 * @deprecated
 	 */
 	public static <T extends WhitePlayer> WhitePlayer cast(T from, Class<T> to){
 		WhitePlayer white = (WhitePlayer) from;

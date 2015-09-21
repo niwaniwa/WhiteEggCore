@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -15,7 +14,6 @@ import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.event.WhiteEggToggleCommandEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.util.Util;
 
 public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implements TabCompleter {
 
@@ -46,13 +44,17 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 				this.sendUsing(player);
 				return true;
 			}
-			Player target = Util.getOnlinePlayer(args[0]);
-			if(target == null){
-				// null message;
+			WhitePlayer target = api.getPlayer(args[0]);
+			if(target != null){
+				this.sendInformation(target);
 				return true;
 			}
-//			WhitePlayer white = WhitePlayerFactory.newInstance(target);
-//			this.sendInformation(white);
+			Object value = ToggleSettings.getValue(player, args[0]);
+			if(value != null){
+				player.sendMessage("&7----- &6" + args[0] + " &7------");
+				player.sendMessage("&7: &6value &7: " + value);
+				return true;
+			}
 			return true;
 		}
 		this.changeToggleSetting(player, args[0], args[1]);
@@ -108,6 +110,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 		if(!event.isCancelled()){
 			if(ToggleSettings.set(player, event.getKey(), event.getValue())){
 				player.sendMessage("成功!");
+				return true;
 			}
 			player.sendMessage("失敗><");
 		}

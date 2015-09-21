@@ -9,7 +9,7 @@ import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import twitter4j.Status;
 
 /**
- * ツイート後のイベント」
+ * ツイート後のイベント※キャンセル不可能
  * @author niwaniwa
  *
  */
