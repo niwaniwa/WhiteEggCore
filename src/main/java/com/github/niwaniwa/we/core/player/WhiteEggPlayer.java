@@ -269,23 +269,23 @@ public class WhiteEggPlayer implements WhitePlayer {
 	public Map<String, Object> serialize() {
 		Map<String, Object> result = new HashMap<>();
 		Map<String, Object> player = new HashMap<>();
-		Map<String, Object> w = new HashMap<>();
-		Map<String, Object> t = new HashMap<>();
+		Map<String, Object> white = new HashMap<>();
+		Map<String, Object> toggle = new HashMap<>();
 		for(ToggleSettings to : getToggleSettings()){
-			t.put(to.getPlugin().getName(), to.serialize());
+			toggle.put(to.getPlugin().getName(), to.serialize());
 		}
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.getRanks());
 		player.put("isvanish", this.isVanish);
-		player.put("toggles", t);
+		player.put("toggles", toggle);
 		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
 		player.put("address", this.getAddress());
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
-		w.put("WhiteEggPlayer", result);
-		return w;
+		white.put("WhiteEggPlayer", result);
+		return white;
 	}
 
 	private Map<String, Object> serializeTwitter() {
