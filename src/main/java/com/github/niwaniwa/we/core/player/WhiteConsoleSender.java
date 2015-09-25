@@ -5,12 +5,16 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+
 public class WhiteConsoleSender implements WhiteCommandSender {
 
-	boolean b = false;
+	private boolean b = false;
+	private Logger logger;
 
 	public WhiteConsoleSender(boolean b) {
 		this.b = b;
+		this.logger = WhiteEggCore.getInstance().getLogger();
 	}
 
 	@Override
@@ -20,7 +24,9 @@ public class WhiteConsoleSender implements WhiteCommandSender {
 
 	@Override
 	public void sendMessage(String message, boolean replaceColorCode) {
-		Logger.getGlobal().info(ChatColor.translateAlternateColorCodes('&', message));
+		logger.info(ChatColor.stripColor(
+				replaceColorCode == true ?
+						ChatColor.translateAlternateColorCodes('&', message) : message));
 	}
 
 	@Override
