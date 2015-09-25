@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.WhiteEggChildCommand;
+import com.github.niwaniwa.we.core.command.abstracts.WhiteEggChildCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 

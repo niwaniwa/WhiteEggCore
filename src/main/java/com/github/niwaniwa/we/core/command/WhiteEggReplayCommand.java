@@ -5,6 +5,7 @@ import java.util.Map;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;

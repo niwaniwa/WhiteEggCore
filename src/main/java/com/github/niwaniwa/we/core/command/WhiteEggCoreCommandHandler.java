@@ -6,11 +6,14 @@ import java.util.Map;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 
 public class WhiteEggCoreCommandHandler {
 
 	private static Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
+
+	private final String msgPrefix = "§7[§bWEC§7]§r";
 
 	public WhiteEggCoreCommandHandler(){}
 
@@ -25,7 +28,7 @@ public class WhiteEggCoreCommandHandler {
 
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
 		if(WhiteEggCore.getConf().isLock()){
-			sender.sendMessage("&cプラグインはロックされています");
+			sender.sendMessage(msgPrefix + "&cプラグインはロックされています");
 			return true;
 		}
 		for(String key : commands.keySet()){

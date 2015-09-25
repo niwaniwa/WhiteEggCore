@@ -19,11 +19,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggReplayCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggWhisperCommand;
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
@@ -51,18 +51,18 @@ public class WhiteEggCore extends JavaPlugin {
 
 	@Override
 	public void onEnable(){
+		versionCheck();
 		instance = this;
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		this.set();
-		WhitePlayerFactory.reload();
-		versionCheck();
+		WhitePlayerFactory.load(); // load
 	}
 
 	@Override
 	public void onDisable(){
-		WhitePlayerFactory.saveAll();
+		WhitePlayerFactory.saveAll();  // save
 	}
 
 	public static WhiteEggCore getInstance(){

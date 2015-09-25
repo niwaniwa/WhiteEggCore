@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.command;
+package com.github.niwaniwa.we.core.command.abstracts;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;

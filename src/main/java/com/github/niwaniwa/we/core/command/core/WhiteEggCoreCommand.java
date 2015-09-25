@@ -10,7 +10,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 

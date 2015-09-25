@@ -66,18 +66,20 @@ public class WhitePlayerFactory {
 	 * @return 指定したクラスのinstance(データ引き継ぎ)
 	 * @deprecated
 	 */
-	public static <T extends WhitePlayer> WhitePlayer cast(T from, Class<T> to){
-		WhitePlayer white = (WhitePlayer) from;
-		white.save();
-		if(to.getName().equals("WhitePlayer")){ return (WhitePlayer) from; }
+	public static <T extends WhitePlayer> WhitePlayer cast(WhitePlayer from, Class<T> to){
+		if(Modifier.isAbstract(to.getModifiers())
+				|| from.getClass().getCanonicalName().equals(from.getClass().getCanonicalName())){
+			return from;
+		}
+		from.save();
 		WhitePlayer instance = null;
 		try {
-			instance = (WhitePlayer) to.getConstructor(to).newInstance(white.getPlayer());
+			instance = (WhitePlayer) to.getConstructor(to).newInstance(from.getPlayer());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
-			return null; // >_<
+			return from; // >_<
 		}
-		instance.saveVariable(JSONObject.fromObject(white.serialize()));
+		instance.saveVariable(JSONObject.fromObject(from.serialize()));
 		return instance;
 	}
 
@@ -90,7 +92,7 @@ public class WhitePlayerFactory {
 		}
 	}
 
-	public static void reload(){
+	public static void load(){
 		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
 		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
 			p.reload();

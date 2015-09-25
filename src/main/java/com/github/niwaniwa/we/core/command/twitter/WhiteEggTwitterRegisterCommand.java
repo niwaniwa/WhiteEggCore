@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 
-import com.github.niwaniwa.we.core.command.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;

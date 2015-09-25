@@ -73,7 +73,6 @@ public class TweetTask extends BukkitRunnable {
 	@Override
 	public void run() {
 		tweet();
-		this.cancel();
 	}
 
 	private void tweet() {

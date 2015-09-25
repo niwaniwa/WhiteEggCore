@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
