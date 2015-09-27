@@ -132,10 +132,10 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 		msg.replaceDefaultLanguage(true);
 		if(!msg.getLangs().isEmpty()){ return; }
-		this.buffer(msg, LanguageType.ja_JP);
+		this.load(msg, LanguageType.ja_JP);
 	}
 
-	private void buffer(MessageManager msg, LanguageType type){
+	private void load(MessageManager msg, LanguageType type){
 		JarFile jar = null;
 		BufferedReader buffer = null;
 		try {

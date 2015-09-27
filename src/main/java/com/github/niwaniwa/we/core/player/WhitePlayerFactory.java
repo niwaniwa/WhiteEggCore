@@ -13,8 +13,16 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 
 import net.sf.json.JSONObject;
 
+/**
+ * WhitePlayerのfactoryクラス
+ * @author niwaniwa
+ *
+ */
 public class WhitePlayerFactory {
 
+	/**
+	 * instance化不可
+	 */
 	private WhitePlayerFactory(){}
 
 	private static List<WhitePlayer> players = new ArrayList<>();
