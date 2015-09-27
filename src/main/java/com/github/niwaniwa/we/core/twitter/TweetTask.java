@@ -30,6 +30,11 @@ import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
+/**
+ * ツイート送信クラス(使い捨て)
+ * @author niwaniwa
+ *
+ */
 public class TweetTask extends BukkitRunnable {
 
 	private static final Pattern urlPattern =  Pattern.compile("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+",

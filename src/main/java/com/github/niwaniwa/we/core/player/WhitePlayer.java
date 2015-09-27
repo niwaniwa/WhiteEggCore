@@ -2,7 +2,6 @@ package com.github.niwaniwa.we.core.player;
 
 import java.net.InetSocketAddress;
 import java.util.List;
-import java.util.Map;
 
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -40,8 +39,6 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 	public abstract boolean load();
 
 	public abstract boolean save();
-
-	public abstract Map<String, Object> serialize();
 
 	public abstract TwitterManager getTwitterManager();
 

@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
@@ -212,7 +213,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public boolean reload() {
-
+		this.save();
 		return this.load();
 	}
 
@@ -241,11 +242,16 @@ public class WhiteEggPlayer implements WhitePlayer {
 			return true;
 		}
 		JSONObject json = unionJson();
-		try {
-			jm.writeJSON(path, this.getUniqueId().toString() + ".json", json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					jm.writeJSON(path, getUniqueId().toString() + ".json", json);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}.runTaskLater(WhiteEggCore.getInstance(), 2);
 		return true;
 	}
 
@@ -253,8 +259,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		JSONObject from = null;
 		try {
 			from = jm.getJSON(new File(path, this.getUniqueId().toString() + ".json"));
-		} catch (IOException e) {
-		}
+		} catch (IOException e) {}
 		JSONObject json = JSONObject.fromObject(this.serialize());
 		if(from == null){ return json; }
 		for(Object key : from.keySet()){
@@ -332,5 +337,4 @@ public class WhiteEggPlayer implements WhitePlayer {
 		CraftPlayer craft = (CraftPlayer) player;
 		craft.getHandle().playerConnection.sendPacket(packet);
 	}
-
 }

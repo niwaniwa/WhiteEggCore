@@ -10,16 +10,14 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 
 public abstract class Mini {
 
-	abstract public void send(Player player);
+	public abstract void send(Player player);
 
 	protected IChatBaseComponent build(String source){
 		return ChatSerializer.a("{\"text\": \""+source+"\"}");
 	}
 
 	protected CraftPlayer cast(Player p){
-
 		if (!(p instanceof Player)) {return null;}
-
 		return (CraftPlayer) p;
 	}
 

@@ -11,7 +11,16 @@ public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggComman
 	protected final String commandPermission = "whiteegg.core.command";
 	protected final String msgPrefix = "§7[§bWEC§7]§r";
 	protected final String logPrefix = "[WEC]";
+	protected MessageManager msg = WhiteEggCore.getMessageManager();
 
+	/**
+	 * コマンドの実行
+	 * @param sender sender
+	 * @param cmd command
+	 * @param label label
+	 * @param args args
+	 * @return boolean
+	 */
 	public abstract boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args);
 
 	/**
@@ -21,8 +30,11 @@ public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggComman
 	 */
 	protected abstract String description();
 
+	/**
+	 * コマンドの説明
+	 * @param sender
+	 * @return String
+	 */
 	public abstract String description(WhiteCommandSender sender);
-
-	protected MessageManager msg = WhiteEggCore.getMessageManager();
 
 }

@@ -109,7 +109,6 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private void registerListener(){
 		pm.registerEvents(new Debug(), this);
-		if(config.isDisableListener()){ return; }
 		pm.registerEvents(new PlayerListener(), this);
 	}
 

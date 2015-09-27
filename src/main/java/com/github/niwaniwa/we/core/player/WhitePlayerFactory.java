@@ -29,7 +29,7 @@ public class WhitePlayerFactory {
 			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
-		white.reload(); // 消すな
+		white.load();
 		players.add(white);
 		return white;
 	}
@@ -83,15 +83,21 @@ public class WhitePlayerFactory {
 		return instance;
 	}
 
+	/**
+	 * プレイヤーデータの保存
+	 */
 	public static void saveAll(){
 		if(Bukkit.getOnlinePlayers().size() != 0){
 			System.out.println("Saving players (WhiteEgg)");
-			for(Player p : Bukkit.getOnlinePlayers()){
-				WhitePlayerFactory.newInstance(p).save();
+			for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
+				p.save();
 			}
 		}
 	}
 
+	/**
+	 * プレイヤーデータの読み込み
+	 */
 	public static void load(){
 		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
 		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
@@ -99,6 +105,10 @@ public class WhitePlayerFactory {
 		}
 	}
 
+	/**
+	 * サーバー起動時から取得時までのプレイヤーのインスタンスの取得
+	 * @return instance
+	 */
 	public static List<WhitePlayer> getPlayers(){
 		return players;
 	}

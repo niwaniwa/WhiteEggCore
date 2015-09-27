@@ -12,8 +12,16 @@ public abstract class AbstractWhiteEggCommand {
 	protected final String error_Player = commandMessageKey + ".notfound";
 	protected WhiteEggAPI api = WhiteEggCore.getAPI();
 
+	/**
+	 * 使い方の送信
+	 * @param sender
+	 */
 	public abstract void sendUsing(WhitePlayer sender);
 
+	/**
+	 * コマンドのpermission
+	 * @return String
+	 */
 	public abstract String getPermission();
 
 }

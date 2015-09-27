@@ -1,5 +1,10 @@
 package com.github.niwaniwa.we.core.util.message;
 
+/**
+ * Minecraft内で使用されている言語
+ * @author niwaniwa
+ *
+ */
 public enum LanguageType {
 
 	af_ZA("af_ZA"),
