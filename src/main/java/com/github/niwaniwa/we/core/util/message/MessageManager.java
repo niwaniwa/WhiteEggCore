@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -62,10 +62,14 @@ public class MessageManager {
 		return getMessage(lang, key, prefix, replaceColorCode, b);
 	}
 
-	public <T extends WhitePlayer> String getMessage(T player, String key, String prefix, boolean replaceColorCode){
-		return getMessage(getLanguage(player), key, prefix, replaceColorCode);
-	}
-
+	/**
+	 * 取得
+	 * @param player WhiteCommandSenderを継承したクラスのインスタンス
+	 * @param key 取得するkey
+	 * @param prefix prefix
+	 * @param replaceColorCode カラーコードの置換
+	 * @return value
+	 */
 	public <T extends WhiteCommandSender> String getMessage(T player, String key, String prefix, boolean replaceColorCode){
 		if(!(player instanceof WhitePlayer)){
 			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
@@ -127,18 +131,9 @@ public class MessageManager {
 	}
 
 	public static LanguageType getLanguage(Player player){
-		try{
-			Object o = player.getClass().getMethod("getHandle").invoke(player);
-			String s = (String) getValue(o, "locale");
-			return LanguageType.valueOf(s);
-		} catch(Exception e) {}
-		return LanguageType.en_US;
-	}
-
-	private static Object getValue(Object instance, String fieldName) throws Exception {
-		Field field = instance.getClass().getDeclaredField(fieldName);
-		field.setAccessible(true);
-		return field.get(instance);
+		String locale = ((CraftPlayer) player).getHandle().locale;
+		LanguageType type = LanguageType.valueOf(locale);
+		return type == null ? LanguageType.en_US : type;
 	}
 
 }

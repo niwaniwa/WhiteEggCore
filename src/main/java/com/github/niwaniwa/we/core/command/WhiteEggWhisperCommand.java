@@ -7,11 +7,12 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 
-public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand {
+public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
 
 	private static Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
 
@@ -20,10 +21,6 @@ public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand {
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
-			return true;
-		}
 		if(!sender.hasPermission(permission)){
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;

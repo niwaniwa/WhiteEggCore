@@ -6,20 +6,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand {
+public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".head";
 	private final String permission = commandPermission + ".head";
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
-			return true;
-		}
 		if(!sender.hasPermission(permission)){
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;

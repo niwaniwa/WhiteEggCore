@@ -6,21 +6,18 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 
-public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand {
+public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
 
 	private final String key = commandMessageKey + ".replay";
 	private final String permission = commandPermission + ".replay";
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
-			return true;
-		}
 		if(!sender.hasPermission(permission)){
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
@@ -56,13 +53,11 @@ public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand {
 
 	@Override
 	public String description(WhiteCommandSender sender) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		return msg.getMessage(sender, key, "", true);
 	}
 
 	@Override
 	public void sendUsing(WhitePlayer sender) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 

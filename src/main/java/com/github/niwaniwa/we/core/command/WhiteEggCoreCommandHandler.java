@@ -8,12 +8,14 @@ import org.bukkit.command.Command;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class WhiteEggCoreCommandHandler {
 
 	private static Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
 
 	private final String msgPrefix = "§7[§bWEC§7]§r";
+	private final String error_Console = "whiteegg.command.console";
 
 	public WhiteEggCoreCommandHandler(){}
 
@@ -26,6 +28,7 @@ public class WhiteEggCoreCommandHandler {
 		commands.remove(name);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
 		if(WhiteEggCore.getConf().isLock()){
 			sender.sendMessage(msgPrefix + "&cプラグインはロックされています");
@@ -33,6 +36,18 @@ public class WhiteEggCoreCommandHandler {
 		}
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
+				AbstractWhiteEggCoreCommand instance = commands.get(key);
+				Class[] clazz = instance.getClass().getInterfaces();
+				if(clazz.length != 0){
+					for(Class s : clazz){
+						if(s.getSimpleName().equalsIgnoreCase("ConsoleCancellable")){
+							if(!(sender instanceof WhitePlayer)){
+								sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
+								return true;
+							}
+						}
+					}
+				}
 				return commands.get(key).onCommand(sender, cmd, label, args);
 			}
 		}

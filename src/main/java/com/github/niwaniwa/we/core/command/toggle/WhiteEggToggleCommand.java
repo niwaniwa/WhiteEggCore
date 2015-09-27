@@ -11,11 +11,12 @@ import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.event.WhiteEggToggleCommandEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
-public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implements TabCompleter {
+public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable, TabCompleter {
 
 	private final String permission = commandPermission + ".toggle";
 	private final String cmdPath = commandMessageKey + ".toggle";
