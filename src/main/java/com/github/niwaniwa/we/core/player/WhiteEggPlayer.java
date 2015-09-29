@@ -205,6 +205,10 @@ public class WhiteEggPlayer implements WhitePlayer {
 		}
 	}
 
+	public void setName(String name){
+		player.setCustomName("");
+	}
+
 	public boolean tweet(String[] tweet){
 		return twitter.tweet(tweet);
 	}
@@ -242,17 +246,20 @@ public class WhiteEggPlayer implements WhitePlayer {
 			return true;
 		}
 		JSONObject json = unionJson();
+		try {
+			return jm.writeJSON(path, getUniqueId().toString() + ".json", json);
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	public void saveTask(){
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				try {
-					jm.writeJSON(path, getUniqueId().toString() + ".json", json);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				save();
 			}
 		}.runTaskLater(WhiteEggCore.getInstance(), 1);
-		return true;
 	}
 
 	private JSONObject unionJson(){

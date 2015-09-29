@@ -56,7 +56,7 @@ public class WhitePlayerFactory {
 		if(clazz.getName().equals("WhitePlayer")){ return (T) WhitePlayerFactory.newInstance(player); }
 		T instance = null;
 		try {
-			Constructor<T> c = clazz.getConstructor(clazz);
+			Constructor<T> c = clazz.getConstructor(Player.class);
 			instance = c.newInstance(player);
 		} catch (NoSuchMethodException | SecurityException | InstantiationException |
 				IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

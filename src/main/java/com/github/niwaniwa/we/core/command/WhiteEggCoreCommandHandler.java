@@ -28,7 +28,6 @@ public class WhiteEggCoreCommandHandler {
 		commands.remove(name);
 	}
 
-	@SuppressWarnings("rawtypes")
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
 		if(WhiteEggCore.getConf().isLock()){
 			sender.sendMessage(msgPrefix + "&cプラグインはロックされています");
@@ -37,22 +36,27 @@ public class WhiteEggCoreCommandHandler {
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
 				AbstractWhiteEggCoreCommand instance = commands.get(key);
-				Class[] clazz = instance.getClass().getInterfaces();
-				if(clazz.length != 0){
-					for(Class s : clazz){
-						if(s.getSimpleName().equalsIgnoreCase("ConsoleCancellable")){
-							if(!(sender instanceof WhitePlayer)){
-								sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
-								return true;
-							}
-						}
+				if(isConsoleCancel(instance)){
+					if(!(sender instanceof WhitePlayer)){
+						sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
+						return true;
 					}
 				}
-				return commands.get(key).onCommand(sender, cmd, label, args);
+				return instance.onCommand(sender, cmd, label, args);
 			}
 		}
 		sendCommands(sender);
 		return true;
+	}
+
+	public static boolean isConsoleCancel(AbstractWhiteEggCoreCommand command){
+		Class<?>[] clazz = command.getClass().getInterfaces();
+		if(clazz.length != 0){
+			for(Class<?> s : clazz){
+				if(s.getSimpleName().equalsIgnoreCase("ConsoleCancellable")){ return true; }
+			}
+		}
+		return false;
 	}
 
 	public static Map<String, AbstractWhiteEggCoreCommand> getCommans(){

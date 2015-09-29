@@ -3,8 +3,6 @@ package com.github.niwaniwa.we.core.player;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.niwaniwa.we.core.WhiteEggCore;
-
 public class SubAccount {
 
 	private List<WhiteEggPlayer> players;
@@ -34,7 +32,7 @@ public class SubAccount {
 	public static void determine(WhitePlayer player) {
 		if(!(player instanceof WhiteEggPlayer)){ return; }
 		WhiteEggPlayer egg = (WhiteEggPlayer) player;
-		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
+		for(WhitePlayer p : WhitePlayerFactory.getPlayers()){
 			if(!(p instanceof WhiteEggPlayer)){ continue; }
 			WhiteEggPlayer egg2 = (WhiteEggPlayer) p;
 			String address1 = egg2.getAddress().getAddress().toString().replaceAll("/", "");

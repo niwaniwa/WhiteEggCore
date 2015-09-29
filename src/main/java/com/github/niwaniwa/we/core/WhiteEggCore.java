@@ -164,7 +164,7 @@ public class WhiteEggCore extends JavaPlugin {
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 		if(!version.equalsIgnoreCase("v1_8_R3")){
 			getLogger().warning("Unsupported CraftBukkit Version >_< : " + version);
-			getLogger().warning("Please use 1.8.X");
+			getLogger().warning("Please use 1.8.8");
 			pm.disablePlugin(instance);
 			return;
 		}
