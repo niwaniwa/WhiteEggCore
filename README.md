@@ -1,4 +1,4 @@
 #WhiteEggCore
-  WhiteEggCore
 
-  java学習中...
+  Coreとしての機能
+  Twitterを使用できる機能

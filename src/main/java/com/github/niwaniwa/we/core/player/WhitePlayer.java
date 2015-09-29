@@ -7,6 +7,7 @@ import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.sf.json.JSONObject;
 
 /**
@@ -45,6 +46,8 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 	public abstract List<ToggleSettings> getToggleSettings();
 
 	public abstract InetSocketAddress getAddress();
+
+	public abstract EntityPlayer getHandle();
 
 	public abstract boolean clear();
 
