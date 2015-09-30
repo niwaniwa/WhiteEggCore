@@ -9,7 +9,7 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggCommand {
 
 	protected final String commandPermission = "whiteegg.core.command";
-	protected final String msgPrefix = "§7[§bWEC§7]§r";
+	protected final String msgPrefix = WhiteEggCore.msgPrefix;
 	protected final String logPrefix = "[WEC]";
 	protected MessageManager msg = WhiteEggCore.getMessageManager();
 

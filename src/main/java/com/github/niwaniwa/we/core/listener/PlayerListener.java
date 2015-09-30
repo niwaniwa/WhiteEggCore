@@ -30,10 +30,13 @@ public class PlayerListener implements Listener {
 		AltAccount.determine(player);
 	}
 
+	/* Error */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
-		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
-		player.save();
+		/*
+		 * WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		 * player.save();
+		 */
 	}
 
 }

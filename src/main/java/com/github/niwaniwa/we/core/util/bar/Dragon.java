@@ -226,7 +226,9 @@ public class Dragon {
 	public static void disable(){
 		for(Dragon d : dragons.values()){
 			if(d.getScheduler() != null){
-				d.sendDestroyPacket(true);
+				if(d.getPlayer().isOnline()){
+					d.sendDestroyPacket(true);
+				}
 			}
 		}
 	}

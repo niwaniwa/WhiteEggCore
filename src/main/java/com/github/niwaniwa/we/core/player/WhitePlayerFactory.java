@@ -95,11 +95,9 @@ public class WhitePlayerFactory {
 	 * プレイヤーデータの保存
 	 */
 	public static void saveAll(){
-		if(Bukkit.getOnlinePlayers().size() != 0){
-			System.out.println("Saving players (WhiteEgg)");
-			for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
-				p.save();
-			}
+		System.out.println("Saving players (WhiteEgg)");
+		for(WhitePlayer p : WhitePlayerFactory.getPlayers()){
+			p.save();
 		}
 	}
 

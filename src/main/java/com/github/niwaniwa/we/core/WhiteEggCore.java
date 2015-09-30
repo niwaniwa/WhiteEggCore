@@ -37,7 +37,6 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
 import com.github.niwaniwa.we.core.util.Util;
-import com.github.niwaniwa.we.core.util.bar.Dragon;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
@@ -50,6 +49,8 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggCoreConfig config;
 	private PluginManager pm;
 
+	public static String msgPrefix = "§7[§bWEC§7]§r";
+
 	@Override
 	public void onEnable(){
 		versionCheck();
@@ -57,14 +58,14 @@ public class WhiteEggCore extends JavaPlugin {
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
-		this.set();
+		this.setting();
 		WhitePlayerFactory.load(); // load
 	}
 
 	@Override
 	public void onDisable(){
-		WhitePlayerFactory.saveAll();  // IllegalPluginAccessException
-		Dragon.disable();
+		WhitePlayerFactory.saveAll();  // JSONException
+//		Dragon.disable(); // ConcurrentModificationException
 	}
 
 	public static WhiteEggCore getInstance(){
@@ -87,7 +88,7 @@ public class WhiteEggCore extends JavaPlugin {
 		return config;
 	}
 
-	private void set(){
+	private void setting(){
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
