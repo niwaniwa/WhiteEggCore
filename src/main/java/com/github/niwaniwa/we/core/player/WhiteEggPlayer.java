@@ -39,7 +39,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private Player player;
 	private List<ToggleSettings> toggle = new ArrayList<>();
 	private List<Rank> ranks = new ArrayList<>();
-	private SubAccount accounts;
+	private AltAccount accounts;
 	private boolean isVanish;
 	private TwitterManager twitter;
 	// not use database
@@ -50,7 +50,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.isVanish = false;
 		this.twitter = new PlayerTwitterManager(this);
 		this.setting();
-		this.accounts = new SubAccount();
+		this.accounts = new AltAccount();
 	}
 
 	private void setting(){
@@ -332,7 +332,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		return ((CraftPlayer) player).getHandle();
 	}
 
-	public SubAccount getAccounts(){
+	public AltAccount getAccounts(){
 		return accounts;
 	}
 
