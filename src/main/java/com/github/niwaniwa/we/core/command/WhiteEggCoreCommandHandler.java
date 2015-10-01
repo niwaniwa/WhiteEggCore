@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCommand;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -36,7 +37,7 @@ public class WhiteEggCoreCommandHandler {
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
 				AbstractWhiteEggCoreCommand instance = commands.get(key);
-				if(isConsoleCancel(instance)){
+				if(AbstractWhiteEggCommand.isConsoleCancel(instance)){
 					if(!(sender instanceof WhitePlayer)){
 						sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
 						return true;
@@ -47,16 +48,6 @@ public class WhiteEggCoreCommandHandler {
 		}
 		sendCommands(sender);
 		return true;
-	}
-
-	public static boolean isConsoleCancel(AbstractWhiteEggCoreCommand command){
-		Class<?>[] clazz = command.getClass().getInterfaces();
-		if(clazz.length != 0){
-			for(Class<?> s : clazz){
-				if(s.getSimpleName().equalsIgnoreCase("ConsoleCancellable")){ return true; }
-			}
-		}
-		return false;
 	}
 
 	public static Map<String, AbstractWhiteEggCoreCommand> getCommans(){

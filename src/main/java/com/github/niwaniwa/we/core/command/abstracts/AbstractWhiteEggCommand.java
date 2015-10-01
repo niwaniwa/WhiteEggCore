@@ -2,6 +2,8 @@ package com.github.niwaniwa.we.core.command.abstracts;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
+import com.github.niwaniwa.we.core.player.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public abstract class AbstractWhiteEggCommand {
@@ -23,5 +25,19 @@ public abstract class AbstractWhiteEggCommand {
 	 * @return String
 	 */
 	public abstract String getPermission();
+
+	public static boolean isConsoleCancel(AbstractWhiteEggCoreCommand command){
+		Class<?>[] clazz = command.getClass().getInterfaces();
+		if(clazz.length != 0){
+			for(Class<?> s : clazz){
+				if(s.equals(ConsoleCancellable.class)){ return true; }
+			}
+		}
+		return false;
+	}
+
+	public static boolean isConsole(WhiteCommandSender sender){
+		return (sender instanceof WhiteConsoleSender);
+	}
 
 }

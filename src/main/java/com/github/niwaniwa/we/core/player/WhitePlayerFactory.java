@@ -76,7 +76,7 @@ public class WhitePlayerFactory {
 	 */
 	public static <T extends WhitePlayer> WhitePlayer cast(WhitePlayer from, Class<T> to){
 		if(Modifier.isAbstract(to.getModifiers())
-				|| from.getClass().getCanonicalName().equals(from.getClass().getCanonicalName())){
+				|| from.getClass().equals(to)){
 			return from;
 		}
 		from.save();

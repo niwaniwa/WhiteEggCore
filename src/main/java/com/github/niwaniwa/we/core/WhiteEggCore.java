@@ -64,7 +64,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	@Override
 	public void onDisable(){
-		WhitePlayerFactory.saveAll();  // JSONException
+		WhitePlayerFactory.saveAll();
 //		Dragon.disable(); // ConcurrentModificationException
 	}
 
