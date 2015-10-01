@@ -263,11 +263,11 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	private JSONObject unionJson(){
+		JSONObject json = JSONObject.fromObject(this.serialize());
 		JSONObject from = null;
 		try {
 			from = jm.getJSON(new File(path, this.getUniqueId().toString() + ".json"));
 		} catch (IOException e) {}
-		JSONObject json = JSONObject.fromObject(this.serialize());
 		if(from == null){ return json; }
 		for(Object key : from.keySet()){
 			if(!String.valueOf(key).equalsIgnoreCase("WhiteEggPlayer")){

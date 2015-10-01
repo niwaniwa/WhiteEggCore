@@ -107,7 +107,7 @@ public class WhiteEggCore extends JavaPlugin {
 		} else {
 			whiteCommandSender = new WhiteConsoleSender(true);
 		}
-		return new WhiteEggCoreCommandHandler().onCommand(whiteCommandSender, command, label, args);
+		return WhiteEggCoreCommandHandler.onCommand(whiteCommandSender, command, label, args);
 	}
 
 	private void registerListener(){

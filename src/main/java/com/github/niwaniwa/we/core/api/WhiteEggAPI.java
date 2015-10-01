@@ -29,10 +29,16 @@ public abstract class WhiteEggAPI {
 
 	/**
 	 * RankBroadcast
+	 * @param rank rank
 	 * @param message message
 	 */
 	public abstract void RankBroadcastMessage(Rank rank, String message);
 
+	/**
+	 * WorldBroadcast
+	 * @param world world
+	 * @param message message
+	 */
 	public abstract void WorldBroadcastMessage(World world, String message);
 
 	/**

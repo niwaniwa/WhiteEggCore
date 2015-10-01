@@ -10,24 +10,22 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class AltAccount implements ConfigurationSerializable {
 
-	private List<WhiteEggPlayer> players;
+	private List<String> players;
 
 	public AltAccount() {
 		this.players = new ArrayList<>();
 	}
 
-	public List<WhiteEggPlayer> get(){
+	public List<String> get(){
 		return players;
 	}
 
 	public boolean add(WhitePlayer player){
-		if(!(player instanceof WhiteEggPlayer)){ return false; }
-		return players.add((WhiteEggPlayer) player);
+		return players.add(player.getUniqueId().toString());
 	}
 
 	public boolean contains(WhitePlayer player){
-		if(!(player instanceof WhiteEggPlayer)){ return false; }
-		return players.contains(player);
+		return players.contains(player.getUniqueId().toString());
 	}
 
 	public boolean remove(Object o){

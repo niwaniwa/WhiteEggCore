@@ -47,7 +47,7 @@ public class Bar {
 		@SuppressWarnings("deprecation")
 		Block block = player.getPlayer().getTargetBlock((HashSet<Byte>) null, 100);
 		if(!block.getType().equals(Material.AIR)){
-			return block.getLocation().add(0, 100, 0);
+			return block.getLocation().add(0, 50, 0);
 		}
 		return block.getLocation();
 	}

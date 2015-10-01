@@ -15,8 +15,8 @@ public class WhiteEggCoreCommandHandler {
 
 	private static Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
 
-	private final String msgPrefix = "§7[§bWEC§7]§r";
-	private final String error_Console = "whiteegg.command.console";
+	private static final String msgPrefix = "§7[§bWEC§7]§r";
+	private static final String error_Console = "whiteegg.command.console";
 
 	public WhiteEggCoreCommandHandler(){}
 
@@ -29,7 +29,7 @@ public class WhiteEggCoreCommandHandler {
 		commands.remove(name);
 	}
 
-	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
+	public static boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
 		if(WhiteEggCore.getConf().isLock()){
 			sender.sendMessage(msgPrefix + "&cプラグインはロックされています");
 			return true;
@@ -54,7 +54,7 @@ public class WhiteEggCoreCommandHandler {
 		return commands;
 	}
 
-	private void sendCommands(WhiteCommandSender sender){
+	private static void sendCommands(WhiteCommandSender sender){
 		sender.sendMessage("&7----- &bWhiteEggCore &7-----");
 		for(String command : commands.keySet()){
 			sender.sendMessage("&6/" + command + " &f:" + commands.get(command).description(sender));
