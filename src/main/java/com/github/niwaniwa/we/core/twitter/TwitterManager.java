@@ -10,6 +10,11 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
+/**
+ * Twitter関連のクラス
+ * @author niwaniwa
+ *
+ */
 public abstract class TwitterManager {
 
 	private Twitter twitter;
@@ -27,6 +32,10 @@ public abstract class TwitterManager {
 		this.tweets = new ArrayList<>();
 	}
 
+	/**
+	 * RequestTokenの取得
+	 * @return RequestToken
+	 */
 	public String getOAuthRequestURL(){
 		if(this.request == null){
 			this.OAuthRequest();
@@ -34,6 +43,10 @@ public abstract class TwitterManager {
 		return request.getAuthorizationURL();
 	}
 
+	/**
+	 * OAuthで認証する際に初期化する
+	 * @return 成功したか
+	 */
 	protected boolean OAuthRequest(){
 		try {
 			this.request = twitter.getOAuthRequestToken();
@@ -43,13 +56,23 @@ public abstract class TwitterManager {
 		return true;
 	}
 
+	/**
+	 * Twitterに投稿する文字列のチェック
+	 * @param tweet 投稿する文字列
+	 * @return 基準以内か(アプリ提携をしているか : 140文字以内)
+	 */
 	public boolean check(String tweet){
 		if(this.access == null){ return false; }
 		if(tweet.length() >= 140){ return false; }
 		return true;
 	}
 
-	public boolean OAuthRequest(String pin){
+	/**
+	 * 認証
+	 * @param pin PIN
+	 * @return 成功したか
+	 */
+	public boolean OAuthAccess(String pin){
 		if(this.access != null){ return false; }
 		if(this.request == null){ return false; }
 		try {
@@ -64,18 +87,41 @@ public abstract class TwitterManager {
 		return true;
 	}
 
+	/**
+	 * ツイートをします
+	 * @param tweet ツイート
+	 * @return 成功したか
+	 */
 	public abstract boolean tweet(String tweet);
 
+	/**
+	 * ツイートをします
+	 * @param tweet ツイート
+	 * @return 成功したか
+	 */
 	public abstract boolean tweet(String[] tweet);
 
+	/**
+	 * AccessTokenを取得します
+	 * @return AccessToken 認証していない場合はnull
+	 */
 	public AccessToken getAccessToken(){
 		return access;
 	}
 
+	/**
+	 * RequestTokenを取得します
+	 * @return RequestToken 初期はnull
+	 */
 	public RequestToken getRequestToken(){
 		return request;
 	}
 
+	/**
+	 * AccessTokenを設定します
+	 * @param access AccessToken
+	 * @return 成功したか
+	 */
 	public boolean setAccessToken(AccessToken access){
 		if(access == null){ return false; }
 		this.access = access;
@@ -83,6 +129,10 @@ public abstract class TwitterManager {
 		return true;
 	}
 
+	/**
+	 * 現在登録されている情報を初期化します
+	 * @return 成功したか
+	 */
 	public boolean reset(){
 		this.access = null;
 		this.twitter = new TwitterFactory().getInstance();
@@ -98,6 +148,10 @@ public abstract class TwitterManager {
 		return tweets;
 	}
 
+	/**
+	 * Twitterクラスのインスタンスを取得します
+	 * @return Twitter {@link Twitter}
+	 */
 	public Twitter getTwitter(){
 		return twitter;
 	}
