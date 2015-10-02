@@ -36,9 +36,9 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	private static WhiteEggAPI api = WhiteEggCore.getAPI();
 
-	private Player player;
-	private List<ToggleSettings> toggle = new ArrayList<>();
-	private List<Rank> ranks = new ArrayList<>();
+	private final Player player;
+	private final List<ToggleSettings> toggle = new ArrayList<>();
+	private final List<Rank> ranks = new ArrayList<>();
 	private AltAccount accounts;
 	private boolean isVanish;
 	private TwitterManager twitter;
@@ -184,9 +184,9 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private void setRank(JSONObject j){
 		if(j.get("rank") != null){
 			JSONArray rank = (JSONArray) j.get("rank");
-			for(int i = 0; i < rank.size(); i++){
-				if(!(rank.get(i) instanceof JSONObject)){ continue; }
-				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank.get(i)));
+			for (Object rank1 : rank) {
+				if(!(rank1 instanceof JSONObject)){ continue; }
+				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank1));
 				if(r == null){ continue; }
 				this.addRank(r);
 			}
@@ -230,9 +230,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 		// local
 		JSONObject json = null;
 		try {
-			json = jm.getJSON(new File(path + "/" + this.getUniqueId().toString() + ".json"));
+			json = jm.getJSON(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		if(json == null){ return false; }
 		this.saveVariable(json);

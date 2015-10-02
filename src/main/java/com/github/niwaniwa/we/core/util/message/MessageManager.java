@@ -22,7 +22,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 public class MessageManager {
 
 	private File path;
-	private Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
+	private final Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
 	private LanguageType type;
 	private boolean b = false;
 
@@ -82,14 +82,15 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーの言語に合わせたメッセージを返します。
-	 * @param player WhiteCommandSenderを継承したクラスのインスタンス
+	 * @param <T>
+	 * @param sender WhiteCommandSenderを継承したクラスのインスタンス
 	 * @param key 取得するkey
 	 * @param prefix prefix
 	 * @param replaceColorCode カラーコードの置換
 	 * @return value
 	 */
-	public <T extends WhiteCommandSender> String getMessage(T player, String key, String prefix, boolean replaceColorCode){
-		if(!(player instanceof WhitePlayer)){
+	public <T extends WhiteCommandSender> String getMessage(T sender, String key, String prefix, boolean replaceColorCode){
+		if(!(sender instanceof WhitePlayer)){
 			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
 		}
 		return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
@@ -97,7 +98,7 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーの言語に合わせたメッセージを返します。
-	 * @param player WhiteCommandSenderを継承したクラスのインスタンス
+	 * @param sender WhiteCommandSenderを継承したクラスのインスタンス
 	 * @param key 取得するkey
 	 * @param prefix prefix
 	 * @param replaceColorCode カラーコードの置換

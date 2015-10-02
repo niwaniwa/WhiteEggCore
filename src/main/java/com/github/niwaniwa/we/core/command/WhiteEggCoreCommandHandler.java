@@ -13,7 +13,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class WhiteEggCoreCommandHandler {
 
-	private static Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
+	private static final Map<String, AbstractWhiteEggCoreCommand> commands = new HashMap<>();
 
 	private static final String msgPrefix = "§7[§bWEC§7]§r";
 	private static final String error_Console = "whiteegg.command.console";

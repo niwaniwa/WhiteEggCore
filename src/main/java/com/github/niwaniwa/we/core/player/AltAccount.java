@@ -10,7 +10,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class AltAccount implements ConfigurationSerializable {
 
-	private List<String> players;
+	private final List<String> players;
 
 	public AltAccount() {
 		this.players = new ArrayList<>();

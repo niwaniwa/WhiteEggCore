@@ -24,30 +24,27 @@ public class WhiteConfig {
 
 	public void createConfig(){
 		if(!path.exists()){ path.mkdirs(); }
-		File file = new File(path, "/" + name);
+		File file = new File(path, File.separator + name);
 		if(file.exists()){ return; }
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
 	public boolean load(){
 		YamlConfiguration config = new YamlConfiguration();
 		try {
-			config.load(new File(path, "/" + name));
+			config.load(new File(path, File.separator + name));
 		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
 		}
 		return true;
 	}
 
 	public boolean save(){
 		try {
-			yaml.save(path + "/" + name);
+			yaml.save(path + File.separator + name);
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return true;
 	}

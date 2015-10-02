@@ -1,4 +1,3 @@
 #WhiteEggCore
 
-  Coreとしての機能
-  Twitterを使用できる機能
+  後で書き直し...

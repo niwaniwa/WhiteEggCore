@@ -1,11 +1,14 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -21,6 +24,7 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
+	private WeakReference<Boolean> isSuccess = null;
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label,
@@ -52,13 +56,23 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 				sender.sendMessage("りせっとしました");
 				return true;
 			}
-			if(tw.OAuthAccess(args[0])){
-				sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true));
-				// success
-				return true;
-			}
-			sender.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
-			// failure
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					isSuccess = new WeakReference<Boolean>(tw.OAuthAccess(args[0]));
+				}
+			}.runTaskAsynchronously(WhiteEggCore.getInstance());
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if(isSuccess  == null
+							|| isSuccess.get() == false){
+						sender.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true)); // success
+					} else {
+						sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true)); // failure
+					}
+				}
+			}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 2 * 20);
 			return true;
 		}
 		return true;
@@ -66,7 +80,7 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 
 	private void sendURL(WhitePlayer p){
 		// 要修正
-		List<ChatFormat> f = new ArrayList<ChatFormat>();
+		List<ChatFormat> f = new ArrayList<>();
 		f.add(ChatFormat.BOLD);
 		Clickable click = new Clickable("Click -->", ChatColor.GOLD, f);
 		ChatExtra extra = new ChatExtra("Open URL", ChatColor.GRAY, f);

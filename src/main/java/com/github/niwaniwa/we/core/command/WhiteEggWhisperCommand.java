@@ -14,7 +14,7 @@ import com.github.niwaniwa.we.core.util.Util;
 
 public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
 
-	private static Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
+	private static final Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
 
 	private final String key = commandMessageKey + ".whisper";
 	private final String permission = commandPermission + ".whisper";

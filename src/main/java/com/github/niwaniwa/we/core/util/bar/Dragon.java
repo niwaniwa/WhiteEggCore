@@ -149,7 +149,7 @@ public class Dragon {
 	}
 
 	public void sendSpawnPacket(){
-		Packet<?> packet = null;
+		Packet<?> packet;
 		dragon = new EntityEnderDragon(world.getHandle());
 		dragon.setLocation(
 				location.getBlockX(), location.getBlockY(), location.getBlockZ(),
@@ -171,7 +171,6 @@ public class Dragon {
 			a.setAccessible(true);
 			a.set(packet, new int[]{ id });
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
 		}
 		player.getHandle().playerConnection.sendPacket(packet);
 		if(cancel){

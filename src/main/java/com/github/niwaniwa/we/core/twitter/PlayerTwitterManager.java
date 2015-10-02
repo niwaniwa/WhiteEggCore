@@ -20,7 +20,7 @@ public class PlayerTwitterManager extends TwitterManager {
 	public boolean tweet(String tweet) {
 		if(!check(tweet)){ return false; }
 		TweetTask task = new TweetTask(this, tweet);
-		task.runTaskLater(WhiteEggCore.getInstance(), 3);
+		task.runTaskAsynchronously(WhiteEggCore.getInstance());
 		return true;
 	}
 

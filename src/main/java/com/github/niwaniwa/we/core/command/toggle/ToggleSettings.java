@@ -18,14 +18,14 @@ import net.sf.json.JSONObject;
 
 public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
-	private static List<ToggleSettings> list = new ArrayList<>();
-	private static Map<String, Object> server = new HashMap<>();
+	private static final List<ToggleSettings> list = new ArrayList<>();
+	private static final Map<String, Object> server = new HashMap<>();
 
 	private Plugin p;
 	private ToggleType type;
 	private String permission;
 	private String title;
-	private Map<String, Object> toggles = new HashMap<>();
+	private final Map<String, Object> toggles = new HashMap<>();
 	private boolean isHide;
 
 	public ToggleSettings(Plugin plugin, ToggleType type, String permission,
@@ -109,7 +109,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 			if(toggle.getType().equals(ToggleType.PLUGIN)){
 				result.add(toggle);
 			}
-			continue;
 		}
 		return result;
 	}
@@ -120,7 +119,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 			if(toggle.getType().equals(ToggleType.DEFAULT)){
 				result.add(toggle);
 			}
-			continue;
 		}
 		return result;
 	}
@@ -131,7 +129,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 			if(toggle.getType().equals(ToggleType.MODERATOR)){
 				result.add(toggle);
 			}
-			continue;
 		}
 		return result;
 	}
@@ -146,7 +143,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 			if(toggle.getType().equals(ToggleType.SERVER)){
 				result.add(toggle);
 			}
-			continue;
 		}
 		return result;
 	}
@@ -217,7 +213,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		plugin.put("plugin", this.getPlugin().getName());
 		plugin.put("toggles", toggles);
 		result.put("togglesettings", plugin);
-
 		return result;
 	}
 

@@ -57,7 +57,7 @@ public class WhiteEggCore extends JavaPlugin {
 		instance = this;
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
-		msg = new MessageManager(this.getDataFolder() + "/lang/");
+		msg = new MessageManager(this.getDataFolder() + File.separator + "lang" + File.separator);
 		this.setting();
 		WhitePlayerFactory.load(); // load
 	}
@@ -130,8 +130,7 @@ public class WhiteEggCore extends JavaPlugin {
 		copyLangFiles(false);
 		try {
 			msg.loadLangFile();
-		} catch (IOException | InvalidConfigurationException e1) {
-			e1.printStackTrace();
+		} catch (IOException | InvalidConfigurationException e) {
 		}
 		msg.replaceDefaultLanguage(true);
 		if(!msg.getLangs().isEmpty()){ return; }
@@ -143,7 +142,7 @@ public class WhiteEggCore extends JavaPlugin {
 		BufferedReader buffer = null;
 		try {
 			jar = new JarFile(getInstance().getFile());
-			JarEntry entry = jar.getJarEntry("lang/" + type.getString() +".yml");
+			JarEntry entry = jar.getJarEntry("lang" + File.separator + type.getString() +".yml");
 			buffer = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
 			msg.loadLangFile(type, buffer);
 		} catch (InvalidConfigurationException | IOException e) {
@@ -173,12 +172,12 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
-			if(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/" + type.getString() + ".yml").exists()){
+			if(new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator + type.getString() + ".yml").exists()){
 				continue;
 			}
 			Util.copyFileFromJar(
 					new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
-					WhiteEggCore.getInstance().getFile(), "lang/"+type.getString()+".yml");
+					WhiteEggCore.getInstance().getFile(), "lang" + File.separator + type.getString() + ".yml");
 		}
 	}
 

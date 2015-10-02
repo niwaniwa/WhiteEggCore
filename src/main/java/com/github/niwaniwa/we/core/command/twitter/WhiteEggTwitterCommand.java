@@ -33,7 +33,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 		}
 		StringBuilder sb = new StringBuilder();
 		for(String str : args){
-			sb.append(str+ " ");
+			sb.append(str).append(" ");
 		}
 		if(player.getTwitterManager().tweet(sb.toString())){
 			player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
