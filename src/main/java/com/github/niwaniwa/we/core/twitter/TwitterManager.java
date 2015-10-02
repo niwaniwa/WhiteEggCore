@@ -23,8 +23,8 @@ public abstract class TwitterManager {
 	private RequestToken request = null;
 	private List<Status> tweets;
 
-	private final String consumerKey = // app consumer key
-	private final String consumerSecret = // app consumer secret
+	private final String consumerKey = ""; // app consumer key
+	private final String consumerSecret = ""; // app consumer secret
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
@@ -51,7 +51,6 @@ public abstract class TwitterManager {
 		try {
 			this.request = twitter.getOAuthRequestToken();
 		} catch (TwitterException e) {
-			e.printStackTrace();
 		}
 		return true;
 	}
@@ -63,8 +62,7 @@ public abstract class TwitterManager {
 	 */
 	public boolean check(String tweet){
 		if(this.access == null){ return false; }
-		if(tweet.length() >= 140){ return false; }
-		return true;
+		return tweet.length() < 140;
 	}
 
 	/**
