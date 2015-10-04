@@ -27,8 +27,8 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 	private WeakReference<Boolean> isSuccess = null;
 
 	@Override
-	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label,
-			String[] args) {
+	public boolean onCommand(final WhiteCommandSender sender, final Command cmd, final String label,
+			final String[] args) {
 		if(!(sender instanceof WhitePlayer)){
 			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
 			return true;
@@ -37,8 +37,8 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
-		WhitePlayer player = (WhitePlayer) sender;
-		TwitterManager tw = player.getTwitterManager();
+		final WhitePlayer player = (WhitePlayer) sender;
+		final TwitterManager tw = player.getTwitterManager();
 		if(tw.getAccessToken() != null){
 			//
 			return true;

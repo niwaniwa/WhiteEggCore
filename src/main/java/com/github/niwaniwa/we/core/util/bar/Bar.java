@@ -19,12 +19,12 @@ public class Bar {
 		setDragon(player, message, 300);
 	}
 
-	public static void setDragon(WhitePlayer player, String message, int seconds) {
+	public static void setDragon(final WhitePlayer player, String message, int seconds) {
 		if(seconds <= 1){ return; }
-		Dragon dragon = Dragon.newInstance(player, getLocation(player), message);
+		final Dragon dragon = Dragon.newInstance(player, getLocation(player), message);
 		dragon.setName(message);
 		dragon.setHealth(dragon.getMaxHealth());
-		float minus = dragon.getMaxHealth() / seconds;
+		final float minus = dragon.getMaxHealth() / seconds;
 		if(dragon.getScheduler() != null){
 			dragon.getScheduler().cancel();
 		}

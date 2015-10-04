@@ -89,7 +89,6 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 	@Override
 	public boolean registerToggle(Plugin plugin, ToggleType type, String permission, String custam,
 			Map<String, Object> toggles, boolean isHide) {
-		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
 

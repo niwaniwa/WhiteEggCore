@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class AltAccount implements ConfigurationSerializable {
 
@@ -20,8 +24,8 @@ public class AltAccount implements ConfigurationSerializable {
 		return players;
 	}
 
-	public boolean add(WhitePlayer player){
-		return players.add(player.getUniqueId().toString());
+	public boolean add(UUID player){
+		return players.add(player.toString());
 	}
 
 	public boolean contains(WhitePlayer player){
@@ -61,6 +65,18 @@ public class AltAccount implements ConfigurationSerializable {
 		Map<String, Object> serialize = new HashMap<>();
 		serialize.put("player", players);
 		return null;
+	}
+
+	public static AltAccount parser(JSONObject json){
+		AltAccount alt = new AltAccount();
+		Object obj = json.get("account");
+		if(obj == null
+				|| (obj instanceof JSONArray)){ return alt; }
+		JSONArray array = JSONArray.fromObject(obj);
+		for(Object o : array){
+			alt.add(UUID.fromString(String.valueOf(o)));
+		}
+		return alt;
 	}
 
 }

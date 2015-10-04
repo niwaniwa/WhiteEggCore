@@ -18,7 +18,7 @@ public abstract class AbstractWhiteEggCommand {
 	 * 使い方の送信
 	 * @param sender
 	 */
-	public abstract void sendUsing(WhitePlayer sender);
+	public abstract void sendUsing(final WhitePlayer sender);
 
 	/**
 	 * コマンドのpermission
@@ -26,7 +26,7 @@ public abstract class AbstractWhiteEggCommand {
 	 */
 	public abstract String getPermission();
 
-	public static boolean isConsoleCancel(AbstractWhiteEggCoreCommand command){
+	public static boolean isConsoleCancel(final AbstractWhiteEggCoreCommand command){
 		Class<?>[] clazz = command.getClass().getInterfaces();
 		if(clazz.length != 0){
 			for(Class<?> s : clazz){

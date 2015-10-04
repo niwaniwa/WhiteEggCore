@@ -157,7 +157,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	protected void addAccount(WhitePlayer player){
 		if(player.equals(this)){ return; }
 		if(accounts.contains(player)){ return; }
-		accounts.add(player);
+		accounts.add(player.getUniqueId());
 	}
 
 	protected void removeAccount(WhitePlayer player){
@@ -178,6 +178,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		}
 		this.setRank(player);
 		this.setToggle(player);
+		AltAccount.parser(player);
 		return true;
 	}
 

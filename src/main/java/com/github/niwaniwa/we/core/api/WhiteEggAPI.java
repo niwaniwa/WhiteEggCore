@@ -45,6 +45,7 @@ public abstract class WhiteEggAPI {
 	 * オフラインのプレイヤーインスタンスを返す
 	 * @param name Minecraft ID
 	 * @return OfflineWhitePlayer
+	 * @deprecated
 	 */
 	public abstract OfflineWhitePlayer getOfflinePlayer(String name);
 
@@ -60,7 +61,7 @@ public abstract class WhiteEggAPI {
 	 * uuidからオンラインプレイヤーを取得する
 	 * @param uuid
 	 * @return WhitePlayer
-	 * @deprecated
+	 *f
 	 */
 	public abstract WhitePlayer getPlayer(UUID uuid);
 

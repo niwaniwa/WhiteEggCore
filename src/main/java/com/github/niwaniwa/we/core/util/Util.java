@@ -16,18 +16,11 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import net.sf.json.JSONObject;
 
 public class Util {
@@ -69,25 +62,6 @@ public class Util {
 		}
 	}
 
-	public static void sendParticle(Player player, Effect effect,
-			float x, float y, float z, float speed, int amount){
-
-		@SuppressWarnings("deprecation")
-		PacketPlayOutWorldEvent packet = new PacketPlayOutWorldEvent(
-				effect.getId(), new BlockPosition(x, y, z), 1, false);
-
-		CraftPlayer c = (CraftPlayer) player;
-
-		c.getHandle().playerConnection.sendPacket(packet);
-
-	}
-
-	public static void circle(Player player,Location loc,EnumParticle particle,double Radius,double height) {
-		for(float i=0;i<360;i=(float) (i+0.5)){
-			((CraftWorld) player.getWorld()).getHandle().a(particle , loc.getX()+Math.sin(Math.toRadians(i))*Radius, loc.getY()+height, loc.getZ()+Math.cos(Math.toRadians(i))*Radius, 1, 0, 0, 0, 0);
-		}
-	}
-
 	public static Player getOnlinePlayer(UUID uuid){
 		for(Player player : Bukkit.getOnlinePlayers()){
 			if(player.getUniqueId().equals(uuid)){
@@ -111,7 +85,6 @@ public class Util {
 	 * @param str
 	 * @return Map
 	 * @throws IOException
-	 *
 	**/
 	public static Map<String, Object> toMap(String str) throws IOException{
 		Properties props = new Properties();

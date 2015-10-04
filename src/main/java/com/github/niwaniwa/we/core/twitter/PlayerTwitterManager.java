@@ -21,7 +21,7 @@ public class PlayerTwitterManager extends TwitterManager {
 		if(!check(tweet)){ return false; }
 		TweetTask task = new TweetTask(this, tweet);
 		task.runTaskAsynchronously(WhiteEggCore.getInstance());
-		return true;
+		return task.isSuccessfull();
 	}
 
 	@Override

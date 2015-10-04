@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -23,6 +25,7 @@ public class MessageManager {
 
 	private File path;
 	private final Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
+	private final List<MessageExtension> extension = new ArrayList<>();
 	private LanguageType type;
 	private boolean b = false;
 
@@ -38,6 +41,14 @@ public class MessageManager {
 	@SuppressWarnings("unused")
 	@Deprecated
 	private MessageManager() {
+	}
+
+	/**
+	 * 拡張
+	 * @return
+	 */
+	public List<MessageExtension> getExtension() {
+		return extension;
 	}
 
 	/**
@@ -178,6 +189,20 @@ public class MessageManager {
 	 */
 	public boolean isReplaceDefaultLanguage(){
 		return b;
+	}
+
+	public String extension(String message, MessageExtension extension, boolean add){
+		if(add){ this.extension.add(extension); }
+		return extension.execute(message);
+	}
+
+	public String extension(String message, Class<?> extension){
+		for(MessageExtension e : this.extension){
+			if(e.getClass().equals(extension)){
+				return extension(message, e, false);
+			}
+		}
+		return message;
 	}
 
 	/**
