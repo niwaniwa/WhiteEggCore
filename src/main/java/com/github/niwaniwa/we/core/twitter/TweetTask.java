@@ -81,8 +81,9 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private void tweet() {
+		boolean player = (twitter instanceof PlayerTwitterManager);
 		Twitter t = twitter.getTwitter();
-		if(twitter instanceof PlayerTwitterManager){
+		if(player){
 			PlayerTwitterManager pt = (PlayerTwitterManager) twitter;
 			// call event
 			WhiteEggPreTweetEvent event = new WhiteEggPreTweetEvent(pt.getPlayer(), tweet);
@@ -102,6 +103,7 @@ public class TweetTask extends BukkitRunnable {
 		// call event
 		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
 		Util.callEvent(event);
+		if(player){ ((PlayerTwitterManager) twitter).set(successfull); }
 	}
 
 	private StatusUpdate build(){

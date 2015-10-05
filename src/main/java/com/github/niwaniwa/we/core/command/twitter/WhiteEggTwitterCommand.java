@@ -1,10 +1,13 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
 import org.bukkit.command.Command;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 
 public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
@@ -21,7 +24,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
-		WhitePlayer player = (WhitePlayer) sender;
+		final WhitePlayer player = (WhitePlayer) sender;
 		if(args.length == 0){
 			this.sendUsing(player);
 			return true;
@@ -35,11 +38,18 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 		for(String str : args){
 			sb.append(str).append(" ");
 		}
-		if(player.getTwitterManager().tweet(sb.toString())){
-			player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
-			return true;
-		}
-		player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
+		// tweet
+		player.getTwitterManager().tweet(sb.toString());
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(((PlayerTwitterManager) player.getTwitterManager()).isSuccessfull()){
+					player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
+					return;
+				}
+				player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
+			}
+		}.runTaskLater(WhiteEggCore.getInstance(), 20);
 		return true;
 	}
 
