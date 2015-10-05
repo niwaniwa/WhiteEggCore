@@ -72,7 +72,7 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 						sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true)); // failure
 					}
 				}
-			}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 2 * 20);
+			}.runTaskLater(WhiteEggCore.getInstance(), 2 * 20);
 			return true;
 		}
 		return true;

@@ -43,7 +43,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private boolean isVanish;
 	private TwitterManager twitter;
 	// not use database
-	private final File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/players/");
+	private final File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator);
 
 	protected WhiteEggPlayer(Player player){
 		this.player = player;
@@ -188,7 +188,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 			for (Object rank1 : rank) {
 				if(!(rank1 instanceof JSONObject)){ continue; }
 				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank1));
-				if(r == null){ continue; }
+				if(!Rank.check(r)){ continue; }
 				this.addRank(r);
 			}
 		}

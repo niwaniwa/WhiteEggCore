@@ -59,12 +59,13 @@ public class WhiteEggCore extends JavaPlugin {
 		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + File.separator + "lang" + File.separator);
 		this.setting();
-		WhitePlayerFactory.load(); // load
+		this.load();
 	}
 
 	@Override
 	public void onDisable(){
 		WhitePlayerFactory.saveAll();
+		Rank.saveAll();
 //		Dragon.disable(); // ConcurrentModificationException
 	}
 
@@ -97,6 +98,11 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerListener();
 		this.register();
 		type = LanguageType.en_US;
+	}
+
+	private void load(){
+		WhitePlayerFactory.load();
+		Rank.load();
 	}
 
 	@Override

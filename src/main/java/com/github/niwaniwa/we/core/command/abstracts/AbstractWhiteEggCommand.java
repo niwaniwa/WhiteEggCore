@@ -26,6 +26,11 @@ public abstract class AbstractWhiteEggCommand {
 	 */
 	public abstract String getPermission();
 
+	/**
+	 * Consoleの実行をブロックするか返す
+	 * @param command 実行コマンドのインスタンス
+	 * @return ブロックするか
+	 */
 	public static boolean isConsoleCancel(final AbstractWhiteEggCoreCommand command){
 		Class<?>[] clazz = command.getClass().getInterfaces();
 		if(clazz.length != 0){
@@ -36,6 +41,11 @@ public abstract class AbstractWhiteEggCommand {
 		return false;
 	}
 
+	/**
+	 * Consoleからの実行か判定
+	 * @param sender WhiteCommandSender
+	 * @return
+	 */
 	public static boolean isConsole(WhiteCommandSender sender){
 		return (sender instanceof WhiteConsoleSender);
 	}
