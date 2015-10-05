@@ -117,7 +117,7 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void registerListener(){
-		pm.registerEvents(new Debug(), this);
+		pm.registerEvents(new Debug(true), this);
 		pm.registerEvents(new PlayerListener(), this);
 	}
 

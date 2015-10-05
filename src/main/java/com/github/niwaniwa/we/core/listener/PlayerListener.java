@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.AltAccount;
+import com.github.niwaniwa.we.core.player.WhiteEggPlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
@@ -33,10 +34,8 @@ public class PlayerListener implements Listener {
 	/* Error */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
-		/*
-		 * WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
-		 * player.save();
-		 */
+		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		((WhiteEggPlayer) player).saveTask();
 	}
 
 }

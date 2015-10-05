@@ -210,8 +210,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.setCustomName("");
 	}
 
-	public boolean tweet(String[] tweet){
-		return twitter.tweet(tweet);
+	public void tweet(String[] tweet){
+		twitter.tweet(tweet);
 	}
 
 	private JsonManager jm = new JsonManager();
@@ -259,7 +259,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 			public void run() {
 				save();
 			}
-		}.runTaskLater(WhiteEggCore.getInstance(), 1);
+		}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 1);
 	}
 
 	private JSONObject unionJson(){

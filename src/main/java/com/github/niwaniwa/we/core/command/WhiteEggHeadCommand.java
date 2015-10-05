@@ -36,7 +36,7 @@ public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand implements 
 		String ukey = key + ".using";
 		sender.sendMessage("&7----- &6/head &7-----");
 		sender.sendMessage("&6/head <target name> &f: &7"
-				+ msg.getMessage(sender, ukey + ".description", "", true));
+				+ msg.getMessage(sender, ukey + ".line_1", "", true));
 	}
 
 	@Override

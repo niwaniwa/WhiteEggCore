@@ -18,20 +18,19 @@ public class PlayerTwitterManager extends TwitterManager {
 	}
 
 	@Override
-	public boolean tweet(String tweet) {
-		if(!check(tweet)){ return false; }
+	public void tweet(String tweet) {
+		if(!check(tweet)){ return; }
 		TweetTask task = new TweetTask(this, tweet);
 		task.runTaskAsynchronously(WhiteEggCore.getInstance());
-		return task.isSuccessfull();
 	}
 
 	@Override
-	public boolean tweet(String[] tweet) {
+	public void tweet(String[] tweet) {
 		StringBuilder sb = new StringBuilder();
 		for(String s : tweet){
 			sb.append(s);
 		}
-		return tweet(sb.toString());
+		tweet(sb.toString());
 	}
 
 	public WhitePlayer getPlayer(){
@@ -46,7 +45,7 @@ public class PlayerTwitterManager extends TwitterManager {
 		return isSuccessfull;
 	}
 
-	protected void set(boolean s){
+	public void set(boolean s){
 		this.isSuccessfull = s;
 	}
 

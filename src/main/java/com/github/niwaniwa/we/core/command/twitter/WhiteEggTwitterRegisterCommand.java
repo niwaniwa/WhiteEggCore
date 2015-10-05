@@ -94,9 +94,9 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 	public void sendUsing(WhitePlayer sender) {
 		sender.sendMessage("&7----- &6/tweet &7-----");
 		sender.sendMessage("&6/register &f: &7"
-				+ msg.getMessage(sender, key + ".using.description_1", "", true));
+				+ msg.getMessage(sender, key + ".using.line_1", "", true));
 		sender.sendMessage("&6/register <pin> &f: &7"
-				+ msg.getMessage(sender, key + ".using.description_2", "", true));
+				+ msg.getMessage(sender, key + ".using.line_2", "", true));
 	}
 
 	@Override

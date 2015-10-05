@@ -50,12 +50,14 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 				player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
 			}
 		}.runTaskLater(WhiteEggCore.getInstance(), 20);
+		((PlayerTwitterManager) player.getTwitterManager()).set(false);
 		return true;
 	}
 
 	@Override
 	public void sendUsing(WhitePlayer sender) {
-
+		sender.sendMessage("&7----- &6/twitter &7-----");
+		sender.sendMessage("");
 	}
 
 	@Override
