@@ -24,32 +24,38 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
+
 		final WhitePlayer player = (WhitePlayer) sender;
+
 		if(args.length == 0){
 			this.sendUsing(player);
 			return true;
 		}
+
 		if(player.getTwitterManager().getAccessToken() == null){
 			player.sendMessage(
 					msg.getMessage(player, key + ".notAcccess", msgPrefix, true));
 			return true;
 		}
+
 		StringBuilder sb = new StringBuilder();
 		for(String str : args){
 			sb.append(str).append(" ");
 		}
 		// tweet
 		player.getTwitterManager().tweet(sb.toString());
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if(((PlayerTwitterManager) player.getTwitterManager()).isSuccessfull()){
+				if((player.getTwitterManager()).isSuccessfull()){
 					player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
 					return;
 				}
 				player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
 			}
 		}.runTaskLater(WhiteEggCore.getInstance(), 20);
+
 		((PlayerTwitterManager) player.getTwitterManager()).set(false);
 		return true;
 	}

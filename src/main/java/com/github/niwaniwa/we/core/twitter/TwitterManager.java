@@ -30,6 +30,7 @@ public abstract class TwitterManager {
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
 		this.tweets = new ArrayList<>();
+		this.OAuthRequest();
 	}
 
 	/**
@@ -37,19 +38,16 @@ public abstract class TwitterManager {
 	 * @return RequestToken
 	 */
 	public String getOAuthRequestURL(){
-		if(this.request == null){
-			this.OAuthRequest();
-		}
 		return request.getAuthorizationURL();
 	}
 
 	/**
-	 * OAuthで認証する際に初期化する
+	 * 初期化する
 	 * @return 成功したか
 	 */
 	protected boolean OAuthRequest(){
 		try {
-			this.request = twitter.getOAuthRequestToken();
+			request = twitter.getOAuthRequestToken();
 		} catch (TwitterException e) {
 		}
 		return true;
@@ -72,7 +70,8 @@ public abstract class TwitterManager {
 	 */
 	public boolean OAuthAccess(String pin){
 		if(this.access != null){ return false; }
-		if(this.request == null){ return false; }
+		if(this.request == null){ OAuthRequest(); }
+
 		try {
 			if (pin.length() > 0) {
 				access = twitter.getOAuthAccessToken(request, pin);
@@ -88,16 +87,14 @@ public abstract class TwitterManager {
 	/**
 	 * ツイートをします
 	 * @param tweet ツイート
-	 * @return 成功したか
 	 */
-	public abstract boolean tweet(String tweet);
+	public abstract void tweet(String tweet);
 
 	/**
 	 * ツイートをします
 	 * @param tweet ツイート
-	 * @return 成功したか
 	 */
-	public abstract boolean tweet(String[] tweet);
+	public abstract void tweet(String[] tweet);
 
 	/**
 	 * AccessTokenを取得します
@@ -133,8 +130,10 @@ public abstract class TwitterManager {
 	 */
 	public boolean reset(){
 		this.access = null;
+		this.request = null;
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		this.OAuthRequest();
 		return true;
 	}
 
@@ -153,6 +152,12 @@ public abstract class TwitterManager {
 	public Twitter getTwitter(){
 		return twitter;
 	}
+
+	/**
+	 * 直前のツイートが送信されたか
+	 * @return
+	 */
+	public abstract boolean isSuccessfull();
 
 
 }

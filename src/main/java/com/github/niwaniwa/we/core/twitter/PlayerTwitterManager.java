@@ -8,12 +8,8 @@ public class PlayerTwitterManager extends TwitterManager {
 	private WhitePlayer player;
 	private boolean isSuccessfull = false;
 
-	private PlayerTwitterManager() {
-		super();
-	}
-
 	public PlayerTwitterManager(WhitePlayer p){
-		this();
+		super();
 		this.player = p;
 	}
 
@@ -37,10 +33,7 @@ public class PlayerTwitterManager extends TwitterManager {
 		return player;
 	}
 
-	/**
-	 * 直前のツイートが送信されたか
-	 * @return
-	 */
+	@Override
 	public boolean isSuccessfull() {
 		return isSuccessfull;
 	}
