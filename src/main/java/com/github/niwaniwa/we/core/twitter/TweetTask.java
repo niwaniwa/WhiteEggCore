@@ -48,7 +48,7 @@ public class TweetTask extends BukkitRunnable {
 	private List<File> medias = new ArrayList<>();
 	private boolean useMedia;
 	private boolean successfull = false;
-	private int wait; // unnecessary
+	private int wait; //
 
 	public TweetTask(TwitterManager twitter, String tweet, int wait){
 		this.twitter = twitter;

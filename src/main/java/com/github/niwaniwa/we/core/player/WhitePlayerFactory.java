@@ -49,11 +49,10 @@ public class WhitePlayerFactory {
 	 * @return T 指定したクラスのinstance
 	 * @deprecated エラーが起こる可能性が高いので使わないでください
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends WhitePlayer> T newInstance(Class<T> clazz, Player player){
+	public static <T extends WhitePlayer> WhitePlayer newInstance(Class<T> clazz, Player player){
 		if(clazz.isInterface()){ return null; }
 		if(Modifier.isAbstract(clazz.getModifiers())){ return null; }
-		if(clazz.getName().equals("WhitePlayer")){ return (T) WhitePlayerFactory.newInstance(player); }
+		if(clazz.getName().equals("WhitePlayer")){ return WhitePlayerFactory.newInstance(player); }
 		T instance = null;
 		try {
 			Constructor<T> c = clazz.getConstructor(Player.class);
@@ -63,7 +62,7 @@ public class WhitePlayerFactory {
 			e.printStackTrace();
 		}
 		if(instance == null){ return null; }
-		instance.reload();
+		instance.load();
 		return instance;
 	}
 
@@ -77,15 +76,15 @@ public class WhitePlayerFactory {
 	public static <T extends WhitePlayer> WhitePlayer cast(WhitePlayer from, Class<T> to){
 		if(Modifier.isAbstract(to.getModifiers())
 				|| from.getClass().equals(to)){
-			return from;
+			return null;
 		}
 		from.save();
 		WhitePlayer instance = null;
 		try {
-			instance = (WhitePlayer) to.getConstructor(to).newInstance(from.getPlayer());
+			Constructor<?> constructor = to.getConstructor(Player.class);
+			instance = (WhitePlayer) (constructor == null ? to.getConstructor(WhitePlayer.class).newInstance(from) : constructor.newInstance(from.getPlayer()));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
-			return from; // >_<
 		}
 		instance.saveVariable(JSONObject.fromObject(from.serialize()));
 		return instance;

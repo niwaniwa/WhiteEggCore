@@ -35,12 +35,12 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 	}
 
 	private void sendVersion(WhiteCommandSender sender){
-		sender.sendMessage("§7 ----- §aWhiteEggCore §7-----");
-		sender.sendMessage(" : Version : " + WhiteEggCore.getInstance().getDescription().getVersion());
-		sender.sendMessage(" : Author : KokekoKko_");
-		sender.sendMessage(" : Server Version : " + Bukkit.getVersion());
-		sender.sendMessage(" : Bukkit Version : " + Bukkit.getBukkitVersion());
-		sender.sendMessage("§7 ----- ----- ----- ----- -----");
+		sender.sendMessage("&7 ----- &6WhiteEggCore &7-----");
+		sender.sendMessage("&7 : &6Version &7: &r" + WhiteEggCore.getInstance().getDescription().getVersion());
+		sender.sendMessage("&7 : &6Author &7: &rKokekoKko_");
+		sender.sendMessage("&7 : &6Server Version &7: &r" + Bukkit.getVersion());
+		sender.sendMessage("&7 : &6Bukkit Version &7: &r" + Bukkit.getBukkitVersion());
+		sender.sendMessage("&7 ----- ----- ----- ----- -----");
 	}
 
 	@Override
@@ -48,6 +48,7 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 		sender.sendMessage("&7 ----- &6WhiteEggCore &7-----");
 		sender.sendMessage("&6/whiteeggcore reload &f: &7Serverをリロードします。");
 		sender.sendMessage("&6/whiteeggcore lock &f: &7プラグインをロックします。");
+		sender.sendMessage("&6/whiteeggcore tweet &f: &7サーバの投稿としてツイートします");
 	}
 
 	@Override

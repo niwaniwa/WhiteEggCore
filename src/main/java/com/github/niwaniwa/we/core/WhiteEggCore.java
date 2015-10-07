@@ -49,7 +49,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggCoreConfig config;
 	private PluginManager pm;
 
-	public static String msgPrefix = "§7[§bWEC§7]§r";
+	public static final String msgPrefix = "§7[§bWEC§7]§r";
 
 	@Override
 	public void onEnable(){
