@@ -32,6 +32,11 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import twitter4j.auth.AccessToken;
 
+/**
+ * WhitePlayerの実装クラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggPlayer implements WhitePlayer {
 
 	private static WhiteEggAPI api = WhiteEggCore.getAPI();

@@ -25,7 +25,7 @@ public class WhitePlayerFactory {
 	 */
 	private WhitePlayerFactory(){}
 
-	private static List<WhitePlayer> players = new ArrayList<>();
+	private static final List<WhitePlayer> players = new ArrayList<>();
 
 	/**
 	 * プレイヤーのインスタンスを返します
@@ -46,20 +46,18 @@ public class WhitePlayerFactory {
 	 * instance
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
-	 * @return T 指定したクラスのinstance
+	 * @return WhitePlayer 指定したクラスのinstance
 	 * @deprecated エラーが起こる可能性が高いので使わないでください
 	 */
 	public static <T extends WhitePlayer> WhitePlayer newInstance(Class<T> clazz, Player player){
 		if(clazz.isInterface()){ return null; }
 		if(Modifier.isAbstract(clazz.getModifiers())){ return null; }
-		if(clazz.getName().equals("WhitePlayer")){ return WhitePlayerFactory.newInstance(player); }
 		T instance = null;
 		try {
 			Constructor<T> c = clazz.getConstructor(Player.class);
 			instance = c.newInstance(player);
 		} catch (NoSuchMethodException | SecurityException | InstantiationException |
-				IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
+				IllegalAccessException | IllegalArgumentException | InvocationTargetException e){
 		}
 		if(instance == null){ return null; }
 		instance.load();

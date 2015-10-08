@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -37,6 +38,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
 import com.github.niwaniwa.we.core.util.Util;
+import com.github.niwaniwa.we.core.util.bar.Dragon;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
@@ -53,6 +55,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	@Override
 	public void onEnable(){
+		long time = new Date().getTime();
 		versionCheck();
 		instance = this;
 		api = new WhiteEggAPIImpl();
@@ -60,13 +63,14 @@ public class WhiteEggCore extends JavaPlugin {
 		msg = new MessageManager(this.getDataFolder() + File.separator + "lang" + File.separator);
 		this.setting();
 		this.load();
+		System.out.println("complete : " + (new Date().getTime() - time));
 	}
 
 	@Override
 	public void onDisable(){
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
-//		Dragon.disable(); // ConcurrentModificationException
+		Dragon.disable(); // ConcurrentModificationException
 	}
 
 	public static WhiteEggCore getInstance(){
@@ -182,7 +186,7 @@ public class WhiteEggCore extends JavaPlugin {
 				continue;
 			}
 			Util.copyFileFromJar(
-					new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
+					new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator),
 					WhiteEggCore.getInstance().getFile(), "lang" + File.separator + type.getString() + ".yml");
 		}
 	}
