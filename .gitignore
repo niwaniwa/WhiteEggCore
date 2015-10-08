@@ -1,1 +1,19 @@
-/target/
+## Maven
+target/
+dependency-reduced-pom.xml
+## IDE / Editor
+*.iml
+.idea/
+.settings/
+## Windows / Mac OS
+.DS_Store
+.Spotlight-V100
+.Trashes
+Thumbs.db
+=======
+## Edit and IDE files
+.idea
+.classpath
+.project
+## Other
+target
