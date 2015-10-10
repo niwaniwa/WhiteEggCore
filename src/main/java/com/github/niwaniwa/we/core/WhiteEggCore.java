@@ -42,6 +42,11 @@ import com.github.niwaniwa.we.core.util.bar.Dragon;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
+/**
+ * メインクラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggCore extends JavaPlugin {
 
 	private static WhiteEggCore instance;
@@ -73,14 +78,26 @@ public class WhiteEggCore extends JavaPlugin {
 		Dragon.disable(); // ConcurrentModificationException
 	}
 
+	/**
+	 * instanceの取得
+	 * @return
+	 */
 	public static WhiteEggCore getInstance(){
 		return instance;
 	}
 
+	/**
+	 * APIインスタンスの取得
+	 * @return
+	 */
 	public static WhiteEggAPI getAPI(){
 		return api;
 	}
 
+	/**
+	 * メッセージマネージャーの取得 {@link WhiteEggAPI}
+	 * @return
+	 */
 	public static MessageManager getMessageManager(){
 		return msg;
 	}
@@ -93,6 +110,9 @@ public class WhiteEggCore extends JavaPlugin {
 		return config;
 	}
 
+	/**
+	 * 初期化処理
+	 */
 	private void setting(){
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
@@ -104,6 +124,9 @@ public class WhiteEggCore extends JavaPlugin {
 		type = LanguageType.en_US;
 	}
 
+	/**
+	 * 読み込み処理
+	 */
 	private void load(){
 		WhitePlayerFactory.load();
 		Rank.load();
@@ -120,11 +143,17 @@ public class WhiteEggCore extends JavaPlugin {
 		return WhiteEggCoreCommandHandler.onCommand(whiteCommandSender, command, label, args);
 	}
 
+	/**
+	 * リスナーの登録
+	 */
 	private void registerListener(){
 		pm.registerEvents(new Debug(true), this);
 		pm.registerEvents(new PlayerListener(), this);
 	}
 
+	/**
+	 * コマンドの登録
+	 */
 	private void registerCommands(){
 		WhiteEggCoreCommandHandler handler = new WhiteEggCoreCommandHandler();
 		handler.registerCommand("whiteeggcore", new WhiteEggCoreCommand());
@@ -136,6 +165,9 @@ public class WhiteEggCore extends JavaPlugin {
 		handler.registerCommand("replay", new WhiteEggReplayCommand());
 	}
 
+	/**
+	 * 言語ファイルの読み込み、言語設定
+	 */
 	private void settingLanguage(){
 		copyLangFiles(false);
 		try {
@@ -147,6 +179,11 @@ public class WhiteEggCore extends JavaPlugin {
 		this.load(msg, LanguageType.ja_JP);
 	}
 
+	/**
+	 * 言語ファイルの読み込み
+	 * @param msg 保存先のインスタンス
+	 * @param type 言語種類 {@link LanguageType}
+	 */
 	private void load(MessageManager msg, LanguageType type){
 		JarFile jar = null;
 		BufferedReader buffer = null;
@@ -164,11 +201,17 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * 各種登録
+	 */
 	private void register(){
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
 		r.add();
 	}
 
+	/**
+	 * バージョンチェックメソッド
+	 */
 	private void versionCheck(){
 		String packageName = getServer().getClass().getPackage().getName();
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
@@ -180,6 +223,10 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * 言語ファイルの読み込み
+	 * @param send 読み込み時にログに出力するか
+	 */
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
 			if(new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator + type.getString() + ".yml").exists()){
@@ -191,12 +238,15 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
-
 	@Override
 	public File getFile() {
 		return super.getFile();
 	}
 
+	/**
+	 * このプラグインに登録されているコマンドの取得
+	 * @return
+	 */
 	public Map<String, AbstractWhiteEggCoreCommand> getCommands(){
 		return WhiteEggCoreCommandHandler.getCommans();
 	}

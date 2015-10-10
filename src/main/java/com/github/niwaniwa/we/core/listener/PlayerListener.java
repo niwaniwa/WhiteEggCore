@@ -13,7 +13,11 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
 
-
+/**
+ * 初期処理
+ * @author niwaniwa
+ *
+ */
 public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -31,7 +35,6 @@ public class PlayerListener implements Listener {
 		AltAccount.determine(player);
 	}
 
-	/* Error */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
