@@ -11,6 +11,7 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.util.bar.Bar;
 
 import twitter4j.TwitterException;
 
@@ -32,6 +33,7 @@ public class Debug implements Listener {
 			WhiteEggCore.getInstance().getLogger().info(
 					"-- " + player.getPlayer().getName() + "Join the game. --");
 		}
+		Bar.setDragon(player, "play.kokekokko.jp");
 	}
 
 	@EventHandler

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -56,11 +55,12 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggCoreConfig config;
 	private PluginManager pm;
 
+	public static final String logPrefix = "[WEC]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
 
 	@Override
 	public void onEnable(){
-		long time = new Date().getTime();
+		long time = System.currentTimeMillis();
 		versionCheck();
 		instance = this;
 		api = new WhiteEggAPIImpl();
@@ -68,14 +68,14 @@ public class WhiteEggCore extends JavaPlugin {
 		msg = new MessageManager(this.getDataFolder() + File.separator + "lang" + File.separator);
 		this.setting();
 		this.load();
-		System.out.println("complete : " + (new Date().getTime() - time));
+		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
 	@Override
 	public void onDisable(){
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
-		Dragon.disable(); // ConcurrentModificationException
+		Dragon.disable();
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * リスナーの登録
 	 */
 	private void registerListener(){
-		pm.registerEvents(new Debug(true), this);
+		pm.registerEvents(new Debug(false), this);
 		pm.registerEvents(new PlayerListener(), this);
 	}
 

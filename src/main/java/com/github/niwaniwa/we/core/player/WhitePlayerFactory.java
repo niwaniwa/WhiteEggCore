@@ -11,8 +11,6 @@ import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 
-import net.sf.json.JSONObject;
-
 /**
  * WhitePlayerのfactoryクラス
  * @author niwaniwa
@@ -84,7 +82,7 @@ public class WhitePlayerFactory {
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 		}
-		instance.saveVariable(JSONObject.fromObject(from.serialize()));
+		instance.saveVariable(from.serialize().toString());
 		return instance;
 	}
 

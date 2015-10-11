@@ -22,9 +22,9 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-shade-plugin</artifactId>
-					<version>2.4</version>
-					<executions>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
 					<execution>
 						<phase>package</phase>
 						<goals>
@@ -32,16 +32,19 @@
 						</goals>
 						<configuration>
 							<artifactSet>
-								<includes>
-									<include>org.twitter4j:*</include>
-									<include>net.sf.json-lib:*</include>
-									<include>org.apache.httpcomponents:*</include>
-								</includes>
+								<excludes>
+									<exclude>org.spigotmc:*</exclude>
+									<exclude>com.googlecode.json-simple:*</exclude>
+									<exclude>com.google.guava:*</exclude>
+									<exclude>com.google.code.gson:*</exclude>
+									<exclude>org.avaje:*</exclude>
+									<exclude>javax.persistence:*</exclude>
+								</excludes>
 							</artifactSet>
 						</configuration>
 					</execution>
 				</executions>
-		</plugin>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -62,11 +65,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>ucchy-github</id>
-			<name>ucchy github repository</name>
-			<url>https://raw.github.com/ucchyocean/mvn-repo/master</url>
-		</repository>
 	</repositories>
 
 	<dependencies>
@@ -85,6 +83,7 @@
 		<dependency>
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
+			<version>[4.0,)</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
@@ -98,14 +97,4 @@
 			<version>4.3.1</version>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.twitter4j</groupId>
-				<artifactId>twitter4j-core</artifactId>
-				<version>[4.0,)</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 </project>

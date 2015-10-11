@@ -61,7 +61,7 @@ public abstract class WhiteEggAPI {
 	 * uuidからオンラインプレイヤーを取得する
 	 * @param uuid
 	 * @return WhitePlayer
-	 *f
+	 *
 	 */
 	public abstract WhitePlayer getPlayer(UUID uuid);
 

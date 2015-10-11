@@ -172,7 +172,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	@Override
-	public boolean saveVariable(JSONObject j) {
+	public boolean saveVariable(String jsonString) {
+		JSONObject j = JSONObject.fromObject(jsonString);
 		JSONObject json = j.getJSONObject("WhiteEggPlayer");
 		JSONObject player = json.getJSONObject("player");
 		this.isVanish = player.getBoolean("isvanish");
@@ -240,7 +241,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		} catch (IOException e) {
 		}
 		if(json == null){ return false; }
-		this.saveVariable(json);
+		this.saveVariable(json.toString());
 		return false;
 	}
 
