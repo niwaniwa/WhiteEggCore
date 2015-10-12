@@ -23,6 +23,8 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 
 public class MessageManager {
 
+	public static final String separator = (File.separator != "/" ? "\\\\" : "/");
+
 	private File path;
 	private final Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
 	private final List<MessageExtension> extension = new ArrayList<>();

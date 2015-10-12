@@ -4,9 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -51,7 +50,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static WhiteEggCore instance;
 	private static WhiteEggAPI api;
 	private static MessageManager msg;
-	private static LanguageType type;
+	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
 	private PluginManager pm;
 
@@ -117,11 +116,10 @@ public class WhiteEggCore extends JavaPlugin {
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
-		this.settingLanguage();
 		this.registerCommands();
 		this.registerListener();
 		this.register();
-		type = LanguageType.en_US;
+		this.settingLanguage();
 	}
 
 	/**
@@ -185,17 +183,17 @@ public class WhiteEggCore extends JavaPlugin {
 	 * @param type 言語種類 {@link LanguageType}
 	 */
 	private void load(MessageManager msg, LanguageType type){
-		JarFile jar = null;
 		BufferedReader buffer = null;
 		try {
-			jar = new JarFile(getInstance().getFile());
-			JarEntry entry = jar.getJarEntry("lang" + File.separator + type.getString() +".yml");
-			buffer = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
+			InputStreamReader reader = new InputStreamReader(
+					this.getClass().getClassLoader()
+					.getResourceAsStream(
+							"lang/" + type.getString() +".yml"), StandardCharsets.UTF_8);
+			buffer = new BufferedReader(reader);
 			msg.loadLangFile(type, buffer);
 		} catch (InvalidConfigurationException | IOException e) {
 		} finally {
 			try{
-				if(jar != null){ jar.close(); }
 				if(buffer != null){ buffer.close(); }
 			} catch (IOException e){}
 		}
@@ -229,12 +227,14 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
-			if(new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator + type.getString() + ".yml").exists()){
+			File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/" + type.getString() + ".yml");
+			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
+			if(path.exists()){
 				continue;
 			}
-			Util.copyFileFromJar(
-					new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator),
-					WhiteEggCore.getInstance().getFile(), "lang" + File.separator + type.getString() + ".yml");
+			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
+					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
+			if(send){ System.out.println(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }
 		}
 	}
 

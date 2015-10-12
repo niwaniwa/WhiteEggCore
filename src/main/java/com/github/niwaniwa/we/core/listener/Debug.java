@@ -33,7 +33,7 @@ public class Debug implements Listener {
 			WhiteEggCore.getInstance().getLogger().info(
 					"-- " + player.getPlayer().getName() + "Join the game. --");
 		}
-		Bar.setDragon(player, "play.kokekokko.jp");
+		Bar.setDragon(player, "play.kokekokko.jp", 10);
 	}
 
 	@EventHandler

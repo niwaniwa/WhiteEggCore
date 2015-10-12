@@ -45,7 +45,7 @@ public class Util {
 					target.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(new File(target, path.split(File.separator)[path.split(File.separator).length - 1]))));
+						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1]))));
 				String s;
 				while ((s = reader.readLine()) != null) {
 					writer.write(s);
