@@ -64,7 +64,7 @@ public class WhiteEggCore extends JavaPlugin {
 		instance = this;
 		api = new WhiteEggAPIImpl();
 		pm = Bukkit.getPluginManager();
-		msg = new MessageManager(this.getDataFolder() + File.separator + "lang" + File.separator);
+		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		this.setting();
 		this.load();
 		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
