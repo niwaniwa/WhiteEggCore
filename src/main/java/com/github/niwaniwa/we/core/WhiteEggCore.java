@@ -207,7 +207,7 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	/**
-	 * バージョンチェックメソッド
+	 * CCraftBukkitバージョンチェックメソッド
 	 */
 	private void versionCheck(){
 		String packageName = getServer().getClass().getPackage().getName();
