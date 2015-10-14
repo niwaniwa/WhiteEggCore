@@ -52,7 +52,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static MessageManager msg;
 	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
-	private PluginManager pm;
+	private PluginManager pm = Bukkit.getPluginManager();
 
 	public static final String logPrefix = "[WEC]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
@@ -63,7 +63,6 @@ public class WhiteEggCore extends JavaPlugin {
 		versionCheck();
 		instance = this;
 		api = new WhiteEggAPIImpl();
-		pm = Bukkit.getPluginManager();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		this.setting();
 		this.load();
