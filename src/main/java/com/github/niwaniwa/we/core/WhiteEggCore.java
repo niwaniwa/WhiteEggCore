@@ -57,6 +57,9 @@ public class WhiteEggCore extends JavaPlugin {
 	public static final String logPrefix = "[WEC]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
 
+	/**
+	 * プラグインの初期化処理
+	 */
 	@Override
 	public void onEnable(){
 		long time = System.currentTimeMillis();
@@ -69,6 +72,9 @@ public class WhiteEggCore extends JavaPlugin {
 		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
+	/**
+	 * プラグインの終了処理
+	 */
 	@Override
 	public void onDisable(){
 		WhitePlayerFactory.saveAll();
@@ -100,10 +106,17 @@ public class WhiteEggCore extends JavaPlugin {
 		return msg;
 	}
 
+	/**
+	 * デフォルトの言語を取得
+	 * @return
+	 */
 	public static LanguageType getType() {
 		return type;
 	}
 
+	/**
+	 * コンフィグの取得
+	 */
 	public static WhiteEggCoreConfig getConf(){
 		return config;
 	}
@@ -129,6 +142,9 @@ public class WhiteEggCore extends JavaPlugin {
 		Rank.load();
 	}
 
+	/**
+	 * command
+	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		WhiteCommandSender whiteCommandSender;
@@ -207,7 +223,7 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	/**
-	 * CCraftBukkitバージョンチェックメソッド
+	 * CraftBukkitバージョンチェックメソッド
 	 */
 	private void versionCheck(){
 		String packageName = getServer().getClass().getPackage().getName();
@@ -237,6 +253,9 @@ public class WhiteEggCore extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * JarFileのパスの取得
+	 */
 	@Override
 	public File getFile() {
 		return super.getFile();

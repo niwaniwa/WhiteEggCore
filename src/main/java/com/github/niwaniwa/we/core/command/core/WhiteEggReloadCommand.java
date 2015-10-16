@@ -7,6 +7,8 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.WhiteEggChildCommand;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
+import com.github.niwaniwa.we.core.player.rank.Rank;
 
 public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 
@@ -19,7 +21,10 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 			sender.sendMessage(msg.getMessage(sender, error_Permission, msgPrefix, true));
 			return true;
 		}
-		Bukkit.reload();
+		WhitePlayerFactory.saveAll();
+		WhitePlayerFactory.load();
+		Rank.saveAll();
+		Rank.load();
 		if(args.length >= 2){
 			if(args[1].equalsIgnoreCase("-b")){
 				Bukkit.broadcastMessage(msgPrefix + "§aReload complete.");

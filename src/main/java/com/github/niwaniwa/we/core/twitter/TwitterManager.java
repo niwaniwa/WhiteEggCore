@@ -155,6 +155,7 @@ public abstract class TwitterManager {
 
 	/**
 	 * 直前のツイートが送信されたか
+	 * ツイートをするたびに値が変わるので注意
 	 * @return
 	 */
 	public abstract boolean isSuccessfull();

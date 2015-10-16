@@ -58,6 +58,9 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.accounts = new AltAccount();
 	}
 
+	/**
+	 * 初期化時の設定
+	 */
 	private void setting(){
 		for(ToggleSettings t : ToggleSettings.getList()){
 			toggle.add(t.clone());
@@ -159,12 +162,20 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.isVanish = b;
 	}
 
+	/**
+	 * アカウントの追加
+	 * @param player
+	 */
 	protected void addAccount(WhitePlayer player){
 		if(player.equals(this)){ return; }
 		if(accounts.contains(player)){ return; }
 		accounts.add(player.getUniqueId());
 	}
 
+	/**
+	 * アカウントの削除
+	 * @param player
+	 */
 	protected void removeAccount(WhitePlayer player){
 		if(player.equals(this)){ return; }
 		if(!accounts.contains(player)){ return; }
