@@ -115,7 +115,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private long[] uploadMedias(){
-		long[] mediaId = new long[this.url.size() - 1];
+		long[] mediaId = new long[this.url.size()];
 		for (int i = 0; i < url.size(); i++) {
 			File media = readImage(url.get(i));
 			medias.add(media);
