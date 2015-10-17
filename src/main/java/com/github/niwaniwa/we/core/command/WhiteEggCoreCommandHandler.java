@@ -27,7 +27,7 @@ public class WhiteEggCoreCommandHandler {
 	 * コマンドの登録
 	 * @param command コマンドの登録名
 	 * @param instance 呼び出すインスタンス
-	 * @return
+	 * @return true
 	 */
 	public boolean registerCommand(String command, AbstractWhiteEggCoreCommand instance){
 		commands.put(command, instance);
@@ -43,12 +43,12 @@ public class WhiteEggCoreCommandHandler {
 	}
 
 	/**
-	 * 呼び出し
-	 * @param sender player
-	 * @param cmd command
-	 * @param label
-	 * @param args
-	 * @return
+	 * コマンドの呼び出し
+	 * @param sender プレイヤー
+	 * @param cmd コマンド
+	 * @param label ラベル
+	 * @param args 引数
+	 * @return 成功したか
 	 */
 	public static boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args){
 		if(WhiteEggCore.getConf().isLock()){
@@ -71,10 +71,18 @@ public class WhiteEggCoreCommandHandler {
 		return true;
 	}
 
+	/**
+	 * 登録されているコマンドを返す
+	 * @return Map コマンド
+	 */
 	public static Map<String, AbstractWhiteEggCoreCommand> getCommans(){
 		return commands;
 	}
 
+	/**
+	 * プレイヤーにコマンド一覧を返します
+	 * @param sender プレイヤー
+	 */
 	private static void sendCommands(WhiteCommandSender sender){
 		sender.sendMessage("&7----- &bWhiteEggCore &7-----");
 		for(String command : commands.keySet()){

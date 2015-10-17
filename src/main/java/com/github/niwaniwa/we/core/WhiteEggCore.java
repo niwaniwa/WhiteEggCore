@@ -84,7 +84,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	/**
 	 * instanceの取得
-	 * @return
+	 * @return このプラグインのインスタンス
 	 */
 	public static WhiteEggCore getInstance(){
 		return instance;
@@ -92,15 +92,15 @@ public class WhiteEggCore extends JavaPlugin {
 
 	/**
 	 * APIインスタンスの取得
-	 * @return
+	 * @return APIを返します
 	 */
 	public static WhiteEggAPI getAPI(){
 		return api;
 	}
 
 	/**
-	 * メッセージマネージャーの取得 {@link WhiteEggAPI}
-	 * @return
+	 * メッセージマネージャーの取得
+	 * @return メッセージマネージャー
 	 */
 	public static MessageManager getMessageManager(){
 		return msg;
@@ -108,7 +108,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	/**
 	 * デフォルトの言語を取得
-	 * @return
+	 * @return 言語
 	 */
 	public static LanguageType getType() {
 		return type;
@@ -116,6 +116,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	/**
 	 * コンフィグの取得
+	 * @return コンフィグ
 	 */
 	public static WhiteEggCoreConfig getConf(){
 		return config;
@@ -263,7 +264,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	/**
 	 * このプラグインに登録されているコマンドの取得
-	 * @return
+	 * @return Map
 	 */
 	public Map<String, AbstractWhiteEggCoreCommand> getCommands(){
 		return WhiteEggCoreCommandHandler.getCommans();

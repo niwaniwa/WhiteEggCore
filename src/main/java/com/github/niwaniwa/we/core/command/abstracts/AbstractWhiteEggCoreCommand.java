@@ -6,6 +6,11 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
+/**
+ * Coreコマンドの抽象クラス
+ * @author niwaniwa
+ *
+ */
 public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggCommand {
 
 	protected final String commandPermission = "whiteegg.core.command";
@@ -25,15 +30,15 @@ public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggComman
 
 	/**
 	 * コマンドの説明
-	 * @return
+	 * @return 説明文
 	 * @deprecated 正常な動作をしない場合があるので使用しないでください {@link #description(WhiteCommandSender)}
 	 */
 	protected abstract String description();
 
 	/**
 	 * コマンドの説明
-	 * @param sender
-	 * @return String
+	 * @param sender プレイヤー
+	 * @return String 説明文
 	 */
 	public abstract String description(WhiteCommandSender sender);
 

@@ -1,7 +1,5 @@
 package com.github.niwaniwa.we.core.listener;
 
-import java.io.IOException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,8 +21,6 @@ public class Debug implements Listener {
 		}
 	}
 
-	/** debag
-	 * @throws IOException **/
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());

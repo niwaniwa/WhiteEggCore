@@ -27,8 +27,9 @@ public class JsonManager {
 	 * @param path 保存フォルダ
 	 * @param file ファイル名
 	 * @param json json
+	 * @param chara 文字コード
 	 * @return 成功したか
-	 * @throws IOException
+	 * @throws IOException 入出力
 	 */
 	public boolean writeJSON(File path, String file, JSONObject json, String chara) throws IOException {
 		if(!path.exists()){ path.mkdirs(); }
@@ -60,9 +61,9 @@ public class JsonManager {
 
 	/**
 	 * local
-	 *
-	 * @return
-	 * @throws IOException
+	 * @param file パス
+	 * @return JSONObject json
+	 * @throws IOException 入出力
 	 */
 	public JSONObject getJSON(File file) throws IOException {
 		if (!file.exists()) { return null; }

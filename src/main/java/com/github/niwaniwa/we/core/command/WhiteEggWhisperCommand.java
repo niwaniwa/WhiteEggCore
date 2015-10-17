@@ -12,6 +12,11 @@ import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 
+/**
+ * Whisperのコマンドクラス
+ * @author nwianiwa
+ *
+ */
 public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
 
 	private static final Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();

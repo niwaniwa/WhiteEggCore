@@ -19,6 +19,11 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.util.Util;
 
+/**
+ * WhiteEggAPIの実装クラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggAPIImpl extends WhiteEggAPI {
 
 	public WhiteEggAPIImpl() {

@@ -1,8 +1,10 @@
 package com.github.niwaniwa.we.core.listener;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -39,6 +41,13 @@ public class PlayerListener implements Listener {
 	public void onQuit(PlayerQuitEvent event){
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
+	}
+
+	@EventHandler
+	public void onSign(SignChangeEvent event) {
+		for (int i = 0; i <= 3; i++) {
+			event.setLine(i, ChatColor.translateAlternateColorCodes('&', event.getLine(i)));
+		}
 	}
 
 }

@@ -71,6 +71,11 @@ public class Util {
 		}
 	}
 
+	/**
+	 * このプラグインのJarファイル内にあるリソースをコピーします
+	 * @param target コピーパス
+	 * @param path ファイルパス
+	 */
 	public static void copyFileFromJar(File target, String path){
 		BufferedWriter writer = null;
 		BufferedReader reader = null;
@@ -104,6 +109,11 @@ public class Util {
 		}
 	}
 
+	/**
+	 * オンラインプレイヤーを取得します
+	 * @param uuid プレイヤーのUUID
+	 * @return プレイヤー
+	 */
 	public static Player getOnlinePlayer(UUID uuid){
 		for(Player player : Bukkit.getOnlinePlayers()){
 			if(player.getUniqueId().equals(uuid)){
@@ -113,6 +123,11 @@ public class Util {
 		return null;
 	}
 
+	/**
+	 * オンラインプレイヤーを取得します
+	 * @param name プレイヤーのID
+	 * @return プレイヤー
+	 */
 	public static Player getOnlinePlayer(String name){
 		for(Player player : Bukkit.getOnlinePlayers()){
 			if(player.getName().equals(name)){
@@ -123,11 +138,11 @@ public class Util {
 	}
 
 	/**
-	 * 要学習
-	 * @param str
+	 * 文字列からマップを返します
+	 * @param str 文字列
 	 * @return Map
-	 * @throws IOException
-	**/
+	 * @throws IOException 入力ストリームからの読み込み中にエラーが発生した場合
+	 */
 	public static Map<String, Object> toMap(String str) throws IOException{
 		Properties props = new Properties();
 		props.load(new StringReader(str.substring(1, str.length() - 1).replace(", ", "\n")));
@@ -138,6 +153,11 @@ public class Util {
 		return map;
 	}
 
+	/**
+	 * 指定された名前のプラグインが存在するか返します
+	 * @param str プラグインの文字列
+	 * @return 存在するか
+	 */
 	public static Plugin getPlugin(String str){
 		for(Plugin p : Bukkit.getPluginManager().getPlugins()){
 			if(p.getName().equalsIgnoreCase(str)){
@@ -147,6 +167,11 @@ public class Util {
 		return null;
 	}
 
+	/**
+	 * JsonからMapを返します
+	 * @param j json
+	 * @return Map
+	 */
 	public static Map<String, Object> toMap(JSONObject j){
 		Map<String, Object> map = new HashMap<>();
 		for(Object o : j.keySet()){
@@ -155,6 +180,12 @@ public class Util {
 		return map;
 	}
 
+	/**
+	 * 配列を指定したところから再構成し、文字列を返します
+	 * @param strings 配列
+	 * @param start スタート位置
+	 * @return 再構成された文字列
+	 */
 	public static String build(String[] strings, int start) {
 		if (strings.length >= start + 1) {
 			String str = strings[start];
@@ -168,11 +199,20 @@ public class Util {
 		return null;
 	}
 
+	/**
+	 * カラーコードの置き換え
+	 * @param s 文字列
+	 * @return 置換された文字列
+	 */
 	public static String replaceColorCode(String s){
 		if(s == null){ return null; }
 		return ChatColor.translateAlternateColorCodes('&', s);
 	}
 
+	/**
+	 * イベントを呼び出します
+	 * @param event Eventを継承したイベント
+	 */
 	public static void callEvent(Event event){
 		Bukkit.getPluginManager().callEvent(event);
 	}

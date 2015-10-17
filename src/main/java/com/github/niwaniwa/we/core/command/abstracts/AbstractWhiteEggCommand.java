@@ -6,6 +6,11 @@ import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
+/**
+ * コマンドの抽象クラス
+ * @author niwaniwa
+ *
+ */
 public abstract class AbstractWhiteEggCommand {
 
 	protected final String commandMessageKey = "whiteegg.command";
@@ -16,7 +21,7 @@ public abstract class AbstractWhiteEggCommand {
 
 	/**
 	 * 使い方の送信
-	 * @param sender
+	 * @param sender プレイヤー
 	 */
 	public abstract void sendUsing(final WhitePlayer sender);
 
@@ -44,7 +49,7 @@ public abstract class AbstractWhiteEggCommand {
 	/**
 	 * Consoleからの実行か判定
 	 * @param sender WhiteCommandSender
-	 * @return
+	 * @return Consoleからの実行か
 	 */
 	public static boolean isConsole(WhiteCommandSender sender){
 		return (sender instanceof WhiteConsoleSender);

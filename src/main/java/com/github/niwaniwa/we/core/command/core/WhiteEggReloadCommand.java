@@ -10,6 +10,11 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 
+/**
+ * Coreコマンドのリロードクラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 
 	private final String permission = commandPermission + ".whiteegg.reload";

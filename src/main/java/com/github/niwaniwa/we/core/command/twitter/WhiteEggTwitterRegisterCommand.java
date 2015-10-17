@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -20,7 +21,7 @@ import com.github.niwaniwa.we.core.util.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 
-public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand  {
+public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
@@ -29,10 +30,6 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 	@Override
 	public boolean onCommand(final WhiteCommandSender sender, final Command cmd, final String label,
 			final String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
-			return true;
-		}
 		if(!sender.hasPermission(permission)){
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;

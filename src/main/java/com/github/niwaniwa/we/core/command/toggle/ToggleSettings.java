@@ -16,6 +16,11 @@ import com.github.niwaniwa.we.core.util.Util;
 
 import net.sf.json.JSONObject;
 
+/**
+ * 各種設定クラス
+ * @author niwaniwa
+ *
+ */
 public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
 	private static final List<ToggleSettings> list = new ArrayList<>();
@@ -28,6 +33,15 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	private final Map<String, Object> toggles = new HashMap<>();
 	private boolean isHide;
 
+	/**
+	 * コンストラクター
+	 * @param plugin プラグイン
+	 * @param type タイプ
+	 * @param permission 権限
+	 * @param custam 任意の名前
+	 * @param toggles 設定
+	 * @param isHide デフォルトでの表示
+	 */
 	public ToggleSettings(Plugin plugin, ToggleType type, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide) {
 		this.p = plugin;
@@ -45,50 +59,97 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		this.isHide = isHide;
 	}
 
+	/**
+	 * 設定を追加
+	 */
 	public void add(){
 		list.add(this);
 	}
 
+	/**
+	 * 設定を設定したプラグイン
+	 * @return プラグイン
+	 */
 	public Plugin getPlugin(){
 		return p;
 	}
 
+	/**
+	 * タイプ
+	 * @return タイプ
+	 */
 	public ToggleType getType(){
 		return type;
 	}
 
+	/**
+	 * 名前
+	 * @return 名前
+	 */
 	public String getTitle(){
 		return title;
 	}
 
+	/**
+	 * 設定
+	 * @return Map
+	 */
 	public Map<String, Object> getToggles(){
 		return toggles;
 	}
 
+	/**
+	 * 権限
+	 * @return 権限
+	 */
 	public String getPermission() {
 		return permission;
 	}
 
+	/**
+	 * 権限の設定
+	 * @param permission 設定する権限
+	 */
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
 
+	/**
+	 * デフォルトで表示するか
+	 * @return デフォルトでの表示
+	 */
 	public boolean isHide(){
 		return isHide;
 	}
 
+	/**
+	 * プラグインのセット
+	 * @param p プラグイン
+	 */
 	protected void setPlugin(Plugin p){
 		this.p = p;
 	}
 
+	/**
+	 * 名前の設定
+	 * @param name 文字列
+	 */
 	public void setTitle(String name){
 		this.title = name;
 	}
 
+	/**
+	 * タイプの設定
+	 * @param type タイプ
+	 */
 	protected void setType(ToggleType type){
 		this.type = type;
 	}
 
+	/**
+	 * デフォルトで表示するか
+	 * @param b boolean
+	 */
 	public void setHide(boolean b){
 		this.isHide = b;
 	}
@@ -99,10 +160,19 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return t;
 	}
 
+	/**
+	 * 現在登録されている設定の取得
+	 * @return List
+	 */
 	public static List<ToggleSettings> getList() {
 		return list;
 	}
 
+	/**
+	 * プラグインに設定されている設定
+	 * @param l 設定
+	 * @return List
+	 */
 	public static List<ToggleSettings> getPluginSetting(List<ToggleSettings> l){
 		List<ToggleSettings> result = new ArrayList<>();
 		for(ToggleSettings toggle : l){
@@ -113,6 +183,11 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return result;
 	}
 
+	/**
+	 * デフォルトで表示される設定
+	 * @param l 設定
+	 * @return List
+	 */
 	public static List<ToggleSettings> getDefaltSetting(List<ToggleSettings> l){
 		List<ToggleSettings> result = new ArrayList<>();
 		for(ToggleSettings toggle : l){
@@ -123,6 +198,11 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return result;
 	}
 
+	/**
+	 * moderator用の設定
+	 * @param l List
+	 * @return List リスト
+	 */
 	public static List<ToggleSettings> getModeratorSetting(List<ToggleSettings> l){
 		List<ToggleSettings> result = new ArrayList<>();
 		for(ToggleSettings toggle : l){
@@ -133,10 +213,19 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return result;
 	}
 
+	/**
+	 * サーバーの設定
+	 * @return List リスト
+	 */
 	public static Map<String, Object> getServerSetting(){
 		return server;
 	}
 
+	/**
+	 * サーバーの設定
+	 * @param l List
+	 * @return List リスト
+	 */
 	public static List<ToggleSettings> getServerSetting(List<ToggleSettings> l){
 		List<ToggleSettings> result = new ArrayList<>();
 		for(ToggleSettings toggle : l){
@@ -147,6 +236,12 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return result;
 	}
 
+	/**
+	 * 指定した設定の中から設定を探して返す
+	 * @param ts 対象設定List
+	 * @param t 設定
+	 * @return 設定
+	 */
 	public static ToggleSettings getSetting(List<ToggleSettings> ts, ToggleSettings t){
 
 		for(ToggleSettings toggle : ts){

@@ -7,6 +7,11 @@ import org.bukkit.event.HandlerList;
 
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 
+/**
+ * toggleコマンドを実行時に呼び出されるイベント
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggToggleCommandEvent extends Event implements Cancellable {
 
 	private static final HandlerList handlers = new HandlerList();

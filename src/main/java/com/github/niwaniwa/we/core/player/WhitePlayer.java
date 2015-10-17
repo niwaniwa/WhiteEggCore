@@ -18,7 +18,7 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	/**
 	 * 現在登録されているランクを返します
-	 * @return List<Rank> rank
+	 * @return List rank
 	 */
 	public abstract List<Rank> getRanks();
 
@@ -70,7 +70,7 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	/**
 	 * jsonからデータを読み込み、変数を変更します
-	 * @param json json
+	 * @param jsonString json
 	 * @return 成功したか
 	 */
 	public abstract boolean saveVariable(String jsonString);
@@ -101,13 +101,13 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	/**
 	 * 現在の設定を返します
-	 * @return
+	 * @return List ToggleSettings
 	 */
 	public abstract List<ToggleSettings> getToggleSettings();
 
 	/**
 	 * 現在接続しているプレイヤーのアドレスを返します
-	 * @return
+	 * @return Address
 	 */
 	public abstract InetSocketAddress getAddress();
 
@@ -119,7 +119,7 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	/**
 	 * 初期化します
-	 * @return
+	 * @return 成功したか
 	 */
 	public abstract boolean clear();
 

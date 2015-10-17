@@ -11,6 +11,11 @@ import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 
+/**
+ * リプライのコマンドクラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
 
 	private final String key = commandMessageKey + ".replay";

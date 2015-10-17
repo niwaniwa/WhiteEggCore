@@ -23,11 +23,26 @@
 
 ## Config.yml
 
-書き書き...
+要素名 | 説明 | type | 説明
+------|------|------|-----
+lock | プラグインのロック | boolean | false
+consumerkey | Twitter app | String |
+consumerSecret | Twitter app | String |
 
 ## その他
 
-書き書き...
+### APIについて
+WhiteEggAPIを使用することで他のプラグインからアクセスすることができます
+
+### Eventについて
+
+現在3つのイベントを使用することができます
+
+1. WhiteEggPreTweetEvent
+2. WhiteEggPostTweetEvent
+3. WhiteEggToggleCommandEvent
+
+詳細はJavadocをご覧ください
 
 ## Library
 

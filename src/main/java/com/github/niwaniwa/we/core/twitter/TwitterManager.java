@@ -139,7 +139,7 @@ public abstract class TwitterManager {
 
 	/**
 	 * プラグインが有効になってからのツイートを取得します
-	 * @return
+	 * @return List ツイート
 	 */
 	public List<Status> getTweet(){
 		return tweets;
@@ -156,7 +156,7 @@ public abstract class TwitterManager {
 	/**
 	 * 直前のツイートが送信されたか
 	 * ツイートをするたびに値が変わるので注意
-	 * @return
+	 * @return ツイートの送信に成功したか
 	 */
 	public abstract boolean isSuccessfull();
 

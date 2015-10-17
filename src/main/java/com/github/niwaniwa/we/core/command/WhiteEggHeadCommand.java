@@ -10,6 +10,11 @@ import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
+/**
+ * MobHeadのコマンドクラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".head";

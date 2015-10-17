@@ -14,6 +14,11 @@ import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
+/**
+ * Coreコマンドクラス
+ * @author niwaniwa
+ *
+ */
 public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements TabCompleter {
 
 	private final String permission = commandPermission + ".whiteegg";

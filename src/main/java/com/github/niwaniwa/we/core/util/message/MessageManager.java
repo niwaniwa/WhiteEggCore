@@ -47,7 +47,7 @@ public class MessageManager {
 
 	/**
 	 * 拡張
-	 * @return
+	 * @return List 使用した拡張クラスのインスタンスを返す
 	 */
 	public List<MessageExtension> getExtension() {
 		return extension;
@@ -95,7 +95,7 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーの言語に合わせたメッセージを返します。
-	 * @param <T>
+	 * @param <T> WhiteCommandSenderを継承したクラス
 	 * @param sender WhiteCommandSenderを継承したクラスのインスタンス
 	 * @param key 取得するkey
 	 * @param prefix prefix
@@ -209,7 +209,7 @@ public class MessageManager {
 
 	/**
 	 * 読み込まれている言語データを返します。
-	 * @return Map<LanguageType, YamlConfiguration> langs
+	 * @return Map langs
 	 */
 	public Map<LanguageType, YamlConfiguration> getLangs(){
 		return langs;
@@ -217,7 +217,8 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーが現在設定している言語を返します
-	 * @param player
+	 * @param <T> WhitePlayerを継承したクラス
+	 * @param player プレイヤー
 	 * @return LanguageType 言語
 	 */
 	public static <T extends WhitePlayer> LanguageType getLanguage(T player){
@@ -226,7 +227,7 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーが現在設定している言語を返します
-	 * @param player
+	 * @param player プレイヤー
 	 * @return LanguageType 言語
 	 */
 	public static LanguageType getLanguage(Player player){

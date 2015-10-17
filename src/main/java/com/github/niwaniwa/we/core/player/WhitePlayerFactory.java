@@ -42,6 +42,7 @@ public class WhitePlayerFactory {
 
 	/**
 	 * instance
+	 * @param <T> WhitePlayerを継承したクラス
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
 	 * @return WhitePlayer 指定したクラスのinstance
@@ -64,6 +65,7 @@ public class WhitePlayerFactory {
 
 	/**
 	 * 型を指定したクラスへ変換する
+	 * @param <T> WhitePlayerを継承したクラス
 	 * @param from 変換前のinstance
 	 * @param to 変換後のクラス
 	 * @return 指定したクラスのinstance(データ引き継ぎ)
