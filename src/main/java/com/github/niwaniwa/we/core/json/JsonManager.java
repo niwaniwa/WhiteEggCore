@@ -3,9 +3,10 @@ package com.github.niwaniwa.we.core.json;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +30,17 @@ public class JsonManager {
 	 * @return 成功したか
 	 * @throws IOException
 	 */
-	public boolean writeJSON(File path, String file, JSONObject json) throws IOException {
+	public boolean writeJSON(File path, String file, JSONObject json, String chara) throws IOException {
 		if(!path.exists()){ path.mkdirs(); }
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path, file)));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path, file)), chara));
 		PrintWriter pw = new PrintWriter(bw);
 		pw.write(json.toString());
 		pw.close();
 		return true;
+	}
+
+	public boolean writeJSON(File path, String file, JSONObject json) throws IOException {
+		return writeJSON(path, file, json, "UTF-8");
 	}
 
 	public boolean writeJSON(File path, String file, JSONObject json, boolean backup) throws IOException {
