@@ -29,6 +29,7 @@ import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.UploadedMedia;
 
 /**
  * ツイート送信クラス(使い捨て)
@@ -109,14 +110,26 @@ public class TweetTask extends BukkitRunnable {
 	private StatusUpdate build(){
 		StatusUpdate su = new StatusUpdate(tweet);
 		if(!useMedia){ return su; }
-		for(String url : this.url){
-			File media = readImage(url);
-			if(media != null){
-				su = su.media(media);
-				medias.add(media);
-			}
-		}
+		su.setMediaIds(uploadMedias());
 		return su;
+	}
+
+	private long[] uploadMedias(){
+		long[] mediaId = new long[this.url.size() - 1];
+		for (int i = 0; i < url.size(); i++) {
+			File media = readImage(url.get(i));
+			medias.add(media);
+			mediaId[i] = uploadMedia(media);
+		}
+		return mediaId;
+	}
+
+	public Long uploadMedia(File path){
+		UploadedMedia media = null;
+		try {
+			media = twitter.getTwitter().uploadMedia(path);
+		} catch (TwitterException e) {}
+		return media.getMediaId();
 	}
 
 	private void delete(){
