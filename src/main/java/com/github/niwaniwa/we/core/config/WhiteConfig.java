@@ -38,6 +38,7 @@ public class WhiteConfig {
 			config.load(new File(path, File.separator + name));
 		} catch (IOException | InvalidConfigurationException e) {
 		}
+		yaml = config;
 		return true;
 	}
 
