@@ -3,6 +3,8 @@ package com.github.niwaniwa.we.core.twitter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -23,8 +25,8 @@ public abstract class TwitterManager {
 	private RequestToken request = null;
 	private List<Status> tweets;
 
-	private final String consumerKey = ""; // app consumer key
-	private final String consumerSecret = ""; // app consumer secret
+	private final String consumerKey = WhiteEggCore.getConf().getConfig().getString("consumerKey"); // app consumer key
+	private final String consumerSecret = WhiteEggCore.getConf().getConfig().getString("consumerSecret"); // app consumer secret
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
