@@ -3,6 +3,8 @@ package com.github.niwaniwa.we.core.twitter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.scheduler.BukkitRunnable;
+
 import com.github.niwaniwa.we.core.WhiteEggCore;
 
 import twitter4j.Status;
@@ -32,7 +34,12 @@ public abstract class TwitterManager {
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
 		this.tweets = new ArrayList<>();
-		this.OAuthRequest();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				OAuthRequest();
+			}
+		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
 	/**

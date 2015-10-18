@@ -1,6 +1,5 @@
 package com.github.niwaniwa.we.core.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -14,12 +13,6 @@ import com.github.niwaniwa.we.core.util.bar.Bar;
 import twitter4j.TwitterException;
 
 public class Debug implements Listener {
-
-	public Debug(boolean isTest) {
-		if(isTest){
-			Bukkit.getPluginManager().registerEvents(this, WhiteEggCore.getInstance());
-		}
-	}
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {

@@ -1,5 +1,5 @@
 name: WhiteEggCore
-version: 1.2
+version: 1.3
 main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
@@ -12,11 +12,15 @@ commands:
   head:
   tweet:
     aliases: tw
+    permission: whiteegg.core.command.twitter
   register:
+    permission: whiteegg.core.command.twitter.register
   whisper:
     aliases: [tell, message, m, t, w]
+    permission: whiteegg.core.command.whisper
   replay:
     aliases: [replay, r]
+    permission: whiteegg.core.command.replay
 permissions:
   whiteegg.*:
     description: Gives access to all WhiteEggPlugins

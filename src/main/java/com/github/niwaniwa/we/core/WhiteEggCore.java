@@ -28,7 +28,6 @@ import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
-import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
@@ -161,7 +160,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * リスナーの登録
 	 */
 	private void registerListener(){
-		pm.registerEvents(new Debug(false), this);
+//		pm.registerEvents(new Debug(), this);
 		pm.registerEvents(new PlayerListener(), this);
 	}
 

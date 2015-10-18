@@ -109,7 +109,7 @@ public class WhitePlayerFactory {
 	}
 
 	/**
-	 * サーバー起動時から取得時までのプレイヤーのインスタンスの取得
+	 * サーバー起動時から取得時までに生成されたプレイヤーのインスタンスの取得
 	 * @return instance
 	 */
 	public static List<WhitePlayer> getPlayers(){

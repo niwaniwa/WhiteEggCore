@@ -5,8 +5,10 @@
 ## 動作
 
 * Spigot最新版にて動作を確認しています
+* 不具合などについてはその他に記載されておりますTwitterまでお問い合わせください
 
 ## 主な機能
+* jsonによるプレイデータの保存
 * Twitterへのツイート、情報を取得
 * Tab、Click可能なテキストを表示できる機能など
 
@@ -18,31 +20,42 @@
 `/head <Player名>` | プレイヤーの頭を取得します | whiteegg.core.command.toggle |
 `/tweet <呟き>` | Twitterに呟きを送信します | whiteegg.core.command.twitter | 初実行時は/registerを行ってください
 `/register` | Twitterに接続するための登録を行います | whiteegg.core.command.twitter.register |
-`whisper` <Player> <メッセージ> | 特定の相手にプライベートメッセージを送信します | whiteegg.core.command.whisper |
-`replay` <メッセージ> | 返信します | whiteegg.core.command.replay |
+`/whisper` <Player> <メッセージ> | 特定の相手にプライベートメッセージを送信します | whiteegg.core.command.whisper |
+`/replay` <メッセージ> | 返信します | whiteegg.core.command.replay |
 
 ## Config.yml
 
-要素名 | 説明 | type | 説明
+要素名 | 説明 | type | 初期値
 ------|------|------|-----
 lock | プラグインのロック | boolean | false
-consumerkey | Twitter app | String |
-consumerSecret | Twitter app | String |
+consumerkey | Twitter app | String | null
+consumerSecret | Twitter app | String | null
 
 ## その他
 
+### プレイヤーについて
+#### データ
+- プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
+- プレイヤーデータは[WhitePlayer](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayer.html)から取得することができます
+- 取得は[WhitePlayerFactory](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayerFactory.html)クラスを使用してください
+
 ### APIについて
+
 WhiteEggAPIを使用することで他のプラグインからアクセスすることができます
 
 ### Eventについて
 
 現在3つのイベントを使用することができます
 
-1. WhiteEggPreTweetEvent
-2. WhiteEggPostTweetEvent
-3. WhiteEggToggleCommandEvent
+1. [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
+2. [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
+3. [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
 
-詳細はJavadocをご覧ください
+詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
+
+## Javadoc
+
+ Javadocは[こちら](http://niwaniwa.github.io/WhiteEggCore/doc/)
 
 ## Library
 
@@ -50,14 +63,38 @@ WhiteEggAPIを使用することで他のプラグインからアクセスする
 
 * [JSON-lib](http://json-lib.sourceforge.net/) (gsonへ移行予定)
 
-* [Apache HttpComponents](https://hc.apache.org/)
+* [apache httpcomponents client](https://hc.apache.org/)
+
+## licenseなどなど
+
+* Twitter4j, apache httpcomponents clientはApache License 2.0licenseを使用しています
+
+>Copyright 2007 Yusuke Yamamoto
+
+>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+>      http://www.apache.org/licenses/LICENSE-2.0
+
+>Unless required by applicable law or agreed to in writing, software
+Distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+>>Twitter4J は JSON レスポンスの解析のため JSON.org のソフトウェアを含んでいます。JSON.org のソフトウェアのライセンスについてはThe JSON Licenseをご覧ください。
 
 ## リンク
 
 Twitter : @[haniwa_koke](https://twitter.com/haniwa_koke "haniwa_koke")
+
+不備がありましたらこちらへ連絡をしていただけると幸いです
 
 進捗どうですか
 >進捗どうですか
 >>進捗どうですか
 >>>進捗どうですか
 >>>>進捗どうですか
+>>>>>進捗どうですか
+>>>>>>進捗ダメです
