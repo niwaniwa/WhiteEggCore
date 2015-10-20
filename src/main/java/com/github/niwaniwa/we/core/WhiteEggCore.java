@@ -242,11 +242,11 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
-			File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/" + type.getString() + ".yml");
-			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
+			File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator  + type.getString() + ".yml");
 			if(path.exists()){
 				continue;
 			}
+			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
 			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
 					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
 			if(send){ System.out.println(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }

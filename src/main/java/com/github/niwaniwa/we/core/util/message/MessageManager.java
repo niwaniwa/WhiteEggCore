@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +24,6 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 
 public class MessageManager {
 
-	public static final String separator = (File.separator != "/" ? "\\\\" : "/");
-
 	private File path;
 	private final Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
 	private final List<MessageExtension> extension = new ArrayList<>();
@@ -40,9 +39,14 @@ public class MessageManager {
 		this(new File(string));
 	}
 
-	@SuppressWarnings("unused")
-	@Deprecated
-	private MessageManager() {
+	public MessageManager() {
+		try {
+			loadLangFile(WhiteEggCore.getType(),
+					new BufferedReader(
+							new InputStreamReader(
+									getClass().getClassLoader().getResourceAsStream(
+											"lang/" + WhiteEggCore.getType().toString() + ".yml"))));
+		} catch (IOException | InvalidConfigurationException e) {}
 	}
 
 	/**

@@ -99,9 +99,7 @@ public class JsonManager {
 			Object value = array.get(i);
 			if (value instanceof JSONArray) {
 				value = toList((JSONArray) value);
-			}
-
-			else if (value instanceof JSONObject) {
+			} else if (value instanceof JSONObject) {
 				value = toMap((JSONObject) value);
 			}
 			list.add(value);
