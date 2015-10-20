@@ -33,6 +33,8 @@ consumerSecret | Twitter app | String | null
 
 ## その他
 
+もう実装する案がありません;;
+
 ### プレイヤーについて
 #### データ
 - プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
@@ -41,15 +43,17 @@ consumerSecret | Twitter app | String | null
 
 ### APIについて
 
-WhiteEggAPIを使用することで他のプラグインからアクセスすることができます
+このプラグインはAPIを利用することが可能です
+
+詳しくは[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください
 
 ### Eventについて
 
 現在3つのイベントを使用することができます
 
-1. [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
-2. [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
-3. [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
+- [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
+- [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
+- [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
 
 詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
 
