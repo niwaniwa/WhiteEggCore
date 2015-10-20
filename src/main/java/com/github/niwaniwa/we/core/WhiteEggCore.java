@@ -63,11 +63,7 @@ public class WhiteEggCore extends JavaPlugin {
 	public void onEnable(){
 		long time = System.currentTimeMillis();
 		versionCheck();
-		instance = this;
-		api = new WhiteEggAPIImpl();
-		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		this.setting();
-		this.load();
 		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
@@ -125,6 +121,9 @@ public class WhiteEggCore extends JavaPlugin {
 	 * 初期化処理
 	 */
 	private void setting(){
+		instance = this;
+		api = new WhiteEggAPIImpl();
+		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
@@ -132,6 +131,7 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerListener();
 		this.register();
 		this.settingLanguage();
+		this.load();
 	}
 
 	/**

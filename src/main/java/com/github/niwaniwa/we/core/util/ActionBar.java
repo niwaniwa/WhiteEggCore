@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
-public class ActionBar extends Mini {
+public class ActionBar extends Extension {
 
 	String str;
 

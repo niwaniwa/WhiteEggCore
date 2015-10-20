@@ -6,14 +6,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import com.github.niwaniwa.we.core.util.Mini;
+import com.github.niwaniwa.we.core.util.Extension;
 
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class Clickable extends Mini {
+public class Clickable extends Extension {
 
 	private JSONObject json;
 
