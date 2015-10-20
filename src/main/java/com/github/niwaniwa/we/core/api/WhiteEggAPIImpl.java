@@ -17,6 +17,7 @@ import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
+import com.github.niwaniwa.we.core.twitter.ServerTwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
 
 /**
@@ -100,6 +101,11 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 	@Override
 	public boolean useDataBase() {
 		return false;
+	}
+
+	@Override
+	public void tweet(String tweet) {
+		ServerTwitterManager.getInstance().tweet(tweet);
 	}
 
 
