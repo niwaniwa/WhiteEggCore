@@ -96,4 +96,10 @@ public abstract class WhiteEggAPI {
 	 * @return データベースを使用するか
 	 */
 	public abstract boolean useDataBase();
+
+	/**
+	 * ツイートを送信します
+	 * @param tweet ツイートする文字列
+	 */
+	public abstract void tweet(String tweet);
 }

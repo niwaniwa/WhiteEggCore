@@ -63,11 +63,7 @@ public class WhiteEggCore extends JavaPlugin {
 	public void onEnable(){
 		long time = System.currentTimeMillis();
 		versionCheck();
-		instance = this;
-		api = new WhiteEggAPIImpl();
-		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		this.setting();
-		this.load();
 		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
@@ -125,6 +121,9 @@ public class WhiteEggCore extends JavaPlugin {
 	 * 初期化処理
 	 */
 	private void setting(){
+		instance = this;
+		api = new WhiteEggAPIImpl();
+		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
@@ -132,6 +131,7 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerListener();
 		this.register();
 		this.settingLanguage();
+		this.load();
 	}
 
 	/**
@@ -242,11 +242,11 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void copyLangFiles(boolean send){
 		for(LanguageType type : LanguageType.values()){
-			File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/" + type.getString() + ".yml");
-			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
+			File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator  + type.getString() + ".yml");
 			if(path.exists()){
 				continue;
 			}
+			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
 			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
 					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
 			if(send){ System.out.println(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }

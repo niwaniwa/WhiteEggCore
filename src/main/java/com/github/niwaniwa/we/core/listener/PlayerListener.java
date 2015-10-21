@@ -43,7 +43,7 @@ public class PlayerListener implements Listener {
 		((WhiteEggPlayer) player).saveTask();
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onSign(SignChangeEvent event) {
 		for (int i = 0; i <= 3; i++) {
 			event.setLine(i, ChatColor.translateAlternateColorCodes('&', event.getLine(i)));

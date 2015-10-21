@@ -31,28 +31,6 @@ lock | プラグインのロック | boolean | false
 consumerkey | Twitter app | String | null
 consumerSecret | Twitter app | String | null
 
-## その他
-
-### プレイヤーについて
-#### データ
-- プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
-- プレイヤーデータは[WhitePlayer](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayer.html)から取得することができます
-- 取得は[WhitePlayerFactory](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayerFactory.html)クラスを使用してください
-
-### APIについて
-
-WhiteEggAPIを使用することで他のプラグインからアクセスすることができます
-
-### Eventについて
-
-現在3つのイベントを使用することができます
-
-1. [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
-2. [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
-3. [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
-
-詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
-
 ## Javadoc
 
  Javadocは[こちら](http://niwaniwa.github.io/WhiteEggCore/doc/)
@@ -85,16 +63,48 @@ limitations under the License.
 
 >>Twitter4J は JSON レスポンスの解析のため JSON.org のソフトウェアを含んでいます。JSON.org のソフトウェアのライセンスについてはThe JSON Licenseをご覧ください。
 
+## その他
+
+もう実装する案がありません;;
+
+### プレイヤーについて
+#### データ
+- プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
+- プレイヤーデータは[WhitePlayer](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayer.html)から取得することができます
+- 取得は[WhitePlayerFactory](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayerFactory.html)クラスを使用してください
+
+### APIについて
+
+このプラグインはAPIを利用することが可能です
+
+詳しくは[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください
+
+### Eventについて
+
+現在3つのイベントを使用することができます
+
+- [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
+- [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
+- [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
+
+詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
+
+## ブランチ
+
+master
+
+database
+
+script
+
+## これから
+
+勉強のためにデータベースやJavaScriptの読み込みなどを実装予定
+
+特にデータベースを重点的に
+
 ## リンク
 
 Twitter : @[haniwa_koke](https://twitter.com/haniwa_koke "haniwa_koke")
 
 不備がありましたらこちらへ連絡をしていただけると幸いです
-
-進捗どうですか
->進捗どうですか
->>進捗どうですか
->>>進捗どうですか
->>>>進捗どうですか
->>>>>進捗どうですか
->>>>>>進捗ダメです

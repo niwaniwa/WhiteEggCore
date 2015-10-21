@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 
-public abstract class Mini {
+public abstract class Extension {
 
 	public abstract void send(Player player);
 
@@ -21,20 +21,20 @@ public abstract class Mini {
 		return (CraftPlayer) p;
 	}
 
-	public static <T extends Mini> void permissionBroadcast(String prm, T t){
+	public static <T extends Extension> void permissionBroadcast(String prm, T t){
 		for(Player p : Bukkit.getOnlinePlayers()){
 			if(p.hasPermission(prm)){
 				t.send(p);
 			}
 		}
 	}
-	public static <T extends Mini> void worldBroadcast(World world, T t){
+	public static <T extends Extension> void worldBroadcast(World world, T t){
 		for(Player p : world.getPlayers()){
 			t.send(p);
 		}
 	}
 
-	public static <T extends Mini> void serverBroadcast(T t){
+	public static <T extends Extension> void serverBroadcast(T t){
 		for(Player p : Bukkit.getOnlinePlayers()){
 			t.send(p);
 		}
