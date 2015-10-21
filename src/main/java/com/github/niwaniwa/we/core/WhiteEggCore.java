@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -29,11 +30,13 @@ import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
+import com.github.niwaniwa.we.core.listener.ScriptListener;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.player.rank.RankProperty;
+import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.bar.Dragon;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
@@ -52,6 +55,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
 	private PluginManager pm = Bukkit.getPluginManager();
+	private JavaScript script;
 
 	public static final String logPrefix = "[WEC]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
@@ -162,6 +166,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private void registerListener(){
 //		pm.registerEvents(new Debug(), this);
 		pm.registerEvents(new PlayerListener(), this);
+		pm.registerEvents(new ScriptListener(), this);
 	}
 
 	/**
@@ -220,6 +225,12 @@ public class WhiteEggCore extends JavaPlugin {
 	private void register(){
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
 		r.add();
+		try {
+			script = new JavaScript(new BufferedReader(
+					new InputStreamReader(getClass().getClassLoader().getResourceAsStream("script.js"), "UTF-8")));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -267,6 +278,10 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	public Map<String, AbstractWhiteEggCoreCommand> getCommands(){
 		return WhiteEggCoreCommandHandler.getCommans();
+	}
+
+	public JavaScript getScript() {
+		return script;
 	}
 
 }

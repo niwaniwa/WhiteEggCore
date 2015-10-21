@@ -2,8 +2,8 @@ package com.github.niwaniwa.we.core.script;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.CodeSource;
@@ -37,7 +37,16 @@ public class JavaScript {
 		this.path = path;
 		try {
 			read();
-		} catch (FileNotFoundException | ScriptException e) {
+		} catch (ScriptException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public JavaScript(BufferedReader buffer) {
+		this.path = null;
+		try {
+			read(buffer);
+		} catch (ScriptException | IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -46,10 +55,32 @@ public class JavaScript {
 		return path;
 	}
 
-	private void read() throws FileNotFoundException, ScriptException{
+	private void read() throws ScriptException, IOException {
+		BufferedReader buffer = new BufferedReader(new FileReader(path));
+		read(buffer);
+	}
+
+	public void read(BufferedReader buffer) throws ScriptException, IOException{
 		manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("js");
-		engine.eval(new BufferedReader(new FileReader(path)));
+		StringBuilder sb = init();
+		String str = buffer.readLine();
+		while (str != null) {
+			sb.append(str);
+			str = buffer.readLine();
+		}
+		buffer.close();
+		engine.eval(sb.toString());
+	}
+
+	private StringBuilder init(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("var events = require('events')");
+		sb.append("function White(event){this.event = event; events.EventEmitter.call(this);}");
+		sb.append("util.inherits(Button, events.EventEmitter);");
+		sb.append("White.prototype.call = function(eventName){this.emit(eventName, this.event)}");
+		sb.append("function call(eventName, event){var white = new White(event);white.call(eventName);}");
+		return sb;
 	}
 
 	/**
@@ -63,7 +94,6 @@ public class JavaScript {
 			@Override
 			public Void run() throws Exception {
 				((Invocable)manager).invokeFunction(function, argument);
-
 				return null;
 			}
 		};
