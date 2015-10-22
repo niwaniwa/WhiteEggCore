@@ -27,10 +27,6 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			// console
-			return true;
-		}
 		if(!sender.hasPermission(permission)){
 			// message
 			return true;
