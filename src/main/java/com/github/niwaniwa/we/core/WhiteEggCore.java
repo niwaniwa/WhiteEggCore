@@ -18,7 +18,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
-import com.github.niwaniwa.we.core.api.WhiteEggAPIImpl;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggReplayCommand;
@@ -50,7 +49,7 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 public class WhiteEggCore extends JavaPlugin {
 
 	private static WhiteEggCore instance;
-	private static WhiteEggAPI api;
+	private static WhiteEggAPI api = WhiteEggAPI.getAPI();
 	private static MessageManager msg;
 	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
@@ -70,7 +69,7 @@ public class WhiteEggCore extends JavaPlugin {
 		long time = System.currentTimeMillis();
 		versionCheck();
 		this.setting();
-		System.out.println("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
+		logger.info("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
 	/**
@@ -128,7 +127,6 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void setting(){
 		instance = this;
-		api = new WhiteEggAPIImpl();
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
@@ -243,8 +241,8 @@ public class WhiteEggCore extends JavaPlugin {
 		String packageName = getServer().getClass().getPackage().getName();
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 		if(!version.equalsIgnoreCase("v1_8_R3")){
-			getLogger().warning("Unsupported CraftBukkit Version >_< : " + version);
-			getLogger().warning("Please use 1.8.8");
+			logger.warning("Unsupported CraftBukkit Version >_< : " + version);
+			logger.warning("Please use 1.8.8");
 			pm.disablePlugin(instance);
 			return;
 		}
@@ -260,10 +258,10 @@ public class WhiteEggCore extends JavaPlugin {
 			if(path.exists()){
 				continue;
 			}
-			if(send){ System.out.println(" " + type.getString() + " : loading now..."); }
+			if(send){ logger.info(" " + type.getString() + " : loading now..."); }
 			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
 					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
-			if(send){ System.out.println(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }
+			if(send){ logger.info(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }
 		}
 	}
 

@@ -102,4 +102,8 @@ public abstract class WhiteEggAPI {
 	 * @param tweet ツイートする文字列
 	 */
 	public abstract void tweet(String tweet);
+
+	public static WhiteEggAPI getAPI(){
+		return new WhiteEggAPIImpl();
+	}
 }

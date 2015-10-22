@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -39,6 +40,11 @@ public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
+		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		((WhiteEggPlayer) player).saveTask();
+	}
+
+	public void onKick(PlayerKickEvent event){
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
 	}
