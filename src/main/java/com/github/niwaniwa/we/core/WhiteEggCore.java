@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,6 +59,8 @@ public class WhiteEggCore extends JavaPlugin {
 
 	public static final String logPrefix = "[WEC]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
+
+	public static Logger logger;
 
 	/**
 	 * プラグインの初期化処理
@@ -131,9 +133,10 @@ public class WhiteEggCore extends JavaPlugin {
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
+		logger = this.getLogger();
+		this.register();
 		this.registerCommands();
 		this.registerListener();
-		this.register();
 		this.settingLanguage();
 		this.load();
 	}
@@ -166,7 +169,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private void registerListener(){
 //		pm.registerEvents(new Debug(), this);
 		pm.registerEvents(new PlayerListener(), this);
-		pm.registerEvents(new ScriptListener(), this);
+		new ScriptListener();
 	}
 
 	/**
@@ -226,11 +229,11 @@ public class WhiteEggCore extends JavaPlugin {
 		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
 		r.add();
 		try {
-			script = new JavaScript(new BufferedReader(
-					new InputStreamReader(getClass().getClassLoader().getResourceAsStream("script.js"), "UTF-8")));
-		} catch (UnsupportedEncodingException e) {
+			JavaScript.copyScript();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		script = JavaScript.loadScript();
 	}
 
 	/**

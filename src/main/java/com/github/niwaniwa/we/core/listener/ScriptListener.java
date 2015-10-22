@@ -1,32 +1,35 @@
 package com.github.niwaniwa.we.core.listener;
 
-import java.security.PrivilegedActionException;
-
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.script.JavaScript;
 
+/**
+ * Script用リスナー
+ * @author niwaniwa
+ *
+ */
 public class ScriptListener implements Listener {
 
-	private JavaScript script = WhiteEggCore.getInstance().getScript();
-
 	public ScriptListener() {
-		if(script == null){
-			HandlerList.unregisterAll(this);
+		if(WhiteEggCore.getInstance().getScript() != null){
+			Bukkit.getPluginManager().registerEvents(this, WhiteEggCore.getInstance());
 		}
 	}
 
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent event){
-		try {
-			script.run("call", event); // TODO: 動いたらいいな(白目)
-		} catch (PrivilegedActionException e) {
-			e.printStackTrace();
-		}
+		JavaScript.callEvent("command", event);
+	}
+
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event){
+		JavaScript.callEvent("join", event);
 	}
 
 }
