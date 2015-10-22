@@ -13,6 +13,7 @@ com.github.niwaniwa.we.core.json
 com.github.niwaniwa.we.core.listener
 com.github.niwaniwa.we.core.player
 com.github.niwaniwa.we.core.player.rank
+com.github.niwaniwa.we.core.script
 com.github.niwaniwa.we.core.twitter
 com.github.niwaniwa.we.core.util
 com.github.niwaniwa.we.core.util.bar
