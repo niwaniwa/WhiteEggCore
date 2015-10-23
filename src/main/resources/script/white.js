@@ -31,4 +31,3 @@ var white =(function() {
   return white;
 
 })();
-var whiteegg = new white();
