@@ -21,6 +21,7 @@ import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggReplayCommand;
+import com.github.niwaniwa.we.core.command.WhiteEggScriptCommand;
 import com.github.niwaniwa.we.core.command.WhiteEggWhisperCommand;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
@@ -182,6 +183,7 @@ public class WhiteEggCore extends JavaPlugin {
 		handler.registerCommand("register", new WhiteEggTwitterRegisterCommand());
 		handler.registerCommand("whisper", new WhiteEggWhisperCommand());
 		handler.registerCommand("replay", new WhiteEggReplayCommand());
+		handler.registerCommand("script", new WhiteEggScriptCommand());
 	}
 
 	/**
@@ -283,6 +285,10 @@ public class WhiteEggCore extends JavaPlugin {
 
 	public JavaScript getScript() {
 		return script;
+	}
+
+	public void setScript(JavaScript s){
+		this.script = s;
 	}
 
 }

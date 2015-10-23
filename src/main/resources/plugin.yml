@@ -21,6 +21,7 @@ commands:
   replay:
     aliases: [replay, r]
     permission: whiteegg.core.command.replay
+  script:
 permissions:
   whiteegg.*:
     description: Gives access to all WhiteEggPlugins
