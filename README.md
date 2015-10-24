@@ -2,17 +2,21 @@
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
-## 動作
+java勉強中...
 
-* Spigot最新版にて動作を確認しています
-* 不具合などについてはその他に記載されておりますTwitterまでお問い合わせください
+## 動作
+- Java 8の機能を利用しています
+- Spigot最新版にて動作を確認しています
+- 不具合などについてはその他に記載されておりますTwitterまでお問い合わせください
 
 ## 主な機能
 * jsonによるプレイデータの保存
 * Twitterへのツイート、情報を取得
 * Tab、Click可能なテキストを表示できる機能など
 
-## コマンド
+## 説明
+
+### コマンド
 コマンド | 説明 | 権限 | 備考
 -------|------|------|-----
 `/WhiteEggCore` | プラグイン情報など | whiteegg.core.command.* |  
@@ -23,13 +27,19 @@
 `/whisper` <Player> <メッセージ> | 特定の相手にプライベートメッセージを送信します | whiteegg.core.command.whisper |
 `/replay` <メッセージ> | 返信します | whiteegg.core.command.replay |
 
-## Config.yml
+### Config.yml
 
 要素名 | 説明 | type | 初期値
 ------|------|------|-----
 lock | プラグインのロック | boolean | false
 consumerkey | Twitter app | String | null
 consumerSecret | Twitter app | String | null
+
+### Script
+JavaScriptを利用してゲーム内に干渉できます(未実装)
+
+[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script)
+
 
 ## Javadoc
 
@@ -89,19 +99,14 @@ limitations under the License.
 
 詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
 
-## ブランチ
-
-master
-
-database
-
-script
 
 ## これから
 
 勉強のためにデータベースやJavaScriptの読み込みなどを実装予定
 
 特にデータベースを重点的に
+
+ｶﾞﾝﾊﾞｯﾃﾏｽ
 
 ## リンク
 
