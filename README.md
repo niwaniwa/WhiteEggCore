@@ -75,8 +75,6 @@ limitations under the License.
 
 ## その他
 
-もう実装する案がありません;;
-
 ### プレイヤーについて
 #### データ
 - プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
@@ -100,16 +98,10 @@ limitations under the License.
 詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
 
 
-## これから
-
-勉強のためにデータベースやJavaScriptの読み込みなどを実装予定
-
-特にデータベースを重点的に
-
-ｶﾞﾝﾊﾞｯﾃﾏｽ
-
 ## リンク
 
 Twitter : @[haniwa_koke](https://twitter.com/haniwa_koke "haniwa_koke")
 
 不備がありましたらこちらへ連絡をしていただけると幸いです
+
+javajava勉強中...
