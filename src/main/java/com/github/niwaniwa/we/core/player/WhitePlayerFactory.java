@@ -46,9 +46,8 @@ public class WhitePlayerFactory {
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
 	 * @return WhitePlayer 指定したクラスのinstance
-	 * @deprecated エラーが起こる可能性が高いので使わないでください
 	 */
-	public static <T extends WhitePlayer> WhitePlayer newInstance(Class<T> clazz, Player player){
+	public static <T extends WhitePlayer> T newInstance(Player player, Class<T> clazz){
 		if(clazz.isInterface()){ return null; }
 		if(Modifier.isAbstract(clazz.getModifiers())){ return null; }
 		T instance = null;
@@ -71,16 +70,17 @@ public class WhitePlayerFactory {
 	 * @return 指定したクラスのinstance(データ引き継ぎ)
 	 * @deprecated
 	 */
-	public static <T extends WhitePlayer> WhitePlayer cast(WhitePlayer from, Class<T> to){
+	@SuppressWarnings("unchecked")
+	public static <T extends WhitePlayer> T cast(WhitePlayer from, Class<T> to){
 		if(Modifier.isAbstract(to.getModifiers())
 				|| from.getClass().getSimpleName().equals(to.getSimpleName())){
 			return null;
 		}
 		from.save();
-		WhitePlayer instance = null;
+		T instance = null;
 		try {
 			Constructor<?> constructor = to.getConstructor(Player.class);
-			instance = (WhitePlayer) (constructor == null ? to.getConstructor(WhitePlayer.class).newInstance(from) : constructor.newInstance(from.getPlayer()));
+			instance = (T) (constructor == null ? to.getConstructor(WhitePlayer.class).newInstance(from) : constructor.newInstance(from.getPlayer()));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 		}
