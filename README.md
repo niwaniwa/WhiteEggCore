@@ -97,6 +97,13 @@ limitations under the License.
 
 詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
 
+## 謝辞
+
+### アドバイス、修正
+- Nekoneko様
+
+御礼を申し上げます
+
 
 ## リンク
 
