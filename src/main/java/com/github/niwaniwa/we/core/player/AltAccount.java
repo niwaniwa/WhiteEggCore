@@ -74,8 +74,8 @@ public class AltAccount implements ConfigurationSerializable {
 		if(obj == null
 				|| !obj.isJsonArray()){ return alt; }
 		JsonArray array = obj.getAsJsonArray();
-		for(Object o : array){
-			alt.add(UUID.fromString(String.valueOf(o)));
+		for(JsonElement o : array){
+			alt.add(UUID.fromString(o.getAsString()));
 		}
 		return alt;
 	}
