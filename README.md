@@ -49,8 +49,6 @@ JavaScriptを利用してゲーム内に干渉できます(未実装)
 
 * [Twitter4j](http://twitter4j.org/)
 
-* [JSON-lib](http://json-lib.sourceforge.net/) (gsonへ移行予定)
-
 * [apache httpcomponents client](https://hc.apache.org/)
 
 ## licenseなどなど
