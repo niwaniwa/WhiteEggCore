@@ -10,7 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
+import java.security.ProtectionDomain;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -43,44 +50,67 @@ public class JavaScript {
 		this.path = path;
 		try {
 			read();
-		} catch (ScriptException | IOException | PrivilegedActionException e) {
+		} catch (ScriptException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * コンストラクター
+	 * @param buffer BufferedReader
+	 */
 	public JavaScript(BufferedReader buffer) {
 		this.manager = new ScriptEngineManager();
 		this.engine = manager.getEngineByName("js");
 		this.path = null;
 		try {
 			read(buffer);
-		} catch (ScriptException | IOException | PrivilegedActionException e) {
+		} catch (ScriptException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * コンストラクター
+	 * @param script javascriptの文字列
+	 */
 	public JavaScript(String script) {
 		this.manager = new ScriptEngineManager();
 		this.engine = manager.getEngineByName("js");
 		this.path = null;
 		try {
-			engine.eval(script);
-		} catch (ScriptException e) {
+			eval(init().append(script).toString());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * script階層を取得
+	 * @return File パス
+	 */
 	public File getPath() {
 		return path;
 	}
 
-	private void read() throws ScriptException, IOException, PrivilegedActionException {
+	/**
+	 * 読み込み
+	 * @throws ScriptException スクリプトでエラーが発生した場合
+	 * @throws IOException 入出力エラー
+	 */
+	private void read() throws ScriptException, IOException {
 		WhiteEggCore.logger.info("Initializing ScriptEngine... ");
 		BufferedReader buffer = new BufferedReader(new FileReader(path));
 		read(buffer);
 	}
 
-	public void read(BufferedReader buffer) throws ScriptException, IOException, PrivilegedActionException{
+	/**
+	 * 読み込み
+	 * @param buffer BufferedReader
+	 * @throws ScriptException スクリプトでエラーが発生した場合
+	 * @throws IOException 入出力エラー
+	 */
+	public void read(BufferedReader buffer) throws ScriptException, IOException {
 		WhiteEggCore.logger.info("Initializing ScriptEngine... ");
 		StringBuilder sb = init();
 		String str = buffer.readLine();
@@ -89,10 +119,46 @@ public class JavaScript {
 			str = buffer.readLine();
 		}
 		buffer.close();
-		engine.eval(sb.toString());
+		eval(sb.toString());
 		this.script = sb.toString();
 	}
 
+	/**
+	 * scriptの実行
+	 * @param str 文字列
+	 */
+	private void eval(String str){
+		AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			@Override
+			public Void run() {
+				try {
+					engine.eval(str);
+				} catch (ScriptException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		}, security());
+	}
+
+	// よくわからない
+	private AccessControlContext security(){
+//		Policy policy = new Policy() {};
+//		Policy.setPolicy(policy);
+//		System.setSecurityManager(new SecurityManager());
+		PermissionCollection permissions = new Permissions();
+		CodeSource codeSource = this.getClass().getProtectionDomain().getCodeSource();
+		ProtectionDomain domain = new ProtectionDomain(codeSource, permissions);
+		ProtectionDomain[] domains = new ProtectionDomain[]{domain};
+		AccessControlContext context = new AccessControlContext(domains);
+		return context;
+	}
+
+	/**
+	 * 必要なScriptファイルを取得する
+	 * @return scriptの文字
+	 * @throws IOException 入出力エラー
+	 */
 	private StringBuilder init() throws IOException{
 		StringBuilder sb = new StringBuilder();
 /*		sb.append("var events = require('events');");
@@ -104,11 +170,18 @@ public class JavaScript {
 		sb.append("function call(eventName, event){white.call(event,eventName);}");
 */
 
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream(new File("script" + File.separator + "init.js"))));
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream(
+				new File(WhiteEggCore.getInstance().getDataFolder(), "script" + File.separator + "init.js"))));
 		sb.append(readFile(buffer));
 		return sb;
 	}
 
+	/**
+	 * バッファーから文字列を読み込む
+	 * @param reader バッファー
+	 * @return 読み込まれた文字列
+	 * @throws IOException 入出力エラー
+	 */
 	private static String readFile(BufferedReader reader) throws IOException{
 		StringBuilder sb = new StringBuilder();
 		String str = reader.readLine();
@@ -132,19 +205,26 @@ public class JavaScript {
 		((Invocable)engine).invokeFunction(function, argument);
 	}
 
-
+	/**
+	 * scriptの文字列の取得
+	 * @return 文字列
+	 */
 	public String getScript() {
 		return script;
 	}
 
+	/**
+	 * scriptのコピー
+	 * @throws IOException 入出力エラー
+	 */
 	public static void copyScript() throws IOException{
 		File path = new File(WhiteEggCore.getInstance().getDataFolder(), "script" + File.separator);
 		if(!path.exists()){ path.mkdirs(); }
 		StringBuilder sb = new StringBuilder();
-//		BufferedReader buffer = new BufferedReader(
-//				new InputStreamReader(WhiteEggCore.class.getClassLoader().getResourceAsStream("script/white.js"), "UTF-8"));
-//		sb.append(readFile(buffer));
 		BufferedReader buffer = new BufferedReader(
+				new InputStreamReader(WhiteEggCore.class.getClassLoader().getResourceAsStream("script/white.js"), "UTF-8"));
+		sb.append(readFile(buffer));
+		buffer = new BufferedReader(
 				new InputStreamReader(WhiteEggCore.class.getClassLoader().getResourceAsStream("script/init.js"), "UTF-8"));
 		sb.append(readFile(buffer));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path, "init.js")), "UTF-8"));
@@ -153,6 +233,10 @@ public class JavaScript {
 		pw.close();
 	}
 
+	/**
+	 * JavaScriptの読み込み
+	 * @return JavaScript インスタンス
+	 */
 	public static JavaScript loadScript(){
 		// TODO: Scriptファイルごとにインスタンスを生成するかすべてまとめてしまうか
 		File path = new File("script" + File.separator);
@@ -171,6 +255,11 @@ public class JavaScript {
 		return script;
 	}
 
+	/**
+	 * イベントのコール
+	 * @param eventName 名前
+	 * @param event イベント
+	 */
 	public static void callEvent(String eventName, Event event){
 		try {
 			WhiteEggCore.getInstance().getScript().run("call", eventName, event);

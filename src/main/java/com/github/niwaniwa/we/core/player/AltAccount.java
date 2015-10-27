@@ -9,8 +9,9 @@ import java.util.UUID;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class AltAccount implements ConfigurationSerializable {
 
@@ -67,14 +68,14 @@ public class AltAccount implements ConfigurationSerializable {
 		return null;
 	}
 
-	public static AltAccount parser(JSONObject json){
+	public static AltAccount parser(JsonObject json){
 		AltAccount alt = new AltAccount();
-		Object obj = json.get("account");
+		JsonElement obj = json.get("account");
 		if(obj == null
-				|| (obj instanceof JSONArray)){ return alt; }
-		JSONArray array = JSONArray.fromObject(obj);
-		for(Object o : array){
-			alt.add(UUID.fromString(String.valueOf(o)));
+				|| !obj.isJsonArray()){ return alt; }
+		JsonArray array = obj.getAsJsonArray();
+		for(JsonElement o : array){
+			alt.add(UUID.fromString(o.getAsString()));
 		}
 		return alt;
 	}

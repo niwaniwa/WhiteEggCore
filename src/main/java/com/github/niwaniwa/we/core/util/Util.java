@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.jar.JarEntry;
@@ -22,9 +23,10 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.md_5.bungee.api.ChatColor;
-import net.sf.json.JSONObject;
 
 public class Util {
 
@@ -141,11 +143,13 @@ public class Util {
 	 * 文字列からマップを返します
 	 * @param str 文字列
 	 * @return Map
-	 * @throws IOException 入力ストリームからの読み込み中にエラーが発生した場合
 	 */
-	public static Map<String, Object> toMap(String str) throws IOException{
+	public static Map<String, Object> toMap(String str){
 		Properties props = new Properties();
-		props.load(new StringReader(str.substring(1, str.length() - 1).replace(", ", "\n")));
+		try {
+			props.load(new StringReader(str.substring(1, str.length() - 1).replace(", ", "\n")));
+		} catch (IOException e1) {
+		}
 		Map<String, Object> map = new HashMap<>();
 		for (Map.Entry<Object, Object> e : props.entrySet()) {
 			map.put((String)e.getKey(), e.getValue());
@@ -172,10 +176,10 @@ public class Util {
 	 * @param j json
 	 * @return Map
 	 */
-	public static Map<String, Object> toMap(JSONObject j){
+	public static Map<String, Object> toMap(JsonObject j){
 		Map<String, Object> map = new HashMap<>();
-		for(Object o : j.keySet()){
-			map.put(String.valueOf(o), j.get(o));
+		for(Entry<String, JsonElement> entry : j.entrySet()){
+			map.put(entry.getKey(), entry.getValue());
 		}
 		return map;
 	}

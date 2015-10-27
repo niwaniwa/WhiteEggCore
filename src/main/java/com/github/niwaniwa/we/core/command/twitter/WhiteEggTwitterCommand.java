@@ -5,22 +5,20 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 
-public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand {
+public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".twitter";
 	private final String permission = commandPermission + ".twitter";
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof WhitePlayer)){
-			sender.sendMessage(msg.getMessage(sender, error_Console, "", true));
-			return true;
-		} else if(!sender.hasPermission(permission)){
+		if(!sender.hasPermission(permission)){
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
