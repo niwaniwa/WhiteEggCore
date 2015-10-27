@@ -13,8 +13,7 @@ import org.bukkit.plugin.Plugin;
 import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
-
-import net.sf.json.JSONObject;
+import com.google.gson.JsonObject;
 
 /**
  * 各種設定クラス
@@ -330,16 +329,16 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		return toggle;
 	}
 
-	public static ToggleSettings deserializeJ(JSONObject json){
-		JSONObject j = json.getJSONObject("togglesettings");
-		Plugin p = Util.getPlugin(j.getString("plugin"));
+	public static ToggleSettings deserializeJ(JsonObject json){
+		JsonObject j = json.getAsJsonObject("togglesettings");
+		Plugin p = Util.getPlugin(j.get("plugin").getAsString());
 		if(p == null){ return null; }
-		JSONObject t = j.getJSONObject("toggles");
-		JSONObject s = t.getJSONObject("settings");
+		JsonObject t = j.getAsJsonObject("toggles");
+		JsonObject s = t.getAsJsonObject("settings");
 		ToggleSettings toggle = new ToggleSettings(
-				p, ToggleType.get(t.getString("toggletype")),
+				p, ToggleType.get(t.get("toggletype").getAsString()),
 				String.valueOf(t.get("permission")),
-				String.valueOf(t.get("name")), Util.toMap(s),
+				String.valueOf(t.get("name")), Util.toMap(s.toString()),
 				Boolean.parseBoolean(String.valueOf(t.get("ishide"))));
 		return toggle;
 	}

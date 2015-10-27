@@ -3,21 +3,27 @@ package com.github.niwaniwa.we.core.json;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class JsonManager {
 
+	private Gson gson = new Gson();
 
 	public JsonManager() {
 	}
@@ -29,34 +35,37 @@ public class JsonManager {
 	 * @param json json
 	 * @param chara 文字コード
 	 * @return 成功したか
-	 * @throws IOException 入出力
 	 */
-	public boolean writeJSON(File path, String file, JSONObject json, String chara) throws IOException {
+	public boolean writeJson(File path, String file, JsonObject json, String chara) {
 		if(!path.exists()){ path.mkdirs(); }
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path, file)), chara));
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path, file)), chara));
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+		}
 		PrintWriter pw = new PrintWriter(bw);
 		pw.write(json.toString());
 		pw.close();
 		return true;
 	}
 
-	public boolean writeJSON(File path, String file, JSONObject json) throws IOException {
-		return writeJSON(path, file, json, "UTF-8");
+	public boolean writeJson(File path, String file, JsonObject json) {
+		return writeJson(path, file, json, "UTF-8");
 	}
 
-	public boolean writeJSON(File path, String file, JSONObject json, boolean backup) throws IOException {
+	public boolean writeJson(File path, String file, JsonObject json, boolean backup) {
 		if(backup){
 			File f = new File(path, file);
 			if(f.exists()){
 				f.renameTo(new File(path, file + "_old"));
 			}
 		}
-		writeJSON(path, file, json);
+		writeJson(path, file, json);
 		return true;
 	}
 
-	public boolean writeJSON(String path, String file, JSONObject json) throws IOException {
-		return writeJSON(new File(file), file, json);
+	public boolean writeJson(String path, String file, JsonObject json) throws IOException {
+		return writeJson(new File(file), file, json);
 	}
 
 	/**
@@ -65,43 +74,50 @@ public class JsonManager {
 	 * @return JSONObject json
 	 * @throws IOException 入出力
 	 */
-	public JSONObject getJSON(File file) throws IOException {
+	public JsonObject getJson(File file) {
 		if (!file.exists()) { return null; }
 		if (file.isDirectory()) { return null; }
 		if (!file.getName().endsWith(".json")) { return null; }
-		BufferedReader reader = new BufferedReader(new FileReader(file));
 		StringBuilder b = new StringBuilder();
-		String str = reader.readLine();
-		while (str != null) {
-			b.append(str);
-			str = reader.readLine();
+		BufferedReader reader = null;
+		try{
+			reader = new BufferedReader(new FileReader(file));
+			String str = reader.readLine();
+			while (str != null) {
+				b.append(str);
+				str = reader.readLine();
+			}
+			reader.close();
+		} catch (IOException ex){
+		} finally {
+			if(reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
 		}
-		reader.close();
 		if (b.length() == 0) { return null; }
-		return JSONObject.fromObject(b.toString());
+		return gson.fromJson(b.toString(), JsonObject.class);
 	}
 
-	public  static Map<String, Object> toMap(Object o){
+	public JsonObject createJsonObject(String json) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, JsonObject.class);
+	}
+
+	public  static Map<String, Object> toMap(JsonObject json){
 		Map<String, Object> map = new HashMap<>();
-		if(!(o instanceof JSONObject)){
-			if(!(o instanceof JSONArray)){ return map; }
-		}
-		JSONObject json = (JSONObject) o;
-		for(Object key : json.keySet()){
-			map.put(String.valueOf(key), json.get(key));
+		for(Entry<String, JsonElement> entry : json.entrySet()){
+			map.put(entry.getKey(), entry.getValue());
 		}
 		return map;
 	}
 
-	public static List<Object> toList(JSONArray array){
-		List<Object> list = new ArrayList<Object>();
+	public static List<JsonElement> toList(JsonArray array){
+		List<JsonElement> list = new ArrayList<JsonElement>();
 		for (int i = 0; i < array.size(); i++) {
-			Object value = array.get(i);
-			if (value instanceof JSONArray) {
-				value = toList((JSONArray) value);
-			} else if (value instanceof JSONObject) {
-				value = toMap((JSONObject) value);
-			}
+			JsonElement value = array.get(i);
 			list.add(value);
 		}
 		return list;
