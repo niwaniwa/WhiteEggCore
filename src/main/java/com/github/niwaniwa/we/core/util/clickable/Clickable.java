@@ -7,36 +7,36 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.util.Extension;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class Clickable extends Extension {
 
-	private JSONObject json;
+	private JsonObject json;
 
 	public Clickable(String text, ChatColor color, List<ChatFormat> formats) {
-		json = new JSONObject();
-		json.put("text", text);
+		json = new JsonObject();
+		json.addProperty("text", text);
 		if (color != null) {
-			json.put("color", color.toString().toLowerCase());
+			json.addProperty("color", color.toString().toLowerCase());
 		}
 		if (formats != null) {
 			for (ChatFormat f : formats) {
-				json.put(f.getFormat(), true);
+				json.addProperty(f.getFormat(), true);
 			}
 		}
 	}
 
 	public void addExtra(ChatExtra extraObject) {
-		if (!json.containsKey("extra")) {
-			json.put("extra", new JSONArray());
+		if (json.get("extra") == null) {
+			json.add("extra", new JsonArray());
 		}
-		JSONArray extra = (JSONArray) json.get("extra");
+		JsonArray extra = json.getAsJsonArray("extra");
 		extra.add(extraObject.toJSON());
-		json.put("extra", extra);
+		json.add("extra", extra);
 	}
 
 	@Override

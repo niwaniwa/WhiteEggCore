@@ -26,13 +26,13 @@ import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.Vanish;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import twitter4j.auth.AccessToken;
 
 /**
@@ -187,14 +187,14 @@ public class WhiteEggPlayer implements WhitePlayer {
 
 	@Override
 	public boolean saveVariable(String jsonString) {
-		JSONObject j = JSONObject.fromObject(jsonString);
-		JSONObject json = j.getJSONObject("WhiteEggPlayer");
-		JSONObject player = json.getJSONObject("player");
-		this.isVanish = player.getBoolean("isvanish");
-		if(!String.valueOf(json.get("twitter")).equalsIgnoreCase("null")){
-			JSONObject tw = json.getJSONObject("twitter");
+		JsonObject j = jm.createJsonObject(jsonString);
+		JsonObject json = j.getAsJsonObject("WhiteEggPlayer");
+		JsonObject player = json.getAsJsonObject("player");
+		this.isVanish = player.get("isvanish").getAsBoolean();
+		if(json.get("twitter").isJsonObject()){
+			JsonObject tw = json.getAsJsonObject("twitter");
 			this.getTwitterManager().setAccessToken(
-					new AccessToken(tw.getString("accesstoken"), tw.getString("accesstokensecret")));
+					new AccessToken(tw.get("accesstoken").getAsString(), tw.get("accesstokensecret").getAsString()));
 		}
 		this.setRank(player);
 		this.setToggle(player);
@@ -202,23 +202,23 @@ public class WhiteEggPlayer implements WhitePlayer {
 		return true;
 	}
 
-	private void setRank(JSONObject j){
+	private void setRank(JsonObject j){
 		if(j.get("rank") != null){
-			JSONArray rank = (JSONArray) j.get("rank");
+			JsonArray rank = j.getAsJsonArray("rank");
 			for (Object rank1 : rank) {
-				if(!(rank1 instanceof JSONObject)){ continue; }
-				Rank r = Rank.parserRank(Util.toMap((JSONObject) rank1));
+				if(!(rank1 instanceof JsonObject)){ continue; }
+				Rank r = Rank.parserRank(Util.toMap(((JsonObject) rank1).toString()));
 				if(!Rank.check(r)){ continue; }
 				this.addRank(r);
 			}
 		}
 	}
 
-	private void setToggle(JSONObject json){
+	private void setToggle(JsonObject json){
 		this.getToggleSettings().clear();
-		JSONObject t = json.getJSONObject("toggles");
-		for(Object key : t.keySet()){
-			JSONObject toggleJ = t.getJSONObject(String.valueOf(key));
+		JsonObject t = json.getAsJsonObject("toggles");
+		for(Entry<String, JsonElement> entry : t.entrySet()){
+			JsonObject toggleJ = entry.getValue().getAsJsonObject();
 			ToggleSettings instance = ToggleSettings.deserializeJ(toggleJ);
 			if(instance == null){ continue; }
 			if(!ToggleSettings.containsInstance(instance)){ continue; }
@@ -275,8 +275,10 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	private JsonObject unionJson(){
-		Gson gson = new Gson();
-		JsonObject serialize = gson.fromJson(this.serialize().toString(), JsonObject.class);
+		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
+		String jsonString = gson.toJson(this.serialize());
+		WhiteEggCore.logger.info(jsonString);
+		JsonObject serialize = jm.createJsonObject(jsonString);
 		JsonObject fileJson = jm.getJson(new File(path, this.getUniqueId().toString() + ".json"));
 		if(fileJson == null){ return serialize; }
 		for(Entry<String, JsonElement> entry : fileJson.entrySet()){

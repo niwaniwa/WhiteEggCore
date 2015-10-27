@@ -92,6 +92,11 @@ public class Rank implements ConfigurationSerializable{
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return serialize().toString();
+	}
+
 	public void save(){
 		if(!path.exists()){ path.mkdirs(); }
 		Transformer tf = null;
@@ -141,7 +146,7 @@ public class Rank implements ConfigurationSerializable{
 	public static Rank parserRank(Map<String, Object> o){
 		String prefix = String.valueOf(o.get("prefix"));
 		String name = String.valueOf(o.get("name"));
-		RankProperty property = RankProperty.valueOf(String.valueOf(o.get("property")));
+		RankProperty property = RankProperty.valueOfString(String.valueOf(o.get("property")));
 		String permission = String.valueOf(o.get("permission"));
 		if(prefix == null
 				|| name == null
