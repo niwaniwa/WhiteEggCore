@@ -1,13 +1,13 @@
 package com.github.niwaniwa.we.core.player;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -25,6 +25,9 @@ import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.Vanish;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -246,11 +249,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 			return true;
 		}
 		// local
-		JSONObject json = null;
-		try {
-			json = jm.getJSON(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
-		} catch (IOException e) {
-		}
+		JsonObject json = jm.getJson(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
 		if(json == null){ return false; }
 		this.saveVariable(json.toString());
 		return false;
@@ -262,12 +261,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 			// sql
 			return true;
 		}
-		JSONObject json = unionJson();
-		try {
-			return jm.writeJSON(path, getUniqueId().toString() + ".json", json);
-		} catch (IOException e) {
-			return false;
-		}
+		JsonObject json = unionJson();
+		return jm.writeJson(path, getUniqueId().toString() + ".json", json);
 	}
 
 	public void saveTask(){
@@ -279,19 +274,17 @@ public class WhiteEggPlayer implements WhitePlayer {
 		}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 1);
 	}
 
-	private JSONObject unionJson(){
-		JSONObject json = JSONObject.fromObject(this.serialize());
-		JSONObject from = null;
-		try {
-			from = jm.getJSON(new File(path, this.getUniqueId().toString() + ".json"));
-		} catch (IOException e) {}
-		if(from == null){ return json; }
-		for(Object key : from.keySet()){
-			if(!String.valueOf(key).equalsIgnoreCase("WhiteEggPlayer")){
-				json.put(key, from.get(key));
+	private JsonObject unionJson(){
+		Gson gson = new Gson();
+		JsonObject serialize = gson.fromJson(this.serialize().toString(), JsonObject.class);
+		JsonObject fileJson = jm.getJson(new File(path, this.getUniqueId().toString() + ".json"));
+		if(fileJson == null){ return serialize; }
+		for(Entry<String, JsonElement> entry : fileJson.entrySet()){
+			if(!entry.getKey().equalsIgnoreCase(this.getClass().getSimpleName())){
+				serialize.add(entry.getKey(), entry.getValue());
 			}
 		}
-		return json;
+		return serialize;
 	}
 
 	@Override
@@ -313,7 +306,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
-		white.put("WhiteEggPlayer", result);
+		white.put(this.getClass().getSimpleName(), result);
 		return white;
 	}
 
