@@ -143,7 +143,6 @@ public class Util {
 	 * 文字列からマップを返します
 	 * @param str 文字列
 	 * @return Map
-	 * @throws IOException 入力ストリームからの読み込み中にエラーが発生した場合
 	 */
 	public static Map<String, Object> toMap(String str){
 		Properties props = new Properties();

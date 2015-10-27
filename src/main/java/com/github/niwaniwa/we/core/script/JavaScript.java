@@ -87,7 +87,7 @@ public class JavaScript {
 
 	/**
 	 * script階層を取得
-	 * @return
+	 * @return File パス
 	 */
 	public File getPath() {
 		return path;

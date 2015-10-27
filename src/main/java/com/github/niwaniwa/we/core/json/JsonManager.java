@@ -72,7 +72,6 @@ public class JsonManager {
 	 * local
 	 * @param file パス
 	 * @return JSONObject json
-	 * @throws IOException 入出力
 	 */
 	public JsonObject getJson(File file) {
 		if (!file.exists()) { return null; }
