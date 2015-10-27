@@ -277,7 +277,6 @@ public class WhiteEggPlayer implements WhitePlayer {
 	private JsonObject unionJson(){
 		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
 		String jsonString = gson.toJson(this.serialize());
-		WhiteEggCore.logger.info(jsonString);
 		JsonObject serialize = jm.createJsonObject(jsonString);
 		JsonObject fileJson = jm.getJson(new File(path, this.getUniqueId().toString() + ".json"));
 		if(fileJson == null){ return serialize; }
