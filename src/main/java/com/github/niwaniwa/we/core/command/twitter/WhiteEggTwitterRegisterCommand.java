@@ -44,10 +44,6 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 			// message
 			this.sendURL(player);
 		} else if(args.length == 1){
-			if(!(args[0].length() > 0)){
-				//
-				return true;
-			}
 			if(args[0].equalsIgnoreCase("reset")){
 				tw.reset();
 				sender.sendMessage("りせっとしました");
