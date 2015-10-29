@@ -294,9 +294,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		Map<String, Object> player = new HashMap<>();
 		Map<String, Object> white = new HashMap<>();
 		Map<String, Object> toggle = new HashMap<>();
-		for(ToggleSettings to : getToggleSettings()){
-			toggle.put(to.getPlugin().getName(), to.serialize());
-		}
+		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.getRanks());
