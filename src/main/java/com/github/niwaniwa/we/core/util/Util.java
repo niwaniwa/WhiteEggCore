@@ -152,7 +152,7 @@ public class Util {
 		}
 		Map<String, Object> map = new HashMap<>();
 		for (Map.Entry<Object, Object> e : props.entrySet()) {
-			map.put((String)e.getKey(), e.getValue());
+			map.put(String.valueOf(e.getKey()), e.getValue());
 		}
 		return map;
 	}
