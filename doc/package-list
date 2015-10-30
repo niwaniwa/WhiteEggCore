@@ -18,4 +18,5 @@ com.github.niwaniwa.we.core.twitter
 com.github.niwaniwa.we.core.util
 com.github.niwaniwa.we.core.util.bar
 com.github.niwaniwa.we.core.util.clickable
+com.github.niwaniwa.we.core.util.holograms
 com.github.niwaniwa.we.core.util.message
