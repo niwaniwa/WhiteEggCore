@@ -29,15 +29,11 @@ public abstract class Extension {
 		}
 	}
 	public static <T extends Extension> void worldBroadcast(World world, T t){
-		for(Player p : world.getPlayers()){
-			t.send(p);
-		}
+		world.getPlayers().forEach(player -> t.send(player));
 	}
 
 	public static <T extends Extension> void serverBroadcast(T t){
-		for(Player p : Bukkit.getOnlinePlayers()){
-			t.send(p);
-		}
+		Bukkit.getOnlinePlayers().forEach(player -> t.send(player));
 	}
 
 }

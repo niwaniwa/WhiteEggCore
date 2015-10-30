@@ -25,9 +25,6 @@ public class JsonManager {
 
 	private Gson gson = new Gson();
 
-	public JsonManager() {
-	}
-
 	/**
 	 * localにファイルを保存します
 	 * @param path 保存フォルダ
@@ -101,7 +98,6 @@ public class JsonManager {
 	}
 
 	public JsonObject createJsonObject(String json) {
-		Gson gson = new Gson();
 		return gson.fromJson(json, JsonObject.class);
 	}
 

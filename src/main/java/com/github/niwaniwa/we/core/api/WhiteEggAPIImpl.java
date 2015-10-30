@@ -46,18 +46,14 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 
 	@Override
 	public void RankBroadcastMessage(Rank rank, String message) {
-		for(WhitePlayer p :  WhiteEggCore.getAPI().getOnlinePlayers()){
-			if(p.getRanks().contains(rank)){
-				p.sendMessage(message);
-			}
-		}
+		WhiteEggCore.getAPI().getOnlinePlayers().stream()
+						.filter(p -> p.getRanks().contains(rank))
+						.forEach(p -> p.sendMessage(message));
 	}
 
 	@Override
 	public void WorldBroadcastMessage(World world, String message) {
-		for(Player p : world.getPlayers()){
-			p.sendMessage(message);
-		}
+		world.getPlayers().forEach(p -> p.sendMessage(message));
 	}
 
 	@Override

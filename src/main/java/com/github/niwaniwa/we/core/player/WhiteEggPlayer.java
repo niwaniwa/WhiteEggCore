@@ -57,17 +57,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.player = player;
 		this.isVanish = false;
 		this.twitter = new PlayerTwitterManager(this);
-		this.setting();
+		ToggleSettings.getList().forEach(list -> this.toggle.add(list.clone()));
 		this.accounts = new AltAccount();
-	}
-
-	/**
-	 * 初期化時の設定
-	 */
-	private void setting(){
-		for(ToggleSettings t : ToggleSettings.getList()){
-			toggle.add(t.clone());
-		}
 	}
 
 	@Override
@@ -78,9 +69,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public String getPrefix() {
 		StringBuilder sb = new StringBuilder();
-		for(Rank r : getRanks()){
-			sb.append(r.getPrefix());
-		}
+		this.getRanks().forEach(rank -> sb.append(rank.getPrefix()));
 		return sb.toString();
 	}
 
@@ -294,12 +283,10 @@ public class WhiteEggPlayer implements WhitePlayer {
 		Map<String, Object> player = new HashMap<>();
 		Map<String, Object> white = new HashMap<>();
 		Map<String, Object> toggle = new HashMap<>();
-		for(ToggleSettings to : getToggleSettings()){
-			toggle.put(to.getPlugin().getName(), to.serialize());
-		}
+		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
-		player.put("rank", this.getRanks());
+		player.put("rank", this.getRanks()); // TODO: 必要のない情報が入ってしまう
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", toggle);
 		player.put("lastonline", new Date()+":"+Bukkit.getServerName());

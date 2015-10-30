@@ -168,47 +168,14 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	}
 
 	/**
-	 * プラグインに設定されている設定
-	 * @param l 設定
-	 * @return List
+	 * 取得したい種別の設定を返す
+	 * @param type 取得したい種別
+	 * @param toggle 検索する設定
+	 * @return List 設定
 	 */
-	public static List<ToggleSettings> getPluginSetting(List<ToggleSettings> l){
+	public static List<ToggleSettings> getList(ToggleType type, List<ToggleSettings> toggle){
 		List<ToggleSettings> result = new ArrayList<>();
-		for(ToggleSettings toggle : l){
-			if(toggle.getType().equals(ToggleType.PLUGIN)){
-				result.add(toggle);
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * デフォルトで表示される設定
-	 * @param l 設定
-	 * @return List
-	 */
-	public static List<ToggleSettings> getDefaltSetting(List<ToggleSettings> l){
-		List<ToggleSettings> result = new ArrayList<>();
-		for(ToggleSettings toggle : l){
-			if(toggle.getType().equals(ToggleType.DEFAULT)){
-				result.add(toggle);
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * moderator用の設定
-	 * @param l List
-	 * @return List リスト
-	 */
-	public static List<ToggleSettings> getModeratorSetting(List<ToggleSettings> l){
-		List<ToggleSettings> result = new ArrayList<>();
-		for(ToggleSettings toggle : l){
-			if(toggle.getType().equals(ToggleType.MODERATOR)){
-				result.add(toggle);
-			}
-		}
+		toggle.stream().filter(t -> t.getType() == type).forEach(t -> result.add(t));
 		return result;
 	}
 
@@ -218,21 +185,6 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 */
 	public static Map<String, Object> getServerSetting(){
 		return server;
-	}
-
-	/**
-	 * サーバーの設定
-	 * @param l List
-	 * @return List リスト
-	 */
-	public static List<ToggleSettings> getServerSetting(List<ToggleSettings> l){
-		List<ToggleSettings> result = new ArrayList<>();
-		for(ToggleSettings toggle : l){
-			if(toggle.getType().equals(ToggleType.SERVER)){
-				result.add(toggle);
-			}
-		}
-		return result;
 	}
 
 	/**

@@ -14,9 +14,7 @@ public class ChatExtra {
 		json = new JsonObject();
 		json.addProperty("text", text);
 		json.addProperty("color", color.toString().toLowerCase());
-		for (ChatFormat format : formats) {
-			json.addProperty(format.getFormat(), true);
-		}
+		formats.forEach(f -> json.addProperty(f.getFormat(), true));
 	}
 
 	public void setClickEvent(ClickEventType action, String value) {
