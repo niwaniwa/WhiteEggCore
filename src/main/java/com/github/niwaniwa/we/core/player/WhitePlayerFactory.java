@@ -45,7 +45,7 @@ public class WhitePlayerFactory {
 	 * @param <T> WhitePlayerを継承したクラス
 	 * @param clazz 取得するクラス
 	 * @param player プレイヤー
-	 * @return WhitePlayer 指定したクラスのinstance
+	 * @return T 指定したクラスのinstance
 	 */
 	public static <T extends WhitePlayer> T newInstance(Player player, Class<T> clazz){
 		if(clazz.isInterface()){ return null; }
@@ -54,8 +54,7 @@ public class WhitePlayerFactory {
 		try {
 			Constructor<T> c = clazz.getConstructor(Player.class);
 			instance = c.newInstance(player);
-		} catch (NoSuchMethodException | SecurityException | InstantiationException |
-				IllegalAccessException | IllegalArgumentException | InvocationTargetException e){
+		} catch (Exception e){
 		}
 		if(instance == null){ return null; }
 		instance.load();
