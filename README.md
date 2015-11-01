@@ -36,9 +36,9 @@ consumerkey | Twitter app | String | null
 consumerSecret | Twitter app | String | null
 
 ### Script
-JavaScriptを利用してゲーム内に干渉できます(未実装)
+JavaScriptを利用してゲーム内に干渉できます
 
-[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script)
+[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script "Script")
 
 
 ## Javadoc
