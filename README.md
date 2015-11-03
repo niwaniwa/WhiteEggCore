@@ -1,4 +1,4 @@
-# WhiteEggCore - v1.0.3
+# WhiteEggCore - v1.0.4
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP"WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
@@ -36,9 +36,9 @@ consumerkey | Twitter app | String | null
 consumerSecret | Twitter app | String | null
 
 ### Script
-JavaScriptを利用してゲーム内に干渉できます(未実装)
+JavaScriptを利用してゲーム内に干渉できます
 
-[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script)
+[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script "Script")
 
 
 ## Javadoc
@@ -94,6 +94,14 @@ limitations under the License.
 - [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
 
 詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
+
+### 言語ファイルについて
+
+`plugins/WhiteEggCore/lang/`
+階層内に設置されている言語ファイルを編集することができます
+
+- カラーコードは`&<code>`とすることで装飾が出来ます
+
 
 ## 謝辞
 
