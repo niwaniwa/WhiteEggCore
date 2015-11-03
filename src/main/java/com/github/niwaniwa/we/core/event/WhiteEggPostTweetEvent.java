@@ -19,12 +19,10 @@ public class WhiteEggPostTweetEvent extends Event {
 
 	private TwitterManager twitter;
 	private Status status;
-	private boolean successfull;
 
-	public WhiteEggPostTweetEvent(TwitterManager twitter, Status tweet, boolean successfull){
+	public WhiteEggPostTweetEvent(TwitterManager twitter, Status tweet){
 		this.twitter = twitter;
 		this.status = tweet;
-		this.successfull = successfull;
 	}
 
 	@Override
@@ -46,10 +44,6 @@ public class WhiteEggPostTweetEvent extends Event {
 
 	public boolean isPlayer(){
 		return (twitter instanceof PlayerTwitterManager);
-	}
-
-	public boolean isSuccessfull() {
-		return successfull;
 	}
 
 }

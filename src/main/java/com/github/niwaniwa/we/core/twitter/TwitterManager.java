@@ -171,13 +171,4 @@ public abstract class TwitterManager {
 		return twitter;
 	}
 
-	/**
-	 * 直前のツイートが送信されたか
-	 * ツイートをするたびに値が変わるので注意
-	 * @return ツイートの送信に成功したか
-	 * @deprecated 正確ではないため
-	 */
-	public abstract boolean isSuccessfull();
-
-
 }

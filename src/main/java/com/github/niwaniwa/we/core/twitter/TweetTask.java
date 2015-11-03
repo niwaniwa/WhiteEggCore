@@ -46,7 +46,6 @@ public class TweetTask extends BukkitRunnable {
 	private List<Status> status = new ArrayList<>();
 	private List<File> medias = new ArrayList<>();
 	private boolean useMedia;
-	private boolean successfull = false;
 	private int wait; //
 
 	/**
@@ -129,16 +128,14 @@ public class TweetTask extends BukkitRunnable {
 			status = t.updateStatus(build());
 		} catch (TwitterException e) {}
 		if(status != null){
-			this.successfull = true;
 			this.status.add(status);
 		}
 		if(callback != null){
-			callback.call(successfull);
+			callback.call((status != null));
 		}
-
 		delete();
 		// call event
-		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
+		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status);
 		Util.callEvent(event);
 	}
 
@@ -173,10 +170,6 @@ public class TweetTask extends BukkitRunnable {
 				f.delete();
 			}
 		}
-	}
-
-	public boolean isSuccessfull() {
-		return successfull;
 	}
 
 	public List<Status> getStatus() {

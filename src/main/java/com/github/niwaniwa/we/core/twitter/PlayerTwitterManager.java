@@ -7,7 +7,6 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 public class PlayerTwitterManager extends TwitterManager {
 
 	private WhitePlayer player;
-	private boolean isSuccessfull = false;
 
 	public PlayerTwitterManager(WhitePlayer p){
 		super();
@@ -32,20 +31,6 @@ public class PlayerTwitterManager extends TwitterManager {
 
 	public WhitePlayer getPlayer(){
 		return player;
-	}
-
-	@Override
-	public boolean isSuccessfull() {
-		return isSuccessfull;
-	}
-
-	/**
-	 * set
-	 * @param s 成功したか
-	 * @deprecated
-	 */
-	public void set(boolean s){
-		this.isSuccessfull = s;
 	}
 
 }
