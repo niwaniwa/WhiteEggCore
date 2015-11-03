@@ -49,11 +49,9 @@ JavaScriptを利用してゲーム内に干渉できます
 
 * [Twitter4j](http://twitter4j.org/ "Twitter4j")
 
-* [apache httpcomponents client](https://hc.apache.org/ "apache")
-
 ## licenseなどなど
 
-* Twitter4j, apache httpcomponents clientはApache License 2.0licenseを使用しています
+* Twitter4jはApache License 2.0licenseを使用しています
 
 >Copyright 2007 Yusuke Yamamoto
 
