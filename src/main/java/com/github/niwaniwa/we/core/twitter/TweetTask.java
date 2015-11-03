@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,12 +14,6 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.HttpClientUtils;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -194,32 +190,19 @@ public class TweetTask extends BukkitRunnable {
 
 	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
-		HttpClient client = create();
-		HttpGet httpGet = new HttpGet(url);
-		HttpResponse response = null;
+
+		URL imageUrl = null;
 		try {
-			response = client.execute(httpGet);
-		} catch (IOException e){
-			close(response);
-			return null;
+			imageUrl = new URL(url);
+		} catch (MalformedURLException e1) {
 		}
-		if(response.getStatusLine().getStatusCode() == 404){ return null; }
+		if(imageUrl == null){ return null; }
 		InputStream input = null;
 		try {
-			input = response.getEntity().getContent();
-		} catch (IllegalStateException | IOException e) {}
+			input = imageUrl.openConnection().getInputStream();
+		} catch (IOException e) {
+		}
 		return input;
-	}
-
-	private void close(HttpResponse responce){
-		if(responce == null){ return; }
-		HttpClientUtils.closeQuietly(responce);
-	}
-
-	private HttpClient create(){
-		RequestConfig request = RequestConfig.DEFAULT;
-		HttpClient http = HttpClientBuilder.create().setDefaultRequestConfig(request).build();
-		return http;
 	}
 
 	private boolean checkExtension(String url){
