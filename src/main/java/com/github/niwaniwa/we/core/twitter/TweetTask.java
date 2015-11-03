@@ -190,7 +190,6 @@ public class TweetTask extends BukkitRunnable {
 
 	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
-
 		URL imageUrl = null;
 		try {
 			imageUrl = new URL(url);
@@ -206,7 +205,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private boolean checkExtension(String url){
-		String[] format = new String[]{".jpg", ".gif", ".png"};
+		String[] format = new String[]{".jpg", ".gif", ".png", ".mp4"};
 		for(String s : format){
 			if(url.endsWith(s)){ return true; }
 			continue;
