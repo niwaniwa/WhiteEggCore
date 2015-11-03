@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.util.Util;
@@ -39,6 +40,7 @@ public class TweetTask extends BukkitRunnable {
 	private static final File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/temp/");
 
 	private TwitterManager twitter;
+	private Callback callback;
 	private String tweet;
 	private List<String> url = new ArrayList<>();
 	private List<Status> status = new ArrayList<>();
@@ -47,6 +49,12 @@ public class TweetTask extends BukkitRunnable {
 	private boolean successfull = false;
 	private int wait; //
 
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param wait 待機時間
+	 */
 	public TweetTask(TwitterManager twitter, String tweet, int wait){
 		this.twitter = twitter;
 		checkURL(tweet);
@@ -54,8 +62,36 @@ public class TweetTask extends BukkitRunnable {
 		this.wait = wait;
 	}
 
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param wait 待機時間
+	 * @param callback ツイート後に呼び出す(戻り値はboolean)
+	 */
+	public TweetTask(TwitterManager twitter, String tweet, int wait, Callback callback){
+		this(twitter, tweet, wait);
+		this.callback = callback;
+	}
+
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 */
 	public TweetTask(TwitterManager twitter, String tweet){
 		this(twitter, tweet, 2);
+	}
+
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param callback ツイート後に呼び出す(戻り値はboolean)
+	 */
+	public TweetTask(TwitterManager twitter, String tweet, Callback callback){
+		this(twitter, tweet, 2);
+		this.callback = callback;
 	}
 
 	private void checkURL(String tweet){
@@ -96,11 +132,14 @@ public class TweetTask extends BukkitRunnable {
 			this.successfull = true;
 			this.status.add(status);
 		}
+		if(callback != null){
+			callback.call(successfull);
+		}
+
 		delete();
 		// call event
 		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
 		Util.callEvent(event);
-		if(player){ ((PlayerTwitterManager) twitter).set(successfull); }
 	}
 
 	private StatusUpdate build(){

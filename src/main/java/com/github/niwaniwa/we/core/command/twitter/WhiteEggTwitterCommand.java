@@ -1,14 +1,12 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
 import org.bukkit.command.Command;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 
 public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
@@ -22,9 +20,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implemen
 			sender.sendMessage(msg.getMessage(sender, error_Permission, "", true));
 			return true;
 		}
-
 		final WhitePlayer player = (WhitePlayer) sender;
-
 		if(args.length == 0){
 			this.sendUsing(player);
 			return true;
@@ -41,27 +37,23 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implemen
 			sb.append(str).append(" ");
 		}
 		// tweet
-		player.getTwitterManager().tweet(sb.toString());
-
-		new BukkitRunnable() {
+		player.getTwitterManager().tweet(sb.toString(), new Callback() {
 			@Override
-			public void run() {
-				if((player.getTwitterManager()).isSuccessfull()){
+			public void call(Object... obj) {
+				if(Boolean.valueOf(String.valueOf(obj[0]))){
 					player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
 					return;
 				}
 				player.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true));
 			}
-		}.runTaskLater(WhiteEggCore.getInstance(), 2 * 20);
-
-		((PlayerTwitterManager) player.getTwitterManager()).set(false);
+		});
 		return true;
 	}
 
 	@Override
 	public void sendUsing(WhitePlayer sender) {
 		sender.sendMessage("&7----- &6/twitter &7-----");
-		sender.sendMessage("");
+		sender.sendMessage("&7/twitter <tweet> &f: ツイートします");
 	}
 
 	@Override
