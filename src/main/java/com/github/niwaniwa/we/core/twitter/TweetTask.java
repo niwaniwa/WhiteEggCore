@@ -94,8 +94,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private void checkURL(String tweet){
-		final Matcher matcher = urlPattern
-				.matcher(tweet);
+		final Matcher matcher = urlPattern.matcher(tweet);
 		String toTweet = tweet;
 		while (matcher.find()) {
 			String url = matcher.group();
@@ -109,34 +108,36 @@ public class TweetTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		tweet();
+		callCallback(tweet());
 	}
 
-	private void tweet() {
-		boolean player = (twitter instanceof PlayerTwitterManager);
+	private boolean tweet() {
 		Twitter t = twitter.getTwitter();
-		if(player){
-			PlayerTwitterManager pt = (PlayerTwitterManager) twitter;
-			// call event
-			WhiteEggPreTweetEvent event = new WhiteEggPreTweetEvent(pt.getPlayer(), tweet);
-			Util.callEvent(event);
-			if(event.isCancelled()){ return; }
-			tweet = event.getTweet();
+		if(!twitter.check(tweet)){ return false; }
+		WhiteEggPreTweetEvent preEvent;
+		if(twitter instanceof PlayerTwitterManager){
+			preEvent = new WhiteEggPreTweetEvent(((PlayerTwitterManager) twitter).getPlayer(), tweet);
+		} else {
+			preEvent = new WhiteEggPreTweetEvent(null, tweet);
 		}
+		Util.callEvent(preEvent);
+		if(preEvent.isCancelled()){ return false; }
+		tweet = preEvent.getTweet();
 		Status status = null;
 		try {
 			status = t.updateStatus(build());
 		} catch (TwitterException e) {}
-		if(status != null){
-			this.status.add(status);
-		}
-		if(callback != null){
-			callback.call((status != null));
-		}
 		delete();
+		if(status == null){ return false; }
+		this.status.add(status);
 		// call event
-		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status);
-		Util.callEvent(event);
+		WhiteEggPostTweetEvent postEvent = new WhiteEggPostTweetEvent(twitter, status);
+		Util.callEvent(postEvent);
+		return true;
+	}
+
+	private void callCallback(Boolean b){
+		if(callback != null){ callback.call(b); }
 	}
 
 	private StatusUpdate build(){
@@ -213,10 +214,7 @@ public class TweetTask extends BukkitRunnable {
 		if(image == null){ return null; }
 		try {
 			ImageIO.write(image, extension, imagePath);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		} catch (IOException e) {}
 		return imagePath;
 	}
 
