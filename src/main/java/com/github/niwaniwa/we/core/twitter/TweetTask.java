@@ -2,9 +2,7 @@ package com.github.niwaniwa.we.core.twitter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +128,6 @@ public class TweetTask extends BukkitRunnable {
 		delete();
 		if(status == null){ return false; }
 		this.status.add(status);
-		// call event
 		WhiteEggPostTweetEvent postEvent = new WhiteEggPostTweetEvent(twitter, status);
 		Util.callEvent(postEvent);
 		return true;
@@ -210,27 +207,19 @@ public class TweetTask extends BukkitRunnable {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(input);
-		} catch (IOException e) {}
-		if(image == null){ return null; }
-		try {
 			ImageIO.write(image, extension, imagePath);
-		} catch (IOException e) {}
+		} catch (Exception e) {}
 		return imagePath;
 	}
 
 	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
 		URL imageUrl = null;
-		try {
-			imageUrl = new URL(url);
-		} catch (MalformedURLException e1) {
-		}
-		if(imageUrl == null){ return null; }
 		InputStream input = null;
 		try {
+			imageUrl = new URL(url);
 			input = imageUrl.openConnection().getInputStream();
-		} catch (IOException e) {
-		}
+		} catch (Exception e) {}
 		return input;
 	}
 
