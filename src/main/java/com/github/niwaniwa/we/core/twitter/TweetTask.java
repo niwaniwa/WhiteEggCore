@@ -2,9 +2,7 @@ package com.github.niwaniwa.we.core.twitter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +44,6 @@ public class TweetTask extends BukkitRunnable {
 	private List<Status> status = new ArrayList<>();
 	private List<File> medias = new ArrayList<>();
 	private boolean useMedia;
-	private boolean successfull = false;
 	private int wait; //
 
 	/**
@@ -95,8 +92,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private void checkURL(String tweet){
-		final Matcher matcher = urlPattern
-				.matcher(tweet);
+		final Matcher matcher = urlPattern.matcher(tweet);
 		String toTweet = tweet;
 		while (matcher.find()) {
 			String url = matcher.group();
@@ -110,36 +106,35 @@ public class TweetTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		tweet();
+		callCallback(tweet());
 	}
 
-	private void tweet() {
-		boolean player = (twitter instanceof PlayerTwitterManager);
+	private boolean tweet() {
 		Twitter t = twitter.getTwitter();
-		if(player){
-			PlayerTwitterManager pt = (PlayerTwitterManager) twitter;
-			// call event
-			WhiteEggPreTweetEvent event = new WhiteEggPreTweetEvent(pt.getPlayer(), tweet);
-			Util.callEvent(event);
-			if(event.isCancelled()){ return; }
-			tweet = event.getTweet();
+		if(!twitter.check(tweet)){ return false; }
+		WhiteEggPreTweetEvent preEvent;
+		if(twitter instanceof PlayerTwitterManager){
+			preEvent = new WhiteEggPreTweetEvent(((PlayerTwitterManager) twitter).getPlayer(), tweet);
+		} else {
+			preEvent = new WhiteEggPreTweetEvent(null, tweet);
 		}
+		Util.callEvent(preEvent);
+		if(preEvent.isCancelled()){ return false; }
+		tweet = preEvent.getTweet();
 		Status status = null;
 		try {
 			status = t.updateStatus(build());
 		} catch (TwitterException e) {}
-		if(status != null){
-			this.successfull = true;
-			this.status.add(status);
-		}
-		if(callback != null){
-			callback.call(successfull);
-		}
-
 		delete();
-		// call event
-		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
-		Util.callEvent(event);
+		if(status == null){ return false; }
+		this.status.add(status);
+		WhiteEggPostTweetEvent postEvent = new WhiteEggPostTweetEvent(twitter, status);
+		Util.callEvent(postEvent);
+		return true;
+	}
+
+	private void callCallback(Boolean b){
+		if(callback != null){ callback.call(b); }
 	}
 
 	private StatusUpdate build(){
@@ -173,10 +168,6 @@ public class TweetTask extends BukkitRunnable {
 				f.delete();
 			}
 		}
-	}
-
-	public boolean isSuccessfull() {
-		return successfull;
 	}
 
 	public List<Status> getStatus() {
@@ -216,30 +207,19 @@ public class TweetTask extends BukkitRunnable {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(input);
-		} catch (IOException e) {}
-		if(image == null){ return null; }
-		try {
 			ImageIO.write(image, extension, imagePath);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		} catch (Exception e) {}
 		return imagePath;
 	}
 
 	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
 		URL imageUrl = null;
-		try {
-			imageUrl = new URL(url);
-		} catch (MalformedURLException e1) {
-		}
-		if(imageUrl == null){ return null; }
 		InputStream input = null;
 		try {
+			imageUrl = new URL(url);
 			input = imageUrl.openConnection().getInputStream();
-		} catch (IOException e) {
-		}
+		} catch (Exception e) {}
 		return input;
 	}
 

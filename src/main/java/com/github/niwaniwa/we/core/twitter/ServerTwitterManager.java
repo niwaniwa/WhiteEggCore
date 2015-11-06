@@ -27,11 +27,6 @@ public class ServerTwitterManager extends TwitterManager {
 		tweet(sb.toString());
 	}
 
-	@Override
-	public boolean isSuccessfull() {
-		return true;
-	}
-
 	public static ServerTwitterManager getInstance(){
 		return manager;
 	}
