@@ -2,8 +2,8 @@ package com.github.niwaniwa.we.core.twitter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,15 +12,10 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.HttpClientUtils;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.util.Util;
@@ -43,14 +38,20 @@ public class TweetTask extends BukkitRunnable {
 	private static final File path = new File(WhiteEggCore.getInstance().getDataFolder() + "/temp/");
 
 	private TwitterManager twitter;
+	private Callback callback;
 	private String tweet;
 	private List<String> url = new ArrayList<>();
 	private List<Status> status = new ArrayList<>();
 	private List<File> medias = new ArrayList<>();
 	private boolean useMedia;
-	private boolean successfull = false;
 	private int wait; //
 
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param wait 待機時間
+	 */
 	public TweetTask(TwitterManager twitter, String tweet, int wait){
 		this.twitter = twitter;
 		checkURL(tweet);
@@ -58,13 +59,40 @@ public class TweetTask extends BukkitRunnable {
 		this.wait = wait;
 	}
 
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param wait 待機時間
+	 * @param callback ツイート後に呼び出す(戻り値はboolean)
+	 */
+	public TweetTask(TwitterManager twitter, String tweet, int wait, Callback callback){
+		this(twitter, tweet, wait);
+		this.callback = callback;
+	}
+
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 */
 	public TweetTask(TwitterManager twitter, String tweet){
 		this(twitter, tweet, 2);
 	}
 
+	/**
+	 * コンストラクター
+	 * @param twitter TwitterManager
+	 * @param tweet ツイート
+	 * @param callback ツイート後に呼び出す(戻り値はboolean)
+	 */
+	public TweetTask(TwitterManager twitter, String tweet, Callback callback){
+		this(twitter, tweet, 2);
+		this.callback = callback;
+	}
+
 	private void checkURL(String tweet){
-		final Matcher matcher = urlPattern
-				.matcher(tweet);
+		final Matcher matcher = urlPattern.matcher(tweet);
 		String toTweet = tweet;
 		while (matcher.find()) {
 			String url = matcher.group();
@@ -78,33 +106,35 @@ public class TweetTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		tweet();
+		callCallback(tweet());
 	}
 
-	private void tweet() {
-		boolean player = (twitter instanceof PlayerTwitterManager);
+	private boolean tweet() {
 		Twitter t = twitter.getTwitter();
-		if(player){
-			PlayerTwitterManager pt = (PlayerTwitterManager) twitter;
-			// call event
-			WhiteEggPreTweetEvent event = new WhiteEggPreTweetEvent(pt.getPlayer(), tweet);
-			Util.callEvent(event);
-			if(event.isCancelled()){ return; }
-			tweet = event.getTweet();
+		if(!twitter.check(tweet)){ return false; }
+		WhiteEggPreTweetEvent preEvent;
+		if(twitter instanceof PlayerTwitterManager){
+			preEvent = new WhiteEggPreTweetEvent(((PlayerTwitterManager) twitter).getPlayer(), tweet);
+		} else {
+			preEvent = new WhiteEggPreTweetEvent(null, tweet);
 		}
+		Util.callEvent(preEvent);
+		if(preEvent.isCancelled()){ return false; }
+		tweet = preEvent.getTweet();
 		Status status = null;
 		try {
 			status = t.updateStatus(build());
 		} catch (TwitterException e) {}
-		if(status != null){
-			this.successfull = true;
-			this.status.add(status);
-		}
 		delete();
-		// call event
-		WhiteEggPostTweetEvent event = new WhiteEggPostTweetEvent(twitter, status, successfull);
-		Util.callEvent(event);
-		if(player){ ((PlayerTwitterManager) twitter).set(successfull); }
+		if(status == null){ return false; }
+		this.status.add(status);
+		WhiteEggPostTweetEvent postEvent = new WhiteEggPostTweetEvent(twitter, status);
+		Util.callEvent(postEvent);
+		return true;
+	}
+
+	private void callCallback(Boolean b){
+		if(callback != null){ callback.call(b); }
 	}
 
 	private StatusUpdate build(){
@@ -138,10 +168,6 @@ public class TweetTask extends BukkitRunnable {
 				f.delete();
 			}
 		}
-	}
-
-	public boolean isSuccessfull() {
-		return successfull;
 	}
 
 	public List<Status> getStatus() {
@@ -181,49 +207,24 @@ public class TweetTask extends BukkitRunnable {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(input);
-		} catch (IOException e) {}
-		if(image == null){ return null; }
-		try {
 			ImageIO.write(image, extension, imagePath);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		} catch (Exception e) {}
 		return imagePath;
 	}
 
 	private InputStream responce(String url){
 		if(!checkExtension(url)){ return null; }
-		HttpClient client = create();
-		HttpGet httpGet = new HttpGet(url);
-		HttpResponse response = null;
-		try {
-			response = client.execute(httpGet);
-		} catch (IOException e){
-			close(response);
-			return null;
-		}
-		if(response.getStatusLine().getStatusCode() == 404){ return null; }
+		URL imageUrl = null;
 		InputStream input = null;
 		try {
-			input = response.getEntity().getContent();
-		} catch (IllegalStateException | IOException e) {}
+			imageUrl = new URL(url);
+			input = imageUrl.openConnection().getInputStream();
+		} catch (Exception e) {}
 		return input;
 	}
 
-	private void close(HttpResponse responce){
-		if(responce == null){ return; }
-		HttpClientUtils.closeQuietly(responce);
-	}
-
-	private HttpClient create(){
-		RequestConfig request = RequestConfig.DEFAULT;
-		HttpClient http = HttpClientBuilder.create().setDefaultRequestConfig(request).build();
-		return http;
-	}
-
 	private boolean checkExtension(String url){
-		String[] format = new String[]{".jpg", ".gif", ".png"};
+		String[] format = new String[]{".jpg", ".gif", ".png", ".mp4"};
 		for(String s : format){
 			if(url.endsWith(s)){ return true; }
 			continue;

@@ -99,14 +99,13 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーの言語に合わせたメッセージを返します。
-	 * @param <T> WhiteCommandSenderを継承したクラス
 	 * @param sender WhiteCommandSenderを継承したクラスのインスタンス
 	 * @param key 取得するkey
 	 * @param prefix prefix
 	 * @param replaceColorCode カラーコードの置換
 	 * @return value
 	 */
-	public <T extends WhiteCommandSender> String getMessage(T sender, String key, String prefix, boolean replaceColorCode){
+	public String getMessage(WhiteCommandSender sender, String key, String prefix, boolean replaceColorCode){
 		if(!(sender instanceof WhitePlayer)){
 			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
 		}
@@ -221,11 +220,10 @@ public class MessageManager {
 
 	/**
 	 * プレイヤーが現在設定している言語を返します
-	 * @param <T> WhitePlayerを継承したクラス
 	 * @param player プレイヤー
 	 * @return LanguageType 言語
 	 */
-	public static <T extends WhitePlayer> LanguageType getLanguage(T player){
+	public static LanguageType getLanguage(WhitePlayer player){
 		return getLanguage(player.getPlayer());
 	}
 

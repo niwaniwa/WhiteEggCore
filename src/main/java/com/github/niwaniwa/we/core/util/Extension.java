@@ -21,18 +21,18 @@ public abstract class Extension {
 		return (CraftPlayer) p;
 	}
 
-	public static <T extends Extension> void permissionBroadcast(String prm, T t){
+	public static void permissionBroadcast(String prm, Extension t){
 		for(Player p : Bukkit.getOnlinePlayers()){
 			if(p.hasPermission(prm)){
 				t.send(p);
 			}
 		}
 	}
-	public static <T extends Extension> void worldBroadcast(World world, T t){
+	public static void worldBroadcast(World world, Extension t){
 		world.getPlayers().forEach(player -> t.send(player));
 	}
 
-	public static <T extends Extension> void serverBroadcast(T t){
+	public static void serverBroadcast(Extension t){
 		Bukkit.getOnlinePlayers().forEach(player -> t.send(player));
 	}
 

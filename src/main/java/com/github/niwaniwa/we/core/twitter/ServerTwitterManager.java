@@ -1,6 +1,7 @@
 package com.github.niwaniwa.we.core.twitter;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 
 public class ServerTwitterManager extends TwitterManager {
 
@@ -11,9 +12,9 @@ public class ServerTwitterManager extends TwitterManager {
 	}
 
 	@Override
-	public void tweet(String tweet) {
+	public void tweet(String tweet, Callback callback) {
 		if(!check(tweet)){ return; }
-		TweetTask task = new TweetTask(this, tweet);
+		TweetTask task = new TweetTask(this, tweet, callback);
 		task.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
@@ -24,11 +25,6 @@ public class ServerTwitterManager extends TwitterManager {
 			sb.append(s);
 		}
 		tweet(sb.toString());
-	}
-
-	@Override
-	public boolean isSuccessfull() {
-		return true;
 	}
 
 	public static ServerTwitterManager getInstance(){

@@ -34,9 +34,6 @@
 							<artifactSet>
 								<includes>
 									<include>org.twitter4j:*</include>
-									<include>org.apache.httpcomponents:*</include>
-									<include>commons-logging:*</include>
-									<include>commons-codec:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -82,11 +79,6 @@
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
 			<version>[4.0,)</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.1</version>
 		</dependency>
 	</dependencies>
 </project>

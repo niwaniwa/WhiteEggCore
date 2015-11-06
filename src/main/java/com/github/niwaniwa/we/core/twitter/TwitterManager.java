@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -96,7 +97,16 @@ public abstract class TwitterManager {
 	 * ツイートをします
 	 * @param tweet ツイート
 	 */
-	public abstract void tweet(String tweet);
+	public void tweet(String tweet){
+		this.tweet(tweet, null);
+	}
+
+	/**
+	 * ツイートをします
+	 * @param tweet ツイート
+	 * @param callback ツイート後に呼び出す(戻り値はboolean)
+	 */
+	public abstract void tweet(String tweet, Callback callback);
 
 	/**
 	 * ツイートをします
@@ -160,13 +170,5 @@ public abstract class TwitterManager {
 	public Twitter getTwitter(){
 		return twitter;
 	}
-
-	/**
-	 * 直前のツイートが送信されたか
-	 * ツイートをするたびに値が変わるので注意
-	 * @return ツイートの送信に成功したか
-	 */
-	public abstract boolean isSuccessfull();
-
 
 }
