@@ -43,7 +43,7 @@ JavaScriptを利用してゲーム内に干渉できます
 
 ## Javadoc
 
- Javadocは[こちら](http://niwaniwa.github.io/WhiteEggCore/doc/)
+ Javadocは[こちら](http://niwaniwa.github.io/javadoc/whiteeggcore/)
 
 ## Library
 
@@ -74,24 +74,24 @@ limitations under the License.
 ### プレイヤーについて
 #### データ
 - プレイヤーのデータは`plugins/WhiteEggCore/players/<uuid>.json`に出力されます
-- プレイヤーデータは[WhitePlayer](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayer.html)から取得することができます
-- 取得は[WhitePlayerFactory](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/player/WhitePlayerFactory.html)クラスを使用してください
+- プレイヤーデータは[WhitePlayer](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/player/WhitePlayer.html)から取得することができます
+- 取得は[WhitePlayerFactory](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/player/WhitePlayerFactory.html)クラスを使用してください
 
 ### APIについて
 
 このプラグインはAPIを利用することが可能です
 
-詳しくは[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください
+詳しくは[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください
 
 ### Eventについて
 
 現在3つのイベントを使用することができます
 
-- [WhiteEggPreTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
-- [WhiteEggPostTweetEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
-- [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/WhiteEggCore/doc/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
+- [WhiteEggPreTweetEvent](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/event/WhiteEggPreTweetEvent.html)
+- [WhiteEggPostTweetEvent](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
+- [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
 
-詳細は[Javadoc](http://niwaniwa.github.io/WhiteEggCore/doc/)をご覧ください
+詳細は[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/)をご覧ください
 
 ### 言語ファイルについて
 
