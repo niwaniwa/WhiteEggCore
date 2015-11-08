@@ -141,12 +141,9 @@ public class JavaScript {
 		}, security());
 	}
 
-	// よくわからない
 	private AccessControlContext security(){
-//		Policy policy = new Policy() {};
-//		Policy.setPolicy(policy);
-//		System.setSecurityManager(new SecurityManager());
 		PermissionCollection permissions = new Permissions();
+//		permissions.add(permission);
 		CodeSource codeSource = this.getClass().getProtectionDomain().getCodeSource();
 		ProtectionDomain domain = new ProtectionDomain(codeSource, permissions);
 		ProtectionDomain[] domains = new ProtectionDomain[]{domain};
@@ -159,17 +156,8 @@ public class JavaScript {
 	 * @return scriptの文字
 	 * @throws IOException 入出力エラー
 	 */
-	private StringBuilder init() throws IOException{
+	private StringBuilder init() throws IOException {
 		StringBuilder sb = new StringBuilder();
-/*		sb.append("var events = require('events');");
-		sb.append("var util = require('util');");
-		sb.append("function White(){events.EventEmitter.call(this);}");
-		sb.append("util.inherits(White, events.EventEmitter);");
-		sb.append("White.prototype.call = function(event,eventName){this.emit(eventName, event);}");
-		sb.append("var white = new White();");
-		sb.append("function call(eventName, event){white.call(event,eventName);}");
-*/
-
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream(
 				new File(WhiteEggCore.getInstance().getDataFolder(), "script" + File.separator + "init.js"))));
 		sb.append(readFile(buffer));
