@@ -9,11 +9,11 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 
 public class WhiteConsoleSender implements WhiteCommandSender {
 
-	private boolean b = false;
+	private boolean permission = false;
 	private Logger logger;
 
-	public WhiteConsoleSender(boolean b) {
-		this.b = b;
+	public WhiteConsoleSender(boolean permission) {
+		this.permission = permission;
 		this.logger = WhiteEggCore.getInstance().getLogger();
 	}
 
@@ -31,12 +31,12 @@ public class WhiteConsoleSender implements WhiteCommandSender {
 
 	@Override
 	public boolean hasPermission(String permission) {
-		return b;
+		return this.permission;
 	}
 
 	@Override
 	public boolean hasPermission(Permission permission) {
-		return b;
+		return this.permission;
 	}
 
 }
