@@ -67,9 +67,7 @@ public class WhitePlayerFactory {
 	 * @param from 変換前のinstance
 	 * @param to 変換後のクラス
 	 * @return 指定したクラスのinstance(データ引き継ぎ)
-	 * @deprecated
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T extends WhitePlayer> T cast(WhitePlayer from, Class<T> to){
 		if(Modifier.isAbstract(to.getModifiers())
 				|| from.getClass().getSimpleName().equals(to.getSimpleName())){
@@ -78,8 +76,7 @@ public class WhitePlayerFactory {
 		from.save();
 		T instance = null;
 		try {
-			Constructor<?> constructor = to.getConstructor(Player.class);
-			instance = (T) (constructor == null ? to.getConstructor(WhitePlayer.class).newInstance(from) : constructor.newInstance(from.getPlayer()));
+			instance = (T) to.getConstructor(Player.class).newInstance(from.getPlayer());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 		}
@@ -92,9 +89,7 @@ public class WhitePlayerFactory {
 	 */
 	public static void saveAll(){
 		System.out.println("Saving players (WhiteEgg)");
-		for(WhitePlayer p : WhitePlayerFactory.getPlayers()){
-			p.save();
-		}
+		WhitePlayerFactory.getPlayers().forEach(p -> p.save());
 	}
 
 	/**
@@ -102,9 +97,7 @@ public class WhitePlayerFactory {
 	 */
 	public static void load(){
 		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
-		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers()){
-			p.reload();
-		}
+		WhiteEggCore.getAPI().getOnlinePlayers().forEach(p -> p.reload());
 	}
 
 	/**
