@@ -33,7 +33,7 @@ public class Util {
 	private Util(){}
 
 	/**
-	 * 特定のJarFileから任意のファイルを任意の階層にコピーする
+	 * 特定のJarFileから任意のファイルを任意の階層にコピーします
 	 * @param target ファイルネーム
 	 * @param jarFile JarFile
 	 * @param path Jar内のファイル
@@ -45,7 +45,7 @@ public class Util {
 		JarFile jar = null;
 		try {
 			if(!path.contains(".")){
-				new File(target, "/"+path).mkdirs();
+				new File(target, File.separator + path).mkdirs();
 				return;
 			}
 			jar = new JarFile(jarFile);
@@ -56,7 +56,7 @@ public class Util {
 					target.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1]))));
+						new FileOutputStream(new File(target, path.split(File.separator)[path.split(File.separator).length - 1]))));
 				String s;
 				while ((s = reader.readLine()) != null) {
 					writer.write(s);
@@ -84,7 +84,7 @@ public class Util {
 		JarFile jar = null;
 		try {
 			if(!path.contains(".")){
-				new File(target, "/"+path).mkdirs();
+				new File(target, File.separator + path).mkdirs();
 				return;
 			}
 			InputStream input = WhiteEggCore.getInstance().getClass().getClassLoader().getResourceAsStream(path);
@@ -94,7 +94,7 @@ public class Util {
 					target.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1]))));
+						new FileOutputStream(new File(target, path.split(File.separator)[path.split(File.separator).length - 1]))));
 				String s;
 				while ((s = reader.readLine()) != null) {
 					writer.write(s);
