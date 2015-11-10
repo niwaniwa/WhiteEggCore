@@ -68,7 +68,7 @@ public class WhiteEggCore extends JavaPlugin {
 		long time = System.currentTimeMillis();
 		versionCheck();
 		this.setting();
-		logger.info("[WhiteEggCore] Done : " + (System.currentTimeMillis() - time) + " ms");
+		logger.info("Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
 
 	/**
@@ -191,8 +191,7 @@ public class WhiteEggCore extends JavaPlugin {
 		copyLangFiles(false);
 		try {
 			msg.loadLangFile();
-		} catch (IOException | InvalidConfigurationException e) {
-		}
+		} catch (IOException | InvalidConfigurationException e) {}
 		msg.replaceDefaultLanguage(true);
 		if(!msg.getLangs().isEmpty()){ return; }
 		this.load(msg, LanguageType.ja_JP);

@@ -1,28 +1,137 @@
 package com.github.niwaniwa.we.core.listener;
 
+import java.util.Arrays;
+
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.util.bar.Bar;
+import com.github.niwaniwa.we.core.util.ActionBar;
+import com.github.niwaniwa.we.core.util.Tab;
+import com.github.niwaniwa.we.core.util.clickable.ChatExtra;
+import com.github.niwaniwa.we.core.util.clickable.ChatFormat;
+import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
+import com.github.niwaniwa.we.core.util.clickable.Clickable;
+import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
 
 import twitter4j.TwitterException;
 
 public class Debug implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOW)
 	public void onJoin(PlayerJoinEvent event) {
-		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		final WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
 		if(event.getPlayer().getUniqueId().toString()
 				.equalsIgnoreCase("f010845c-a9ac-4a04-bf27-61d92f8b03ff")){
 			WhiteEggCore.getInstance().getLogger().info(
 					"-- " + player.getPlayer().getName() + "Join the game. --");
 		}
-		Bar.setDragon(player, "play.kokekokko.jp", 10);
+		Clickable click = new Clickable("Hellow! ->", ChatColor.GOLD, Arrays.asList(ChatFormat.BOLD));
+		ChatExtra extra = new ChatExtra("PvP!", ChatColor.AQUA, Arrays.asList(ChatFormat.BOLD));
+		extra.setClickEvent(ClickEventType.OPEN_URL, "https://twitter.com/");
+		extra.setHoverEvent(HoverEventType.SHOW_TEXT, "ｳｪﾙｶﾑﾄｩｰｵｰｽ");
+		click.addExtra(extra);
+		click.send(player.getPlayer());
+
+		Tab tab = new Tab("hi", "ihi");
+		tab.send(player.getPlayer());
+		actionBar(player);
+	}
+
+	private void actionBar(final WhitePlayer player){
+		ActionBar actionBar = new ActionBar("§b>>>>>>>>>>>>>");
+		actionBar.send(player.getPlayer());
+		new BukkitRunnable() {
+			int i = 0;
+			@Override
+			public void run() {
+				if(!player.isOnline()){ this.cancel(); }
+				switch(i){
+				case 0:
+					actionBar.setMessage("§6>§b>>>>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 1:
+					actionBar.setMessage("§6>>§b>>>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 2:
+					actionBar.setMessage("§6>>>§b>>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 3:
+					actionBar.setMessage("§b>§6>>>§b>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 4:
+					actionBar.setMessage("§b>§6>>>§b>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 5:
+					actionBar.setMessage("§b>>§6>>>§b>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 6:
+					actionBar.setMessage("§b>>>§6>>>§b>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 7:
+					actionBar.setMessage("§b>>>>§6>>>§b>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 8:
+					actionBar.setMessage("§b>>>>>§6>>>§b>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 9:
+					actionBar.setMessage("§b>>>>>>§6>>>§b>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 10:
+					actionBar.setMessage("§b>>>>>>>§6>>>§b>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 11:
+					actionBar.setMessage("§b>>>>>>>>§6>>>§b>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 12:
+					actionBar.setMessage("§b>>>>>>>>>§6>>>§b>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 13:
+					actionBar.setMessage("§b>>>>>>>>>>§6>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 14:
+					actionBar.setMessage("§b>>>>>>>>>>>§6>>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 15:
+					actionBar.setMessage("§b>>>>>>>>>>>>§6>");
+					actionBar.send(player.getPlayer());
+					break;
+				case 16:
+					actionBar.setMessage("§b>>>>>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					break;
+				default:
+					actionBar.setMessage("§b>>>>>>>>>>>>>");
+					actionBar.send(player.getPlayer());
+					if(i == 30){
+						i = -1;
+					}
+				}
+				i++;
+			}
+		}.runTaskTimerAsynchronously(WhiteEggCore.getInstance(), 20, 1);
 	}
 
 	@EventHandler

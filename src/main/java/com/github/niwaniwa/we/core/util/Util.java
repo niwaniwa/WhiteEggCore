@@ -55,7 +55,7 @@ public class Util {
 					target.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(new File(target, path.split(File.separator)[path.split(File.separator).length - 1]))));
+						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1])) ,"UTF-8"));
 				String s;
 				while ((s = reader.readLine()) != null) {
 					writer.write(s);
@@ -78,7 +78,7 @@ public class Util {
 	 * @param path ファイルパス
 	 */
 	public static void copyFileFromJar(File target, String path){
-		copyFileFromJar(WhiteEggCore.getInstance().getDataFolder(), target, path);
+		copyFileFromJar(WhiteEggCore.getInstance().getFile(), target, path);
 	}
 
 	/**

@@ -7,7 +7,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class ActionBar extends Extension {
 
-	String str;
+	private String str;
 
 	public ActionBar(String str){
 		this.str = str;
