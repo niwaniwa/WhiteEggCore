@@ -138,6 +138,14 @@ public class WhiteEggCore extends JavaPlugin {
 		this.registerListener();
 		this.settingLanguage();
 		this.load();
+		this.settingCheck();
+	}
+
+	private void settingCheck(){
+		if(config.getConfig().getString("consumerKey").isEmpty()
+				|| config.getConfig().getString("consumerSecret").isEmpty()){
+			logger.warning("Twitter Consumer key or Consumer Secret is empty.");
+		}
 	}
 
 	/**
