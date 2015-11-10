@@ -1,4 +1,4 @@
-# WhiteEggCore - v1.0.4
+# WhiteEggCore - v1.5
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP"WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
