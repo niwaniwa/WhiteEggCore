@@ -23,11 +23,7 @@ public class Clickable extends Extension {
 		if (color != null) {
 			json.addProperty("color", color.toString().toLowerCase());
 		}
-		if (formats != null) {
-			for (ChatFormat f : formats) {
-				json.addProperty(f.getFormat(), true);
-			}
-		}
+		if (formats != null) { formats.forEach(f -> json.addProperty(f.getFormat(), true)); }
 	}
 
 	public void addExtra(ChatExtra extraObject) {

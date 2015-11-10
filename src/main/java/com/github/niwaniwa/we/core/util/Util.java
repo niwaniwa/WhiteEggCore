@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
@@ -79,36 +78,7 @@ public class Util {
 	 * @param path ファイルパス
 	 */
 	public static void copyFileFromJar(File target, String path){
-		BufferedWriter writer = null;
-		BufferedReader reader = null;
-		JarFile jar = null;
-		try {
-			if(!path.contains(".")){
-				new File(target, File.separator + path).mkdirs();
-				return;
-			}
-			InputStream input = WhiteEggCore.getInstance().getClass().getClassLoader().getResourceAsStream(path);
-			if (input != null) {
-				reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
-				if (!target.exists()) {
-					target.mkdirs();
-				}
-				writer = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(new File(target, path.split(File.separator)[path.split(File.separator).length - 1]))));
-				String s;
-				while ((s = reader.readLine()) != null) {
-					writer.write(s);
-					writer.newLine();
-				}
-			}
-		} catch (IOException e) {
-		} finally {
-			try {
-				if(writer != null){ writer.close(); }
-				if(reader != null){ reader.close(); }
-				if(jar != null){ jar.close(); }
-			} catch (IOException e){}
-		}
+		copyFileFromJar(WhiteEggCore.getInstance().getDataFolder(), target, path);
 	}
 
 	/**
