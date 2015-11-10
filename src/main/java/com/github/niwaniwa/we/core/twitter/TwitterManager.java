@@ -1,6 +1,7 @@
 package com.github.niwaniwa.we.core.twitter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.scheduler.BukkitRunnable;
@@ -10,6 +11,7 @@ import com.github.niwaniwa.we.core.api.Callback;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
@@ -47,7 +49,7 @@ public abstract class TwitterManager {
 	 * @return RequestToken
 	 */
 	public String getOAuthRequestURL(){
-		return request.getAuthorizationURL();
+		return request != null ? request.getAuthorizationURL() : "nothing yet";
 	}
 
 	/**
@@ -70,6 +72,21 @@ public abstract class TwitterManager {
 	public boolean check(String tweet){
 		if(this.access == null){ return false; }
 		return tweet.length() < 140;
+	}
+
+	/**
+	 * 認証
+	 * @param pin PIN
+	 * @param callback 処理終了後に呼び出すインスタンス
+	 */
+	public void OAuthAccess(String pin, Callback... callback){
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Arrays.stream(callback).forEach(c -> c.onTwitter(OAuthAccess(pin)));;
+			}
+		}.runTaskAsynchronously(WhiteEggCore.getInstance());
+		return;
 	}
 
 	/**
@@ -169,6 +186,29 @@ public abstract class TwitterManager {
 	 */
 	public Twitter getTwitter(){
 		return twitter;
+	}
+
+	/**
+	 * ツイートの削除(非同期)
+	 * @param status 削除するツイート
+	 * @param callback 処理終了後に実行するインスタンス
+	 */
+	public void removeTweet(Status status, Callback... callback){
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Arrays.stream(callback).forEach(c -> c.onTwitter(removeTweet(status)));;
+			}
+		}.runTaskAsynchronously(WhiteEggCore.getInstance());
+	}
+
+	public boolean removeTweet(Status status){
+		try {
+			twitter.destroyStatus(status.getId());
+		} catch (TwitterException e) {
+			return false;
+		}
+		return true;
 	}
 
 }
