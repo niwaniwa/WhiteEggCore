@@ -77,6 +77,21 @@ public abstract class TwitterManager {
 	/**
 	 * 認証
 	 * @param pin PIN
+	 * @param callback 処理終了後に呼び出すインスタンス
+	 */
+	public void OAuthAccess(String pin, Callback... callback){
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Arrays.stream(callback).forEach(c -> c.onTwitter(OAuthAccess(pin)));;
+			}
+		};
+		return;
+	}
+
+	/**
+	 * 認証
+	 * @param pin PIN
 	 * @return 成功したか
 	 */
 	public boolean OAuthAccess(String pin){
@@ -187,7 +202,7 @@ public abstract class TwitterManager {
 		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
-	private boolean removeTweet(Status status){
+	public boolean removeTweet(Status status){
 		try {
 			twitter.destroyStatus(status.getId());
 		} catch (TwitterException e) {
