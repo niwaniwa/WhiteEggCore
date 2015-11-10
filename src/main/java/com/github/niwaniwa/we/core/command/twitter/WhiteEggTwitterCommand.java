@@ -39,8 +39,8 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implemen
 		// tweet
 		player.getTwitterManager().tweet(sb.toString(), new Callback() {
 			@Override
-			public void call(Object... obj) {
-				if(Boolean.valueOf(String.valueOf(obj[0]))){
+			public void onTwitter(Boolean twitter) {
+				if(twitter){
 					player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
 					return;
 				}

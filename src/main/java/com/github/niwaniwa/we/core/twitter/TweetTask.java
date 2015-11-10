@@ -134,7 +134,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private void callCallback(Boolean b){
-		if(callback != null){ callback.call(b); }
+		if(callback != null){ callback.onTwitter(b); }
 	}
 
 	private StatusUpdate build(){
