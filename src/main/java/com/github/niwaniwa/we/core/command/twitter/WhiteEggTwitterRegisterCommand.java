@@ -1,14 +1,12 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
@@ -25,7 +23,6 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
-	private WeakReference<Boolean> isSuccess = null;
 
 	@Override
 	public boolean onCommand(final WhiteCommandSender sender, final Command cmd, final String label,
@@ -44,28 +41,16 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 			// message
 			this.sendURL(player);
 		} else if(args.length == 1){
-			if(args[0].equalsIgnoreCase("reset")){
-				tw.reset();
-				sender.sendMessage("りせっとしました");
-				return true;
-			}
-			new BukkitRunnable() {
+			tw.OAuthAccess(args[0], new Callback(){
 				@Override
-				public void run() {
-					isSuccess = new WeakReference<Boolean>(tw.OAuthAccess(args[0]));
-				}
-			}.runTaskAsynchronously(WhiteEggCore.getInstance());
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					if(isSuccess  == null
-							|| isSuccess.get() == false){
+				public void onTwitter(Boolean isSuccess) {
+					if(isSuccess){
 						sender.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true)); // success
-					} else {
-						sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true)); // failure
+						return;
 					}
+					sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true)); // failure
 				}
-			}.runTaskLater(WhiteEggCore.getInstance(), 2 * 20);
+			});
 			return true;
 		}
 		return true;
