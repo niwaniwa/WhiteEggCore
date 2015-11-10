@@ -49,7 +49,7 @@ public abstract class TwitterManager {
 	 * @return RequestToken
 	 */
 	public String getOAuthRequestURL(){
-		return request.getAuthorizationURL();
+		return request != null ? request.getAuthorizationURL() : "nothing yet";
 	}
 
 	/**
@@ -85,7 +85,7 @@ public abstract class TwitterManager {
 			public void run() {
 				Arrays.stream(callback).forEach(c -> c.onTwitter(OAuthAccess(pin)));;
 			}
-		};
+		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 		return;
 	}
 
