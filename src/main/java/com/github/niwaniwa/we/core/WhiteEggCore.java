@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -35,7 +34,6 @@ import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
-import com.github.niwaniwa.we.core.player.rank.RankProperty;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.bar.Dragon;
@@ -226,8 +224,6 @@ public class WhiteEggCore extends JavaPlugin {
 	 * 各種登録
 	 */
 	private void register(){
-		Rank r = new Rank("*", ChatColor.WHITE, "Owner", RankProperty.HIGHEST, "whiteegg.owner");
-		r.add();
 		try {
 			JavaScript.copyScript();
 		} catch (IOException e) {
@@ -237,9 +233,16 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	/**
-	 * CraftBukkitバージョンチェックメソッド
+	 * Java、CraftBukkitバージョンチェックメソッド
 	 */
 	private void versionCheck(){
+		int javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
+		if(javaVersion <= 1.7){
+			logger.warning("Unsupported Java Version >_< : " + javaVersion);
+			logger.warning("Please use 1.8");
+			pm.disablePlugin(instance);
+		}
+		// TODO: CraftBukkit
 		String packageName = getServer().getClass().getPackage().getName();
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 		if(!version.equalsIgnoreCase("v1_8_R3")){
