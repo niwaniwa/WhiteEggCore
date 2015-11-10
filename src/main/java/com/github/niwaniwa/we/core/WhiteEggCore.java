@@ -60,13 +60,14 @@ public class WhiteEggCore extends JavaPlugin {
 
 	public static Logger logger;
 
+	private boolean version = false;
+
 	/**
 	 * プラグインの初期化処理
 	 */
 	@Override
 	public void onEnable(){
 		long time = System.currentTimeMillis();
-		versionCheck();
 		this.setting();
 		logger.info("Done : " + (System.currentTimeMillis() - time) + " ms");
 	}
@@ -76,6 +77,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	@Override
 	public void onDisable(){
+		if (!version) { return; }
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
 		Dragon.disable();
@@ -126,11 +128,12 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void setting(){
 		instance = this;
+		logger = this.getLogger();
+		if(!versionCheck()){ return; }
 		msg = new MessageManager(this.getDataFolder() + "/lang/");
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
-		logger = this.getLogger();
 		this.register();
 		this.registerCommands();
 		this.registerListener();
@@ -242,22 +245,25 @@ public class WhiteEggCore extends JavaPlugin {
 	/**
 	 * Java、CraftBukkitバージョンチェックメソッド
 	 */
-	private void versionCheck(){
+	private boolean versionCheck(){
 		int javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
 		if(javaVersion <= 1.7){
 			logger.warning("Unsupported Java Version >_< : " + javaVersion);
 			logger.warning("Please use 1.8");
 			pm.disablePlugin(instance);
+			return false;
 		}
 		// TODO: CraftBukkit
 		String packageName = getServer().getClass().getPackage().getName();
 		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 		if(!version.equalsIgnoreCase("v1_8_R3")){
 			logger.warning("Unsupported CraftBukkit Version >_< : " + version);
-			logger.warning("Please use 1.8.8");
+			logger.warning("Please use v1_8_R3");
 			pm.disablePlugin(instance);
-			return;
+			return false;
 		}
+		this.version = true;
+		return true;
 	}
 
 	/**
