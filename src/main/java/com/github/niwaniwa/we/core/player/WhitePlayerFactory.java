@@ -100,12 +100,10 @@ public class WhitePlayerFactory {
 	 */
 	public static void load(){
 		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
-		isLock = true;
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				WhiteEggCore.getAPI().getOnlinePlayers().forEach(p -> p.reload());
-				isLock = false;
 			}
 		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
