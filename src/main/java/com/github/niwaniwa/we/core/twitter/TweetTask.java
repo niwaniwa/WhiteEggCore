@@ -163,11 +163,7 @@ public class TweetTask extends BukkitRunnable {
 	}
 
 	private void delete(){
-		for(File f : medias){
-			if(f.exists()){
-				f.delete();
-			}
-		}
+		medias.stream().filter(f -> f.exists()).forEach(f -> f.delete());
 	}
 
 	public List<Status> getStatus() {

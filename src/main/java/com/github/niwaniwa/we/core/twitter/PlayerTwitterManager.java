@@ -1,5 +1,7 @@
 package com.github.niwaniwa.we.core.twitter;
 
+import java.util.Arrays;
+
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -22,9 +24,7 @@ public class PlayerTwitterManager extends TwitterManager {
 	@Override
 	public void tweet(String[] tweet) {
 		StringBuilder sb = new StringBuilder();
-		for(String s : tweet){
-			sb.append(s);
-		}
+		Arrays.asList(tweet).forEach(s -> sb.append(s));
 		tweet(sb.toString());
 	}
 
