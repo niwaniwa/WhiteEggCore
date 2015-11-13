@@ -104,7 +104,7 @@ limitations under the License.
 ## 謝辞
 
 ### アドバイス、修正
-- Nekoneko様
+- [Nekoneko](https://www.nekonekoserver.net/)様
 
 御礼を申し上げます
 
