@@ -1,5 +1,7 @@
 package com.github.niwaniwa.we.core.command.twitter;
 
+import java.util.Arrays;
+
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.api.Callback;
@@ -33,9 +35,7 @@ public class WhiteEggTwitterCommand extends AbstractWhiteEggCoreCommand implemen
 		}
 
 		StringBuilder sb = new StringBuilder();
-		for(String str : args){
-			sb.append(str).append(" ");
-		}
+		Arrays.asList(args).forEach(s -> sb.append(s));
 		// tweet
 		player.getTwitterManager().tweet(sb.toString(), new Callback() {
 			@Override

@@ -59,8 +59,7 @@ public abstract class TwitterManager {
 	protected boolean OAuthRequest(){
 		try {
 			request = twitter.getOAuthRequestToken();
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return true;
 	}
 
