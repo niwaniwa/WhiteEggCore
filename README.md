@@ -100,6 +100,13 @@ limitations under the License.
 
 - カラーコードは`&<code>`とすることで装飾が出来ます
 
+## 更新履歴
+
+### version 2
+
+Spigot 1.8.8
+
+- none
 
 ## 謝辞
 
