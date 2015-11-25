@@ -12,12 +12,16 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.json.JsonManager;
@@ -33,6 +37,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.server.v1_8_R3.EntityPlayer;
+import twitter4j.Status;
+import twitter4j.StatusUpdate;
+import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 
 /**
@@ -340,5 +347,62 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.twitter = new PlayerTwitterManager(this);
 		this.ranks.clear();
 		return true;
+	}
+
+	@Override
+	public Location getLocation() {
+		return player.getLocation();
+	}
+
+	@Override
+	public Inventory getInventory() {
+		return player.getInventory();
+	}
+
+	@Override
+	public void teleport(Location loc) {
+		player.teleport(loc);
+	}
+
+	@Override
+	public void teleport(Entity entity) {
+		player.teleport(entity);
+	}
+
+	@Override
+	public void updateStatus(StatusUpdate update) {
+		try {
+			twitter.getTwitter().updateStatus(update);
+		} catch (TwitterException e) { e.printStackTrace(); }
+	}
+
+	@Override
+	public void updateStatus(StatusUpdate update, Callback callback) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					callback.onTwitter((twitter.getTwitter().updateStatus(update) == null ? false : true));
+				} catch (TwitterException e) { e.printStackTrace(); }
+			}
+		}.runTaskAsynchronously(WhiteEggCore.getInstance());
+	}
+
+	@Override
+	public void updateStatus(String tweet) {
+		twitter.tweet(tweet);
+	}
+
+	@Override
+	public List<Status> getTimeLine() {
+		try {
+			return twitter.getTwitter().getHomeTimeline();
+		} catch (TwitterException e) { e.printStackTrace(); }
+		return new ArrayList<>(0);
+	}
+
+	@Override
+	public void remove() {
+		player.remove();
 	}
 }

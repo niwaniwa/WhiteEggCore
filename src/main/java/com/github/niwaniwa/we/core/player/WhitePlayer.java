@@ -3,6 +3,10 @@ package com.github.niwaniwa.we.core.player;
 import java.net.InetSocketAddress;
 import java.util.List;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.inventory.Inventory;
+
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -14,7 +18,7 @@ import net.minecraft.server.v1_8_R3.EntityPlayer;
  * @author KokekoKko_
  *
  */
-public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
+public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender, Tweet {
 
 	/**
 	 * 現在登録されているランクを返します
@@ -65,6 +69,7 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 	/**
 	 * フラグの変更
 	 * @param b boolean
+	 * @deprecated
 	 */
 	public abstract void setVanish(boolean b);
 
@@ -116,6 +121,36 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 	 * @return EntityPlayer player
 	 */
 	public abstract EntityPlayer getHandle();
+
+	/**
+	 * 現在いる座標を返します
+	 * @return Location loc
+	 */
+	public abstract Location getLocation();
+
+	/**
+	 * プレイヤーのインベントリーを取得します
+	 * @return Inventory inventory
+	 */
+	public abstract Inventory getInventory();
+
+	/**
+	 * 指定した座標に移動します
+	 * @param loc 移動先の座標
+	 */
+	public abstract void teleport(Location loc);
+
+	/**
+	 * 指定したエンティティーに移動します
+	 * @param entity エンティティー
+	 */
+	public abstract void teleport(Entity entity);
+
+	/**
+	 * サーバーから削除します
+	 * @deprecated
+	 */
+	public abstract void remove();
 
 	/**
 	 * 初期化します
