@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.api;
+package com.github.niwaniwa.we.core.api.callback;
 
 public class Callback {
 
