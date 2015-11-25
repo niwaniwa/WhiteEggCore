@@ -79,7 +79,7 @@ public abstract class WhiteEggAPI {
 	/**
 	 * 新たな設定を追加します
 	 * @param plugin プラグイン
-	 * @param type タイプ
+	 * @param tag 設定のタグ
 	 * @param permission 権限
 	 * @param custam 任意の名前
 	 * @param toggles 設定内容
