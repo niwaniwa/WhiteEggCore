@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.command.Command;
 
-import com.github.niwaniwa.we.core.api.Callback;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;

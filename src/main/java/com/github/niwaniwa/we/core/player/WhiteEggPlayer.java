@@ -21,8 +21,8 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.api.Callback;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.json.JsonManager;
 import com.github.niwaniwa.we.core.player.rank.Rank;

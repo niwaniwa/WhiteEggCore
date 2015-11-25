@@ -3,7 +3,7 @@ package com.github.niwaniwa.we.core.twitter;
 import java.util.Arrays;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.api.Callback;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class PlayerTwitterManager extends TwitterManager {

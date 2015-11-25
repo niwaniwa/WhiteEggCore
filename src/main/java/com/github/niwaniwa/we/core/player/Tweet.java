@@ -2,7 +2,7 @@ package com.github.niwaniwa.we.core.player;
 
 import java.util.List;
 
-import com.github.niwaniwa.we.core.api.Callback;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 
 import twitter4j.Status;
 import twitter4j.StatusUpdate;

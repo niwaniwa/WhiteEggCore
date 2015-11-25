@@ -7,7 +7,7 @@ import java.util.List;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.api.Callback;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 
 import twitter4j.Status;
 import twitter4j.Twitter;

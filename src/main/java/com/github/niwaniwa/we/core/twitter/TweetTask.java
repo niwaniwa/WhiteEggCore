@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.api.Callback;
+import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.util.Util;
