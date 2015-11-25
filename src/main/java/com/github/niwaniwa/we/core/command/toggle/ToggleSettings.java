@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.plugin.Plugin;
 
-import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 import com.google.gson.JsonObject;
@@ -26,7 +25,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	private static final Map<String, Object> server = new HashMap<>();
 
 	private Plugin p;
-	private ToggleType type;
+	private String tag;
 	private String permission;
 	private String title;
 	private final Map<String, Object> toggles = new HashMap<>();
@@ -41,17 +40,17 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 * @param toggles 設定
 	 * @param isHide デフォルトでの表示
 	 */
-	public ToggleSettings(Plugin plugin, ToggleType type, String permission,
+	public ToggleSettings(Plugin plugin, String tag, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide) {
 		this.p = plugin;
-		this.type = type;
+		this.tag = tag;
 		this.permission = permission;
 		this.title = custam.isEmpty() ? p.getName() : custam;
 		if(toggles != null){
 			for(String key : toggles.keySet()){
 				this.toggles.put(key, toggles.get(key));
 			}
-			if(type == ToggleType.SERVER){
+			if(tag.equalsIgnoreCase("SERVER")){
 				server.putAll(toggles);
 			}
 		}
@@ -74,11 +73,11 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	}
 
 	/**
-	 * タイプ
-	 * @return タイプ
+	 * タグの取得
+	 * @return String タグ
 	 */
-	public ToggleType getType(){
-		return type;
+	public String getTag(){
+		return tag;
 	}
 
 	/**
@@ -138,11 +137,11 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	}
 
 	/**
-	 * タイプの設定
-	 * @param type タイプ
+	 * タグの設定
+	 * @param tag タグ
 	 */
-	protected void setType(ToggleType type){
-		this.type = type;
+	protected void setTag(String tag){
+		this.tag = tag;
 	}
 
 	/**
@@ -155,7 +154,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
 	public ToggleSettings clone() {
 		ToggleSettings t = new ToggleSettings(this.getPlugin(),
-				this.getType(), this.getPermission(), this.getTitle(), this.getToggles(), this.isHide());
+				this.getTag(), this.getPermission(), this.getTitle(), this.getToggles(), this.isHide());
 		return t;
 	}
 
@@ -173,9 +172,9 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 * @param toggle 検索する設定
 	 * @return List 設定
 	 */
-	public static List<ToggleSettings> getList(ToggleType type, List<ToggleSettings> toggle){
+	public static List<ToggleSettings> getList(String tag, List<ToggleSettings> toggle){
 		List<ToggleSettings> result = new ArrayList<>();
-		toggle.stream().filter(t -> t.getType() == type).forEach(t -> result.add(t));
+		toggle.stream().filter(t -> t.getTag().equalsIgnoreCase(tag)).forEach(t -> result.add(t));
 		return result;
 	}
 
@@ -198,7 +197,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		for(ToggleSettings toggle : ts){
 			if(toggle.getPlugin().equals(t.getPlugin())){
 				if(toggle.getTitle().equals(t.getTitle())){
-					if(toggle.getType().equals(t.getType())){
+					if(toggle.getTag().equalsIgnoreCase(t.getTag())){
 						return toggle;
 					}
 				}
@@ -234,7 +233,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		for(ToggleSettings t : player.getToggleSettings()){
 			for(String k : t.getToggles().keySet()){
 				if(k.equalsIgnoreCase(key)){
-					if(t.getType() == ToggleType.SERVER){
+					if(t.getTag().equalsIgnoreCase("SERVER")){
 						getServerSetting().put(key, value);
 						return true;
 					}
@@ -252,7 +251,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		Map<String, Object> plugin = new HashMap<>();
 		Map<String, Object> toggles = new HashMap<>();
 		toggles.put("name", this.getTitle());
-		toggles.put("toggletype", this.getType().getType());
+		toggles.put("toggletag", this.getTag());
 		toggles.put("permission", this.getPermission());
 		toggles.put("ishide", this.isHide());
 		toggles.put("settings", this.getToggles());
@@ -274,7 +273,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		Map<String, Object> t = Util.toMap(String.valueOf(map2.get("toggles")));
 		Map<String, Object> toggles = Util.toMap(String.valueOf(t.get("settings")));
 		ToggleSettings toggle = new ToggleSettings(
-				p, ToggleType.valueOf(String.valueOf(t.get("toggletype"))),
+				p, String.valueOf(t.get("toggletag")),
 				String.valueOf(t.get("permission")),
 				String.valueOf(t.get("name")), toggles,
 				Boolean.parseBoolean(String.valueOf(t.get("ishide"))));
@@ -288,7 +287,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		JsonObject t = j.getAsJsonObject("toggles");
 		JsonObject s = t.getAsJsonObject("settings");
 		ToggleSettings toggle = new ToggleSettings(
-				p, ToggleType.get(t.get("toggletype").getAsString()),
+				p, t.get("toggletag").getAsString(),
 				String.valueOf(t.get("permission")),
 				String.valueOf(t.get("name")), Util.toMap(s.toString()),
 				Boolean.parseBoolean(String.valueOf(t.get("ishide"))));
@@ -300,7 +299,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 			if(t.getPermission().equalsIgnoreCase(s.getPermission())
 					&& t.getPlugin().getName().equalsIgnoreCase(s.getPlugin().getName())
 					&& t.getTitle().equalsIgnoreCase(s.getTitle())
-					&& t.getType().equals(s.getType())){
+					&& t.getTag().equalsIgnoreCase(s.getTag())){
 				return true;
 			}
 		}

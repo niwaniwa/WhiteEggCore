@@ -12,7 +12,6 @@ import org.bukkit.util.StringUtil;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.event.WhiteEggToggleCommandEvent;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -64,7 +63,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 		List<ToggleSettings> d = ToggleSettings.getList();
 		if(player.isOp()){
 			player.sendMessage("&7 ----- &bServer Settings &7-----");
-			for(ToggleSettings toggle : ToggleSettings.getList(ToggleType.SERVER, d)){
+			for(ToggleSettings toggle : ToggleSettings.getList("SERVER", d)){
 				for(String key : toggle.getToggles().keySet()){
 					player.sendMessage("&7 : " + key + " &7: &6" + toggle.getToggles().get(key));
 				}
@@ -72,7 +71,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 		}
 		if(player.hasPermission("whiteegg.moderator")){
 			player.sendMessage(" &7----- &bModerator Settings &7-----");
-			for(ToggleSettings toggle : ToggleSettings.getList(ToggleType.MODERATOR, d)){
+			for(ToggleSettings toggle : ToggleSettings.getList("MODERATOR", d)){
 				if(!player.hasPermission(toggle.getPermission())){ continue; }
 				ToggleSettings pt = ToggleSettings.getSetting(t, toggle);
 				ToggleSettings ds = ToggleSettings.getSetting(d, toggle);
@@ -84,7 +83,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 			}
 		}
 		player.sendMessage("&7 ----- &6Settings &7-----");
-		for(ToggleSettings toggle : ToggleSettings.getList(ToggleType.DEFAULT, d)){
+		for(ToggleSettings toggle : ToggleSettings.getList("DEFAULT", d)){
 			if(!player.hasPermission(toggle.getPermission())){ continue; }
 			if(toggle.isHide()){ continue; }
 			ToggleSettings pt = ToggleSettings.getSetting(t, toggle);

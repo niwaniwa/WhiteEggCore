@@ -8,7 +8,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -88,7 +87,7 @@ public abstract class WhiteEggAPI {
 	 * @return 成功したか
 	 * @deprecated 使用しないでください
 	 */
-	public abstract boolean registerToggle(Plugin plugin, ToggleType type, String permission,
+	public abstract boolean registerToggle(Plugin plugin, String tag, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide);
 
 	/**

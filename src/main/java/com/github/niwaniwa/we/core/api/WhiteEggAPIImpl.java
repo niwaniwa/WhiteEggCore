@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
@@ -89,7 +88,7 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 
 	@Deprecated
 	@Override
-	public boolean registerToggle(Plugin plugin, ToggleType type, String permission, String custam,
+	public boolean registerToggle(Plugin plugin, String tag, String permission, String custam,
 			Map<String, Object> toggles, boolean isHide) {
 		return false;
 	}
