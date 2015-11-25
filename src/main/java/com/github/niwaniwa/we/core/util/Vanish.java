@@ -18,9 +18,7 @@ public class Vanish {
 				p.hidePlayer(player.getPlayer());
 			}
 		}
-
 		player.setVanish(true);
-
 		return true;
 
 	}
