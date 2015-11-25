@@ -38,7 +38,7 @@ public class AltAccount implements ConfigurationSerializable {
 	}
 
 	public static void determine(WhitePlayer player) {
-		if(!(player instanceof WhiteEggPlayer)){ return; }
+		if(!(player instanceof WhiteEggPlayer)){ throw new IllegalArgumentException(String.format("Class %s does not extends WhiteEggPlayer", new Object[] { player.getClass().getSimpleName() })); }
 		WhiteEggPlayer egg = (WhiteEggPlayer) player;
 		for(WhitePlayer p : WhitePlayerFactory.getPlayers()){
 			if(!(p instanceof WhiteEggPlayer)){ continue; }
@@ -74,9 +74,7 @@ public class AltAccount implements ConfigurationSerializable {
 		if(obj == null
 				|| !obj.isJsonArray()){ return alt; }
 		JsonArray array = obj.getAsJsonArray();
-		for(JsonElement o : array){
-			alt.add(UUID.fromString(o.getAsString()));
-		}
+		array.forEach(element -> alt.add(UUID.fromString(element.getAsString())));
 		return alt;
 	}
 
