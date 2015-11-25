@@ -82,6 +82,7 @@ public class WhitePlayerFactory {
 			instance = (T) to.getConstructor(Player.class).newInstance(from.getPlayer());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
 		}
 		instance.saveVariable(from.serialize().toString());
 		return instance;

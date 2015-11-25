@@ -62,14 +62,19 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private boolean version = false;
 
+	@Override
+	public void onLoad() {
+	}
+
 	/**
 	 * プラグインの初期化処理
 	 */
 	@Override
 	public void onEnable(){
-		long time = System.currentTimeMillis();
+		long time = System.nanoTime();
 		this.setting();
-		logger.info("Done : " + (System.currentTimeMillis() - time) + " ms");
+		long finish = (System.nanoTime() - time);
+		logger.info(String.format("Done : %.3f  s", new Object[] { Double.valueOf(finish / 1.0E9D) }));
 	}
 
 	/**
@@ -130,7 +135,7 @@ public class WhiteEggCore extends JavaPlugin {
 		instance = this;
 		logger = this.getLogger();
 		if(!versionCheck()){ return; }
-		msg = new MessageManager(this.getDataFolder() + "/lang/");
+		msg = new MessageManager(this.getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
