@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarFile;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -21,6 +23,7 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
+import com.github.niwaniwa.we.core.util.Util;
 
 public class MessageManager {
 
@@ -33,6 +36,18 @@ public class MessageManager {
 	public MessageManager(File langPathFolder) {
 		this.path = langPathFolder;
 		this.type = WhiteEggCore.getType();
+	}
+
+	private MessageManager(File langPathFolder, String jarPath, JarFile jar, String jarLangPathFolder, LanguageType defaultLanguage) {
+		if(langPathFolder == null){ throw new IllegalArgumentException("file is not null"); }
+		this.path = langPathFolder;
+		this.type = defaultLanguage;
+		File targetPath = new File(jarPath);
+		Arrays.asList(LanguageType.values()).forEach(type -> Util.copyFileFromJar(langPathFolder, targetPath, jarLangPathFolder + "/" + type.getString() + ".yml"));
+	}
+
+	public MessageManager(File langPathFolder, String jarPath, String jarLangPathFolder, LanguageType defaultLanguage) throws IOException{
+		this(langPathFolder, jarPath, new JarFile(jarPath), jarLangPathFolder, defaultLanguage);
 	}
 
 	public MessageManager(String string) {
@@ -137,7 +152,7 @@ public class MessageManager {
 	public boolean loadLangFile() throws FileNotFoundException, IOException, InvalidConfigurationException{
 		Map<LanguageType, YamlConfiguration> result = new HashMap<>();
 		for(LanguageType type : LanguageType.values()){
-			File langF = new File(path + "/" + type.getString() + ".yml");
+			File langF = new File(path + File.separator + type.getString() + ".yml");
 			if(!langF.exists()){ continue; }
 			YamlConfiguration yaml = new YamlConfiguration();
 			yaml.load(langF);
