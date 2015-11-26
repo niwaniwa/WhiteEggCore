@@ -106,10 +106,8 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 		}
 		if(!event.isCancelled()){
 			if(ToggleSettings.set(player, event.getKey(), event.getValue())){
-				player.sendMessage("成功!");
 				return true;
 			}
-			player.sendMessage("失敗><");
 		}
 		return true;
 	}
