@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -192,56 +193,35 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 * @param t 設定
 	 * @return 設定
 	 */
-	public static ToggleSettings getSetting(List<ToggleSettings> ts, ToggleSettings t){
-
-		for(ToggleSettings toggle : ts){
-			if(toggle.getPlugin().equals(t.getPlugin())){
-				if(toggle.getTitle().equals(t.getTitle())){
-					if(toggle.getTag().equalsIgnoreCase(t.getTag())){
-						return toggle;
-					}
-				}
-			}
-		}
-		return null;
+	public static ToggleSettings getSetting(List<ToggleSettings> toggles, ToggleSettings t){
+		if(toggles.isEmpty()){ throw new IllegalArgumentException("list is empty"); }
+		List<ToggleSettings> result = toggles.stream().filter(toggle -> toggle.getPlugin().equals(t.getPlugin()))
+						.filter(toggle -> toggle.getTitle().equals(t.getTitle()))
+						.collect(Collectors.toList());
+		return result.isEmpty() ? null : result.get(0);
 	}
 
 	public static boolean contains(String key){
-		for(ToggleSettings t : list){
-			for(String k : t.getToggles().keySet()){
-				if(k.equalsIgnoreCase(key)){
-					return true;
-				}
-			}
-		}
-		return false;
+		return list.stream()
+				.anyMatch(toggles ->  toggles.getToggles()
+						.entrySet().stream().anyMatch(entry -> entry.getKey().equalsIgnoreCase(key)));
 	}
 
 	public static Object getValue(WhitePlayer player, String key){
 		if(!contains(key)){ return null; }
-		for(ToggleSettings t : player.getToggleSettings()){
-			for(String k : t.getToggles().keySet()){
-				if(k.equalsIgnoreCase(key)){
-					return t.getToggles().get(key);
-				}
-			}
-		}
-		return null;
+		List<ToggleSettings> result = player.getToggleSettings().stream()
+				.filter(toggle -> toggle.getToggles().keySet().stream()
+					.anyMatch(k -> k.equalsIgnoreCase(key)))
+				.collect(Collectors.toList());
+		return result.isEmpty() ? null : result.get(0);
 	}
 
 	public static boolean set(WhitePlayer player, String key, Object value){
-		for(ToggleSettings t : player.getToggleSettings()){
-			for(String k : t.getToggles().keySet()){
-				if(k.equalsIgnoreCase(key)){
-					if(t.getTag().equalsIgnoreCase("SERVER")){
-						getServerSetting().put(key, value);
-						return true;
-					}
-					t.getToggles().put(key, value);
-					return true;
-				}
-			}
-		}
+		player.getToggleSettings().stream()
+			.filter(toggle -> toggle.getToggles().keySet().stream()
+				.anyMatch(string -> string.equalsIgnoreCase(key)))
+			.filter(toggle -> toggle.getTag().equalsIgnoreCase("SERVER")).limit(1)
+			.forEach(toggle -> toggle.getToggles().put(key, value));
 		return false;
 	}
 
