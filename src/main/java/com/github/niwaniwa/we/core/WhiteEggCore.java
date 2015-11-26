@@ -36,7 +36,6 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Util;
-import com.github.niwaniwa.we.core.util.bar.Dragon;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
@@ -85,7 +84,6 @@ public class WhiteEggCore extends JavaPlugin {
 		if (!version) { return; }
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
-		Dragon.disable();
 	}
 
 	/**
