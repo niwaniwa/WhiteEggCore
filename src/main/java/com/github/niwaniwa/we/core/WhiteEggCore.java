@@ -36,6 +36,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Util;
+import com.github.niwaniwa.we.core.util.Versioning;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
@@ -51,6 +52,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static MessageManager msg;
 	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
+
 	private PluginManager pm = Bukkit.getPluginManager();
 	private JavaScript script;
 
@@ -58,11 +60,13 @@ public class WhiteEggCore extends JavaPlugin {
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
 
 	public static Logger logger;
-
-	private boolean version = false;
+	public static Versioning version;
 
 	@Override
 	public void onLoad() {
+		logger = this.getLogger();
+		logger.info("Checking version....");
+		version = Versioning.getInstance();
 	}
 
 	/**
@@ -81,7 +85,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	@Override
 	public void onDisable(){
-		if (!version) { return; }
+		if (!version.isSupport()) { return; }
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
 	}
@@ -131,8 +135,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void setting(){
 		instance = this;
-		logger = this.getLogger();
-		if(!versionCheck()){ return; }
+		this.versionCheck();
 		msg = new MessageManager(this.getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
@@ -246,27 +249,22 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	/**
-	 * Java、CraftBukkitバージョンチェックメソッド
+	 * バージョンチェックメソッド
 	 */
-	private boolean versionCheck(){
-		int javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
-		if(javaVersion <= 1.7){
-			logger.warning("Unsupported Java Version >_< : " + javaVersion);
+	private void versionCheck(){
+		if(version.getJavaVersion() <= 1.7){
+			logger.warning("Unsupported Java Version >_< : " + version.getJavaVersion());
 			logger.warning("Please use 1.8");
 			pm.disablePlugin(instance);
-			return false;
+			return;
 		}
-		// TODO: CraftBukkit
-		String packageName = getServer().getClass().getPackage().getName();
-		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-		if(!version.equalsIgnoreCase("v1_8_R3")){
+		if(!version.getCraftBukkitVersion().equalsIgnoreCase("v1_8_R3")){
 			logger.warning("Unsupported CraftBukkit Version >_< : " + version);
 			logger.warning("Please use v1_8_R3");
 			pm.disablePlugin(instance);
-			return false;
+			return;
 		}
-		this.version = true;
-		return true;
+		return;
 	}
 
 	/**
