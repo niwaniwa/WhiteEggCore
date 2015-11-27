@@ -2,6 +2,7 @@ package com.github.niwaniwa.we.core.command.toggle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.plugin.Plugin;
 
+import com.github.niwaniwa.we.core.command.toggle.type.ToggleType;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.Util;
 import com.google.gson.JsonObject;
@@ -26,7 +28,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	private static final Map<String, Object> server = new HashMap<>();
 
 	private Plugin p;
-	private String tag;
+	private List<String> tags;
 	private String permission;
 	private String title;
 	private final Map<String, Object> toggles = new HashMap<>();
@@ -40,20 +42,48 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 * @param custam 任意の名前
 	 * @param toggles 設定
 	 * @param isHide デフォルトでの表示
+	 * @deprecated version2.0.0にて非推奨になりました{@link #ToggleSettings(Plugin, List, String, String, Map, boolean)}
 	 */
-	public ToggleSettings(Plugin plugin, String tag, String permission,
+	public ToggleSettings(Plugin plugin, ToggleType type, String permission,
+			String custam, Map<String, Object> toggles, boolean isHide) {
+		this(plugin, Arrays.asList(new String[]{type.getType()}), permission, custam, toggles, isHide);
+	}
+
+	/**
+	 * コンストラクター
+	 * @param plugin プラグイン
+	 * @param tags タグ
+	 * @param permission 権限
+	 * @param custam 任意の名前
+	 * @param toggles 設定
+	 * @param isHide デフォルトでの表示
+	 */
+	public ToggleSettings(Plugin plugin, String tags, String permission,
+			String custam, Map<String, Object> toggles, boolean isHide) {
+		this(plugin, Arrays.asList(tags.split(",")), permission, custam, toggles, isHide);
+	}
+
+	/**
+	 * コンストラクター
+	 * @param plugin プラグイン
+	 * @param tags タグ
+	 * @param permission 権限
+	 * @param custam 任意の名前
+	 * @param toggles 設定
+	 * @param isHide デフォルトでの表示
+	 */
+	public ToggleSettings(Plugin plugin, List<String> tags, String permission,
 			String custam, Map<String, Object> toggles, boolean isHide) {
 		this.p = plugin;
-		this.tag = tag;
+		this.tags = tags;
 		this.permission = permission;
 		this.title = custam.isEmpty() ? p.getName() : custam;
+		if(!tags.contains("DEFAULT")){ tags.add("DEFAULT"); }
 		if(toggles != null){
 			for(String key : toggles.keySet()){
 				this.toggles.put(key, toggles.get(key));
 			}
-			if(tag.equalsIgnoreCase("SERVER")){
-				server.putAll(toggles);
-			}
+			if(tags.contains("SERVER")){ server.putAll(toggles); }
 		}
 		this.isHide = isHide;
 	}
@@ -76,9 +106,14 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	/**
 	 * タグの取得
 	 * @return String タグ
+	 * @deprecated
 	 */
 	public String getTag(){
-		return tag;
+		return tags.get(0);
+	}
+
+	public List<String> getTags(){
+		return tags;
 	}
 
 	/**
@@ -142,7 +177,11 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 * @param tag タグ
 	 */
 	protected void setTag(String tag){
-		this.tag = tag;
+		this.addTag(tag);
+	}
+
+	public void addTag(String tag){
+		this.tags.add(tag);
 	}
 
 	/**
@@ -155,7 +194,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
 	public ToggleSettings clone() {
 		ToggleSettings t = new ToggleSettings(this.getPlugin(),
-				this.getTag(), this.getPermission(), this.getTitle(), this.getToggles(), this.isHide());
+				this.getTags(), this.getPermission(), this.getTitle(), this.getToggles(), this.isHide());
 		return t;
 	}
 
@@ -168,15 +207,16 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	}
 
 	/**
-	 * 取得したい種別の設定を返す
-	 * @param type 取得したい種別
+	 * 取得したいタグの設定を返す
+	 * @param tag 取得したいタグ
 	 * @param toggle 検索する設定
 	 * @return List 設定
 	 */
 	public static List<ToggleSettings> getList(String tag, List<ToggleSettings> toggle){
-		List<ToggleSettings> result = new ArrayList<>();
-		toggle.stream().filter(t -> t.getTag().equalsIgnoreCase(tag)).forEach(t -> result.add(t));
-		return result;
+		if(tag.equalsIgnoreCase("DEFAULT")){
+			return toggle.stream().filter(t -> t.getTags().contains("DEFAULT")).collect(Collectors.toList());
+		}
+		return toggle.stream().filter(t -> t.getTags().contains(tag)).collect(Collectors.toList());
 	}
 
 	/**
@@ -195,8 +235,9 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 	 */
 	public static ToggleSettings getSetting(List<ToggleSettings> toggles, ToggleSettings t){
 		if(toggles.isEmpty()){ throw new IllegalArgumentException("list is empty"); }
+		if(t.getToggles().isEmpty()){ throw new IllegalArgumentException("setting is empty"); }
 		List<ToggleSettings> result = toggles.stream().filter(toggle -> toggle.getPlugin().equals(t.getPlugin()))
-						.filter(toggle -> toggle.getTitle().equals(t.getTitle()))
+						.filter(toggle -> toggle.getTitle().equalsIgnoreCase(t.getTitle()))
 						.collect(Collectors.toList());
 		return result.isEmpty() ? null : result.get(0);
 	}
@@ -220,7 +261,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 		player.getToggleSettings().stream()
 			.filter(toggle -> toggle.getToggles().keySet().stream()
 				.anyMatch(string -> string.equalsIgnoreCase(key)))
-			.filter(toggle -> toggle.getTag().equalsIgnoreCase("SERVER")).limit(1)
+			.filter(toggle -> toggle.getTags().contains("SERVER")).limit(1)
 			.forEach(toggle -> toggle.getToggles().put(key, value));
 		return false;
 	}

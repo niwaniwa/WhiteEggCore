@@ -69,19 +69,6 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 				}
 			}
 		}
-		if(player.hasPermission("whiteegg.moderator")){
-			player.sendMessage(" &7----- &bModerator Settings &7-----");
-			for(ToggleSettings toggle : ToggleSettings.getList("MODERATOR", d)){
-				if(!player.hasPermission(toggle.getPermission())){ continue; }
-				ToggleSettings pt = ToggleSettings.getSetting(t, toggle);
-				ToggleSettings ds = ToggleSettings.getSetting(d, toggle);
-				if(pt == null){ continue; }
-				for(String key : toggle.getToggles().keySet()){
-					player.sendMessage("&7 : " + key + " &7: &6" +
-							(pt.getToggles().get(key) == null ? ds.getToggles().get(key) : pt.getToggles().get(key)));
-				}
-			}
-		}
 		player.sendMessage("&7 ----- &6Settings &7-----");
 		for(ToggleSettings toggle : ToggleSettings.getList("DEFAULT", d)){
 			if(!player.hasPermission(toggle.getPermission())){ continue; }
