@@ -64,7 +64,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		this.player = player;
 		this.isVanish = false;
 		this.twitter = new PlayerTwitterManager(this);
-		ToggleSettings.getList().forEach(list -> this.toggle.add(list.clone()));
+		ToggleSettings.getList().forEach(list -> toggle.add(list.clone()));
 		this.accounts = new AltAccount();
 	}
 
@@ -300,6 +300,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		player.put("address", this.getAddress());
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
+		result.put("ver", WhiteEggCore.getInstance().getDescription().getVersion());
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
 		white.put(this.getClass().getSimpleName(), result);
 		return white;
