@@ -3,10 +3,11 @@ package com.github.niwaniwa.we.core.json;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -77,7 +78,7 @@ public class JsonManager {
 		StringBuilder b = new StringBuilder();
 		BufferedReader reader = null;
 		try{
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
 			String str = reader.readLine();
 			while (str != null) {
 				b.append(str);
