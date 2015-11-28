@@ -11,7 +11,7 @@ public class Versioning {
 	private int javaVersion;
 
 	private Versioning() {
-		versionCheck();
+		this.support = versionCheck();
 		instance = this;
 	}
 
@@ -28,7 +28,6 @@ public class Versioning {
 			craftBukkitVersion = version;
 			return false;
 		}
-		this.support = true;
 		return true;
 	}
 
