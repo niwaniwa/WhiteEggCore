@@ -29,7 +29,7 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
-import com.github.niwaniwa.we.core.util.Vanish;
+import com.github.niwaniwa.we.core.util.lib.Vanish;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;

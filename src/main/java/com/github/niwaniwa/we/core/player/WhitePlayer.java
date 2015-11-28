@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 

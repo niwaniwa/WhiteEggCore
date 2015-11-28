@@ -30,9 +30,9 @@ import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterComman
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.listener.ScriptListener;
-import com.github.niwaniwa.we.core.player.WhiteCommandSender;
-import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Util;

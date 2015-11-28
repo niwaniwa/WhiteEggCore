@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.player;
+package com.github.niwaniwa.we.core.player.commad;
 
 import org.bukkit.permissions.Permission;
 

@@ -11,8 +11,9 @@ import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.util.Versioning;
 
 /**
  * Coreコマンドクラス
@@ -45,6 +46,7 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 		sender.sendMessage("&7 : &6Author &7: &rKokekoKko_");
 		sender.sendMessage("&7 : &6Server Version &7: &r" + Bukkit.getVersion());
 		sender.sendMessage("&7 : &6Bukkit Version &7: &r" + Bukkit.getBukkitVersion());
+		sender.sendMessage("&7 : &6CraftBukkit Version &7: &r" + Versioning.getInstance().getCraftBukkitVersion());
 		sender.sendMessage("&7 ----- ----- ----- ----- -----");
 	}
 

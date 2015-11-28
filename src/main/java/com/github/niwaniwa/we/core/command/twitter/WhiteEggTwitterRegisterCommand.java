@@ -9,14 +9,14 @@ import org.bukkit.command.Command;
 import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
-import com.github.niwaniwa.we.core.player.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
-import com.github.niwaniwa.we.core.util.clickable.ChatExtra;
-import com.github.niwaniwa.we.core.util.clickable.ChatFormat;
-import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
-import com.github.niwaniwa.we.core.util.clickable.Clickable;
-import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
+import com.github.niwaniwa.we.core.util.lib.clickable.ChatExtra;
+import com.github.niwaniwa.we.core.util.lib.clickable.ChatFormat;
+import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
+import com.github.niwaniwa.we.core.util.lib.clickable.Clickable;
+import com.github.niwaniwa.we.core.util.lib.clickable.HoverEventType;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 
 public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
