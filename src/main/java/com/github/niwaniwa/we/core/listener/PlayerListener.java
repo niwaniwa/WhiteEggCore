@@ -1,5 +1,7 @@
 package com.github.niwaniwa.we.core.listener;
 
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,15 +28,10 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onJoin(PlayerJoinEvent event) {
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
-		for (RankProperty p : RankProperty.values()) {
-			for (Rank r : Rank.getRanks()) {
-				if (r.getProperty().equals(p)) {
-					if (player.hasPermission(r.getPermission())) {
-						player.addRank(r);
-					}
-				}
-			}
-		}
+		Arrays.asList(RankProperty.values()).forEach(property -> {
+			 Rank.getRanks().stream().filter(r -> r.getProperty().equals(property))
+			 					.forEach(rank -> { if (player.hasPermission(rank.getPermission())) { player.addRank(rank); }});
+		});
 		AltAccount.determine(player);
 	}
 
