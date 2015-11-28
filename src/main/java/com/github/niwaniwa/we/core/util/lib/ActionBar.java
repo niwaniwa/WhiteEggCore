@@ -1,7 +1,9 @@
-package com.github.niwaniwa.we.core.util;
+package com.github.niwaniwa.we.core.util.lib;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import com.github.niwaniwa.we.core.util.Extension;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 

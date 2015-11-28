@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.util.clickable;
+package com.github.niwaniwa.we.core.util.lib.clickable;
 
 public enum HoverEventType {
 	SHOW_TEXT("show_text"),

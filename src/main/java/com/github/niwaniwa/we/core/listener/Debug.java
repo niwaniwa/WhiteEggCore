@@ -13,13 +13,13 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.util.ActionBar;
-import com.github.niwaniwa.we.core.util.Tab;
-import com.github.niwaniwa.we.core.util.clickable.ChatExtra;
-import com.github.niwaniwa.we.core.util.clickable.ChatFormat;
-import com.github.niwaniwa.we.core.util.clickable.ClickEventType;
-import com.github.niwaniwa.we.core.util.clickable.Clickable;
-import com.github.niwaniwa.we.core.util.clickable.HoverEventType;
+import com.github.niwaniwa.we.core.util.lib.ActionBar;
+import com.github.niwaniwa.we.core.util.lib.Tab;
+import com.github.niwaniwa.we.core.util.lib.clickable.ChatExtra;
+import com.github.niwaniwa.we.core.util.lib.clickable.ChatFormat;
+import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
+import com.github.niwaniwa.we.core.util.lib.clickable.Clickable;
+import com.github.niwaniwa.we.core.util.lib.clickable.HoverEventType;
 
 import twitter4j.TwitterException;
 

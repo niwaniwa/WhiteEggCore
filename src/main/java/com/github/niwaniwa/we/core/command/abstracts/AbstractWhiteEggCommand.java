@@ -2,9 +2,9 @@ package com.github.niwaniwa.we.core.command.abstracts;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
-import com.github.niwaniwa.we.core.player.WhiteCommandSender;
-import com.github.niwaniwa.we.core.player.WhiteConsoleSender;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
 
 /**
  * コマンドの抽象クラス

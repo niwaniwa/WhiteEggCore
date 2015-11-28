@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.util;
+package com.github.niwaniwa.we.core.util.lib;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

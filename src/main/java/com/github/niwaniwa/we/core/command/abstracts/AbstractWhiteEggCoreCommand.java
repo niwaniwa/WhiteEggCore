@@ -3,7 +3,7 @@ package com.github.niwaniwa.we.core.command.abstracts;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.player.WhiteCommandSender;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
 /**
