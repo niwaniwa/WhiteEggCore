@@ -1,6 +1,6 @@
-# WhiteEggCore - v1.5
+# WhiteEggCore - v2.0.0
 
-このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP"WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
+このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
 java勉強中...
 
@@ -50,6 +50,8 @@ JavaScriptを利用してゲーム内に干渉できます
 * [Twitter4j](http://twitter4j.org/ "Twitter4j")
 
 ## licenseなどなど
+
+* [Licenseはこちら](whiteeggcore "License")
 
 * Twitter4jはApache License 2.0licenseを使用しています
 
