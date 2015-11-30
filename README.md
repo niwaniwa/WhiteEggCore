@@ -2,8 +2,6 @@
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
-java勉強中...
-
 ## 動作
 - Java 8の機能を利用しています
 - Spigot最新版にて動作を確認しています
@@ -51,9 +49,9 @@ JavaScriptを利用してゲーム内に干渉できます
 
 ## licenseなどなど
 
-* [Licenseはこちら](whiteeggcore "License")
+* [Licenseはこちら](https://github.com/niwaniwa/WhiteEggCore/blob/master/License.txt "License")
 
-* Twitter4jはApache License 2.0licenseを使用しています
+* 本プラグインはTwitterのapiを使用するためTwitter4jを含んでおります(Twitter4jはApache License 2.0licenseを使用しています)
 
 >Copyright 2007 Yusuke Yamamoto
 
