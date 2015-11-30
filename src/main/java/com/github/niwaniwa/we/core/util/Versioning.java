@@ -18,16 +18,11 @@ public class Versioning {
 	private boolean versionCheck(){
 		int javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
 		this.javaVersion = javaVersion;
-		if(javaVersion <= 1.7){
-			return false;
-		}
+		if(javaVersion <= 1.7){ return false; }
 		// TODO: CraftBukkit
 		String packageName = Bukkit.getServer().getClass().getPackage().getName();
-		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-		if(!version.equalsIgnoreCase("v1_8_R3")){
-			craftBukkitVersion = version;
-			return false;
-		}
+		craftBukkitVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
+		if(!craftBukkitVersion.equalsIgnoreCase("v1_8_R3")){ return false; }
 		return true;
 	}
 

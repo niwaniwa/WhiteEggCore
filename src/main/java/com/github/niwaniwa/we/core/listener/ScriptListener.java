@@ -23,13 +23,9 @@ public class ScriptListener implements Listener {
 	}
 
 	@EventHandler
-	public void onCommand(PlayerCommandPreprocessEvent event){
-		JavaScript.callEvent("command", event);
-	}
+	public void onCommand(PlayerCommandPreprocessEvent event){ JavaScript.callEvent("command", event); }
 
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event){
-		JavaScript.callEvent("join", event);
-	}
+	public void onJoin(PlayerJoinEvent event){ JavaScript.callEvent("join", event); }
 
 }
