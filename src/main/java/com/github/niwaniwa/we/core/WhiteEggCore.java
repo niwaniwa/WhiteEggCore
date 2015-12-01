@@ -43,7 +43,7 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 /**
  * メインクラス
  * @author niwaniwa
- *
+ * @version 2.0.0
  */
 public class WhiteEggCore extends JavaPlugin {
 

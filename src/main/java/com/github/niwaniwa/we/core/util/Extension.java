@@ -10,6 +10,10 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 
 public abstract class Extension {
 
+	/**
+	 * プレイヤーにパケットなどを送信します
+	 * @param player
+	 */
 	public abstract void send(Player player);
 
 	protected IChatBaseComponent build(String source){
@@ -21,17 +25,28 @@ public abstract class Extension {
 		return (CraftPlayer) p;
 	}
 
+	/**
+	 * 指定した権限を所持しているプレイヤーのみに送信します
+	 * @param prm 権限
+	 * @param t Extension
+	 */
 	public static void permissionBroadcast(String prm, Extension t){
-		for(Player p : Bukkit.getOnlinePlayers()){
-			if(p.hasPermission(prm)){
-				t.send(p);
-			}
-		}
+		Bukkit.getOnlinePlayers().stream().filter(p -> p.hasPermission(prm)).forEach(p -> t.send(p));
 	}
+
+	/**
+	 * 指定したワールドにいるプレイヤーに送信します
+	 * @param world world
+	 * @param t Extension
+	 */
 	public static void worldBroadcast(World world, Extension t){
 		world.getPlayers().forEach(player -> t.send(player));
 	}
 
+	/**
+	 * すべてのプレイヤーに送信します
+	 * @param t Extension
+	 */
 	public static void serverBroadcast(Extension t){
 		Bukkit.getOnlinePlayers().forEach(player -> t.send(player));
 	}

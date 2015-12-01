@@ -17,6 +17,12 @@ public class Clickable extends Extension {
 
 	private JsonObject json;
 
+	/**
+	 * Constructor
+	 * @param text 表示する文字列
+	 * @param color 文字列の装飾
+	 * @param formats フォーマット
+	 */
 	public Clickable(String text, ChatColor color, List<ChatFormat> formats) {
 		json = new JsonObject();
 		json.addProperty("text", text);
@@ -26,6 +32,10 @@ public class Clickable extends Extension {
 		if (formats != null) { formats.forEach(f -> json.addProperty(f.getFormat(), true)); }
 	}
 
+	/**
+	 * Eventなどを追加します
+	 * @param extraObject ChatExtra
+	 */
 	public void addExtra(ChatExtra extraObject) {
 		if (json.get("extra") == null) {
 			json.add("extra", new JsonArray());

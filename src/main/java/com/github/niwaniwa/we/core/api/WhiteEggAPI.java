@@ -19,6 +19,8 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
  */
 public abstract class WhiteEggAPI {
 
+	private static WhiteEggAPI instance = new WhiteEggAPIImpl();
+
 	/**
 	 * 現在のオンラインプレイヤーを返す
 	 * @return List 現在接続しているプレイヤーを取得
@@ -102,7 +104,11 @@ public abstract class WhiteEggAPI {
 	 */
 	public abstract void tweet(String tweet);
 
+	/**
+	 * APIインスタンスの取得
+	 * @return WhiteEggAPI instance
+	 */
 	public static WhiteEggAPI getAPI(){
-		return new WhiteEggAPIImpl();
+		return instance;
 	}
 }

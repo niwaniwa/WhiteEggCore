@@ -201,6 +201,11 @@ public abstract class TwitterManager {
 		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
+	/**
+	 * ツイートの削除
+	 * @param status 削除するツイート
+	 * @return 成功したか
+	 */
 	public boolean removeTweet(Status status){
 		try {
 			twitter.destroyStatus(status.getId());

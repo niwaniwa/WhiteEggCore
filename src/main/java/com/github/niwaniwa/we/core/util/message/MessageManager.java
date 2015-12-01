@@ -31,13 +31,25 @@ public class MessageManager {
 	private final Map<LanguageType, YamlConfiguration> langs = new HashMap<>();
 	private final List<MessageExtension> extension = new ArrayList<>();
 	private LanguageType type;
-	private boolean b = false;
+	private boolean replaceDefaultLanguage = false;
 
+	/**
+	 * Constructor
+	 * @param langPathFolder 言語ファイルが格納されている階層
+	 */
 	public MessageManager(File langPathFolder) {
 		this.path = langPathFolder;
 		this.type = WhiteEggCore.getType();
 	}
 
+	/**
+	 * Constructor
+	 * @param langPathFolder 言語ファイルが格納されている(される)階層
+	 * @param jarPath 言語ファイルが格納されているJarファイルのパス
+	 * @param jar 言語ファイルが格納されているJarファイルのパスのJarインスタンス
+	 * @param jarLangPathFolder jar内の言語ファイルが格納されているフォルダーを差すパス
+	 * @param defaultLanguage デフォルトで表示される言語
+	 */
 	private MessageManager(File langPathFolder, String jarPath, JarFile jar, String jarLangPathFolder, LanguageType defaultLanguage) {
 		if(langPathFolder == null){ throw new IllegalArgumentException("file is not null"); }
 		this.path = langPathFolder;
@@ -46,14 +58,29 @@ public class MessageManager {
 		Arrays.asList(LanguageType.values()).forEach(type -> Util.copyFileFromJar(langPathFolder, targetPath, jarLangPathFolder + "/" + type.getString() + ".yml"));
 	}
 
+	/**
+	 * Constructor
+	 * @param langPathFolder 言語ファイルが格納されている(される)階層
+	 * @param jarPath 言語ファイルが格納されているJarファイルのパス
+	 * @param jarLangPathFolder jar内の言語ファイルが格納されているフォルダーを差すパス
+	 * @param defaultLanguage デフォルトで表示される言語
+	 * @throws IOException 入出力エラー
+	 */
 	public MessageManager(File langPathFolder, String jarPath, String jarLangPathFolder, LanguageType defaultLanguage) throws IOException{
 		this(langPathFolder, jarPath, new JarFile(jarPath), jarLangPathFolder, defaultLanguage);
 	}
 
-	public MessageManager(String string) {
-		this(new File(string));
+	/**
+	 * Constructor
+	 * @param string 言語ファイルが格納されている階層
+	 */
+	public MessageManager(String path) {
+		this(new File(path));
 	}
 
+	/**
+	 * このJarファイル(WhiteEggCore)に含まれている言語ファイルを使用して初期化します
+	 */
 	public MessageManager() {
 		try {
 			loadLangFile(WhiteEggCore.getType(),
@@ -109,7 +136,7 @@ public class MessageManager {
 	 * @return メッセージ
 	 */
 	public String getMessage(LanguageType lang, String key, String prefix, boolean replaceColorCode){
-		return getMessage(lang, key, prefix, replaceColorCode, b);
+		return getMessage(lang, key, prefix, replaceColorCode, replaceDefaultLanguage);
 	}
 
 	/**
@@ -199,8 +226,8 @@ public class MessageManager {
 	 * デフォルトでメッセージを取得できない場合にデファオルトの言語を取得するかを設定します
 	 * @param b boolean
 	 */
-	public void replaceDefaultLanguage(boolean b){
-		this.b = b;
+	public void replaceDefaultLanguage(boolean isReplaceDefaultLanguage){
+		this.replaceDefaultLanguage = isReplaceDefaultLanguage;
 	}
 
 	/**
@@ -208,14 +235,27 @@ public class MessageManager {
 	 * @return boolean
 	 */
 	public boolean isReplaceDefaultLanguage(){
-		return b;
+		return replaceDefaultLanguage;
 	}
 
+	/**
+	 * 拡張機能を使用しメッセージを改変します
+	 * @param message 元となる文字列
+	 * @param extension 使用する機能
+	 * @param add 履歴に追加するか
+	 * @return 改変された文字列
+	 */
 	public String extension(String message, MessageExtension extension, boolean add){
 		if(add){ this.extension.add(extension); }
 		return extension.execute(message);
 	}
 
+	/**
+	 * 既に使用した機能を検索し使用します
+	 * @param message 元となる文字列
+	 * @param extension MessageExtensionを継承した使用する機能のクラス
+	 * @return
+	 */
 	public String extension(String message, Class<?> extension){
 		for(MessageExtension e : this.extension){
 			if(e.getClass().equals(extension)){
