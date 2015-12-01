@@ -248,7 +248,7 @@ public class WhiteEggPlayer implements WhitePlayer {
 		JsonObject json = jm.getJson(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
 		if(json == null){ return false; }
 		this.saveVariable(json.toString());
-		return false;
+		return true;
 	}
 
 	@Override
