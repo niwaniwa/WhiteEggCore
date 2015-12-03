@@ -1,3 +1,12 @@
 lock: false
-consumerKey: ''
-consumerSecret: ''
+setting:
+  savePlayerData: true
+  enableScript: false
+  autoSave:
+    enable: false
+    time: 300000 # ms
+  enablecCommands: true
+  twitter:
+    useTwitter: true
+    consumerKey: ''
+    consumerSecret: ''
