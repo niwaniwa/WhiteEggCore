@@ -29,8 +29,8 @@ public abstract class TwitterManager {
 	private RequestToken request = null;
 	private List<Status> tweets;
 
-	private final String consumerKey = WhiteEggCore.getConf().getConfig().getString("consumerKey"); // app consumer key
-	private final String consumerSecret = WhiteEggCore.getConf().getConfig().getString("consumerSecret"); // app consumer secret
+	private final String consumerKey = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerKey"); // app consumer key
+	private final String consumerSecret = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerSecret"); // app consumer secret
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
