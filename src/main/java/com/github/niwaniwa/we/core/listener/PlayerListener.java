@@ -37,11 +37,13 @@ public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
+		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
 	}
 
 	public void onKick(PlayerKickEvent event){
+		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
 		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
 	}
