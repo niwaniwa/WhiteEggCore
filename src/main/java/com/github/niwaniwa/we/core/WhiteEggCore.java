@@ -15,6 +15,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
@@ -56,7 +57,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private PluginManager pm = Bukkit.getPluginManager();
 	private JavaScript script;
 
-	public static final String logPrefix = "[WEC]";
+	public static final String logPrefix = "[WhiteEggCore]";
 	public static final String msgPrefix = "§7[§bWEC§7]§r";
 
 	public static Logger logger;
@@ -74,6 +75,8 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable(){
+		this.versionCheck();
+		if (!version.isSupport()) { return; }
 		long time = System.nanoTime();
 		this.setting();
 		long finish = (System.nanoTime() - time);
@@ -135,7 +138,6 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void setting(){
 		instance = this;
-		this.versionCheck();
 		msg = new MessageManager(this.getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
@@ -146,12 +148,15 @@ public class WhiteEggCore extends JavaPlugin {
 		this.settingLanguage();
 		this.load();
 		this.settingCheck();
+		this.runTask();
 	}
 
 	private void settingCheck(){
-		if(config.getConfig().getString("consumerKey").isEmpty()
-				|| config.getConfig().getString("consumerSecret").isEmpty()){
-			logger.warning("Twitter Consumer key or Consumer Secret is empty.");
+		if(config.getConfig().getString("setting.twitter.consumerKey", "").isEmpty()
+				|| config.getConfig().getString("setting.twitter.consumerSecret", "").isEmpty()){
+			logger.warning("Twitter Consumer key or Consumer Secret is empty");
+			logger.warning("Twitter command disable");
+			config.getConfig().set("setting.twitter.useTwitter", false);
 		}
 	}
 
@@ -190,15 +195,29 @@ public class WhiteEggCore extends JavaPlugin {
 	 * コマンドの登録
 	 */
 	private void registerCommands(){
+		if(!config.getConfig().getBoolean("setting.enablecCommands")){ return; }
 		WhiteEggCoreCommandHandler handler = new WhiteEggCoreCommandHandler();
 		handler.registerCommand("whiteeggcore", new WhiteEggCoreCommand());
 		handler.registerCommand("toggle", new WhiteEggToggleCommand());
 		handler.registerCommand("head", new WhiteEggHeadCommand());
-		handler.registerCommand("tweet", new WhiteEggTwitterCommand());
 		handler.registerCommand("register", new WhiteEggTwitterRegisterCommand());
 		handler.registerCommand("whisper", new WhiteEggWhisperCommand());
 		handler.registerCommand("replay", new WhiteEggReplayCommand());
 		handler.registerCommand("script", new WhiteEggScriptCommand());
+		if(config.getConfig().getBoolean("setting.twitter.useTwitter", true)){
+			handler.registerCommand("tweet", new WhiteEggTwitterCommand());
+		}
+	}
+
+	private void runTask(){
+		final int run = config.getConfig().getInt("setting.autoSave.time", 300000);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(!config.getConfig().getBoolean("setting.autoSave.enable", false)){ this.cancel(); }
+				WhitePlayerFactory.saveAll();
+			}
+		}.runTaskTimerAsynchronously(instance, run, run);
 	}
 
 	/**
@@ -240,6 +259,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * 各種登録
 	 */
 	private void register(){
+		if(config.getConfig().getBoolean("setting.enablecCommands"))
 		try {
 			JavaScript.copyScript();
 		} catch (IOException e) {
@@ -249,7 +269,7 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	/**
-	 * バージョンチェックメソッド
+	 * バージョンチェック
 	 */
 	private void versionCheck(){
 		if(version.getJavaVersion() <= 1.7){
