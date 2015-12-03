@@ -72,7 +72,7 @@ public class MessageManager {
 
 	/**
 	 * Constructor
-	 * @param string 言語ファイルが格納されている階層
+	 * @param path 言語ファイルが格納されている階層
 	 */
 	public MessageManager(String path) {
 		this(new File(path));
@@ -224,7 +224,7 @@ public class MessageManager {
 
 	/**
 	 * デフォルトでメッセージを取得できない場合にデファオルトの言語を取得するかを設定します
-	 * @param b boolean
+	 * @param isReplaceDefaultLanguage boolean
 	 */
 	public void replaceDefaultLanguage(boolean isReplaceDefaultLanguage){
 		this.replaceDefaultLanguage = isReplaceDefaultLanguage;
@@ -254,7 +254,7 @@ public class MessageManager {
 	 * 既に使用した機能を検索し使用します
 	 * @param message 元となる文字列
 	 * @param extension MessageExtensionを継承した使用する機能のクラス
-	 * @return
+	 * @return 改変された文字列
 	 */
 	public String extension(String message, Class<?> extension){
 		for(MessageExtension e : this.extension){

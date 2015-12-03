@@ -12,7 +12,7 @@ public abstract class Extension {
 
 	/**
 	 * プレイヤーにパケットなどを送信します
-	 * @param player
+	 * @param player 対象プレイヤー
 	 */
 	public abstract void send(Player player);
 

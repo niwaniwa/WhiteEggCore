@@ -49,7 +49,7 @@ public class ChatExtra {
 
 	/**
 	 * 設定をJsonObjectとして返します
-	 * @return
+	 * @return JsonObject json
 	 */
 	public JsonObject toJSON() {
 		return json;

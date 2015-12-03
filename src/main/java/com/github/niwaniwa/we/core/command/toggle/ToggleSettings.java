@@ -229,7 +229,7 @@ public class ToggleSettings implements Cloneable, ConfigurationSerializable {
 
 	/**
 	 * 指定した設定の中から設定を探して返す
-	 * @param ts 対象設定List
+	 * @param toggles 対象設定List
 	 * @param t 設定
 	 * @return 設定
 	 */
