@@ -16,8 +16,7 @@ public class Versioning {
 	}
 
 	private boolean versionCheck(){
-		int javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
-		this.javaVersion = javaVersion;
+		this.javaVersion = Integer.valueOf(System.getProperty("java.version").split("_")[1]);
 		// TODO: CraftBukkit
 		String packageName = Bukkit.getServer().getClass().getPackage().getName();
 		craftBukkitVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
