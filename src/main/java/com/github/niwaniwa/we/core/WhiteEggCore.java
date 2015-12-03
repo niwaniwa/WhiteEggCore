@@ -249,8 +249,7 @@ public class WhiteEggCore extends JavaPlugin {
 			msg.loadLangFile(type, buffer);
 		} catch (InvalidConfigurationException | IOException e) {
 		} finally {
-			try{
-				if(buffer != null){ buffer.close(); }
+			try{ if(buffer != null){ buffer.close(); }
 			} catch (IOException e){}
 		}
 	}
