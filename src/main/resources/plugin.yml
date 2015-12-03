@@ -4,12 +4,14 @@ main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
     description: admin command
-    permission: whiteegg.moderator
+    permission: whiteegg.core.command.*
     aliases: wbc
   toggle:
     aliases: to
     permission: whiteegg.core.command.toggle
   head:
+    description: give player head
+    permission: whiteegg.core.command.head
   tweet:
     aliases: tw
     permission: whiteegg.core.command.twitter
@@ -29,23 +31,42 @@ permissions:
       whiteegg.core.*: true
       whiteegg.core.command.*: true
       whiteegg.core.command.toggle: true
-      whiteegg.owner: true
+      whiteegg.owner: false
       whiteegg.moderator: true
   whiteegg.core.*:
     description: Gives access to all WhiteEggCore
     children:
       whiteegg.core.command.*: true
-      whiteegg.core.command.toggle: true
+      whiteegg.core.vanish: true
   whiteegg.core.command.*:
     description: Gives access to all WhiteEggCore commands
     children:
       whiteegg.core.command.toggle: true
+      whiteegg.core.command.head: true
+      whiteegg.core.command.twitter: true
+      whiteegg.core.command.whisper: true
+      whiteegg.core.command.replay: true
   whiteegg.core.command.toggle:
     description: Gives access to all toggle command
     default: true
-  whiteegg.owner:
-    description: Owner permission
-  whiteegg.moderator:
-    description: Moderator permission
+  whiteegg.core.command.head:
+    description: head permission
+    default: op
+  whiteegg.core.command.twitter:
+    default: true
     children:
-      whiteegg.core.command: true
+      whiteegg.core.command.twitter.register: true
+  whiteegg.core.command.twitter.register:
+    default: true
+  whiteegg.core.command.whisper:
+    description: Gives access to whisper command
+    default: true
+  whiteegg.core.command.replay:
+    description: Gives access to replay command
+    default: true
+  whiteegg.core.vanish:
+    default: op
+  whiteegg.owner:
+    children:
+        whiteegg.*: true
+    description: Owner permission
