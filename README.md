@@ -47,9 +47,9 @@ JavaScriptを利用してゲーム内に干渉できます
 
 * [Twitter4j](http://twitter4j.org/ "Twitter4j")
 
-## licenseなどなど
+## license
 
-* [Licenseはこちら](https://github.com/niwaniwa/WhiteEggCore/blob/master/License.txt "License")
+* [MIT License](https://github.com/niwaniwa/WhiteEggCore/blob/master/License.txt "License")
 
 * 本プラグインはTwitterのapiを使用するためTwitter4jを含んでおります(Twitter4jはApache License 2.0licenseを使用しています)
 
