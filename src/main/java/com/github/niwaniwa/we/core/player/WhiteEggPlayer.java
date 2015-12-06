@@ -1,23 +1,18 @@
 package com.github.niwaniwa.we.core.player;
 
 import java.io.File;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -36,7 +31,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
@@ -47,11 +41,11 @@ import twitter4j.auth.AccessToken;
  * @author niwaniwa
  *
  */
-public class WhiteEggPlayer implements WhitePlayer {
+public class WhiteEggPlayer extends EggPlayer {
 
 	private static WhiteEggAPI api = WhiteEggCore.getAPI();
 
-	private final Player player;
+	private Player player;
 	private final List<ToggleSettings> toggle = new ArrayList<>();
 	private final List<Rank> ranks = new ArrayList<>();
 	private AltAccount accounts;
@@ -60,7 +54,8 @@ public class WhiteEggPlayer implements WhitePlayer {
 	// not use database
 	private final File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator);
 
-	protected WhiteEggPlayer(Player player){
+	public WhiteEggPlayer(Player player){
+		super(player);
 		this.player = player;
 		this.isVanish = false;
 		this.twitter = new PlayerTwitterManager(this);
@@ -69,45 +64,10 @@ public class WhiteEggPlayer implements WhitePlayer {
 	}
 
 	@Override
-	public String getName() {
-		return player.getName();
-	}
-
-	@Override
 	public String getPrefix() {
 		StringBuilder sb = new StringBuilder();
 		this.getRanks().forEach(rank -> sb.append(rank.getPrefix()));
 		return sb.toString();
-	}
-
-	@Override
-	public String getFullName() {
-		return getPrefix() + getName();
-	}
-
-	@Override
-	public Player getPlayer() {
-		return player;
-	}
-
-	@Override
-	public UUID getUniqueId() {
-		return player.getUniqueId();
-	}
-
-	@Override
-	public boolean isOnline() {
-		return player.isOnline();
-	}
-
-	@Override
-	public void sendMessage(String message) {
-		this.sendMessage(message, true);
-	}
-
-	@Override
-	public void sendMessage(String message, boolean replaceColorCode) {
-		player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 	}
 
 	@Override
@@ -129,21 +89,6 @@ public class WhiteEggPlayer implements WhitePlayer {
 	@Override
 	public boolean isVanish() {
 		return isVanish;
-	}
-
-	@Override
-	public boolean isOp(){
-		return player.isOp();
-	}
-
-	@Override
-	public boolean hasPermission(String permission) {
-		return player.hasPermission(permission);
-	}
-
-	@Override
-	public boolean hasPermission(Permission permission) {
-		return player.hasPermission(permission);
 	}
 
 	@Override
@@ -328,16 +273,6 @@ public class WhiteEggPlayer implements WhitePlayer {
 		return this.serialize().toString();
 	}
 
-	@Override
-	public InetSocketAddress getAddress() {
-		return player.getAddress();
-	}
-
-	@Override
-	public EntityPlayer getHandle(){
-		return ((CraftPlayer) player).getHandle();
-	}
-
 	public AltAccount getAccounts(){
 		return accounts;
 	}
@@ -402,8 +337,4 @@ public class WhiteEggPlayer implements WhitePlayer {
 		return new ArrayList<>(0);
 	}
 
-	@Override
-	public void remove() {
-		player.remove();
-	}
 }
