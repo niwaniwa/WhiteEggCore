@@ -19,7 +19,7 @@ import net.minecraft.server.v1_8_R3.EntityPlayer;
  * @author KokekoKko_
  *
  */
-public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender, Tweet {
+public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 
 	/**
 	 * 現在登録されているランクを返します
