@@ -35,7 +35,10 @@ public class WhitePlayerFactory {
 	public static WhitePlayer newInstance(Player player){
 		if(isLock){ throw new IllegalStateException("Cannot use newInstance for data load."); }
 		for(WhitePlayer p : players){
-			if(p.getUniqueId().equals(player.getUniqueId())){ return p; }
+			if(p.getUniqueId().equals(player.getUniqueId())){
+				((EggPlayer) p).update();
+				return p;
+			}
 		}
 		WhitePlayer white = new WhiteEggPlayer(player);
 		white.load();
