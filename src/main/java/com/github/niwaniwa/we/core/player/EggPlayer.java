@@ -6,8 +6,11 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.permissions.Permission;
 
 import com.github.niwaniwa.we.core.api.callback.Callback;
@@ -95,6 +98,27 @@ public abstract class EggPlayer implements Tweet, WhitePlayer {
 	@Override
 	public EntityPlayer getHandle(){
 		return ((CraftPlayer) player).getHandle();
+	}
+
+
+	@Override
+	public Location getLocation() {
+		return player.getLocation();
+	}
+
+	@Override
+	public Inventory getInventory() {
+		return player.getInventory();
+	}
+
+	@Override
+	public void teleport(Location loc) {
+		player.teleport(loc);
+	}
+
+	@Override
+	public void teleport(Entity entity) {
+		player.teleport(entity);
 	}
 
 	@Override

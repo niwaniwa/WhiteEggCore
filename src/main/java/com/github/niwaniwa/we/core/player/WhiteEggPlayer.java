@@ -9,10 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -283,26 +280,6 @@ public class WhiteEggPlayer extends EggPlayer {
 		this.twitter = new PlayerTwitterManager(this);
 		this.ranks.clear();
 		return true;
-	}
-
-	@Override
-	public Location getLocation() {
-		return player.getLocation();
-	}
-
-	@Override
-	public Inventory getInventory() {
-		return player.getInventory();
-	}
-
-	@Override
-	public void teleport(Location loc) {
-		player.teleport(loc);
-	}
-
-	@Override
-	public void teleport(Entity entity) {
-		player.teleport(entity);
 	}
 
 	@Override
