@@ -58,7 +58,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private JavaScript script;
 
 	public static final String logPrefix = "[WhiteEggCore]";
-	public static final String msgPrefix = "§7[§bWEC§7]§r";
+	public static final String msgPrefix = "§7[§bWhiteEggCore§7]§r";
 
 	public static Logger logger;
 	public static Versioning version;
@@ -78,7 +78,7 @@ public class WhiteEggCore extends JavaPlugin {
 		this.versionCheck();
 		if (!version.isSupport()) { return; }
 		long time = System.nanoTime();
-		this.setting();
+		this.init();
 		long finish = (System.nanoTime() - time);
 		logger.info(String.format("Done : %.3f  s", new Object[] { Double.valueOf(finish / 1.0E9D) }));
 	}
@@ -133,15 +133,17 @@ public class WhiteEggCore extends JavaPlugin {
 		return config;
 	}
 
+	private void init(){
+		instance = this;
+		msg = new MessageManager(this.getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
+		this.setting();
+	}
+
 	/**
 	 * 初期化処理
 	 */
 	private void setting(){
-		instance = this;
-		msg = new MessageManager(this.getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
-		saveDefaultConfig();
-		config = new WhiteEggCoreConfig();
-		config.load();
+		this.loadConfig();
 		this.register();
 		this.registerCommands();
 		this.registerListener();
@@ -149,6 +151,12 @@ public class WhiteEggCore extends JavaPlugin {
 		this.load();
 		this.settingCheck();
 		this.runTask();
+	}
+
+	private void loadConfig(){
+		saveDefaultConfig();
+		config = new WhiteEggCoreConfig();
+		config.load();
 	}
 
 	private void settingCheck(){
@@ -195,7 +203,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * コマンドの登録
 	 */
 	private void registerCommands(){
-		if(!config.getConfig().getBoolean("setting.enablecCommands")){ return; }
+		if(!config.getConfig().getBoolean("setting.enableCommands", true)){ return; }
 		WhiteEggCoreCommandHandler handler = new WhiteEggCoreCommandHandler();
 		handler.registerCommand("whiteeggcore", new WhiteEggCoreCommand());
 		handler.registerCommand("toggle", new WhiteEggToggleCommand());
@@ -204,7 +212,7 @@ public class WhiteEggCore extends JavaPlugin {
 		handler.registerCommand("whisper", new WhiteEggWhisperCommand());
 		handler.registerCommand("replay", new WhiteEggReplayCommand());
 		handler.registerCommand("script", new WhiteEggScriptCommand());
-		if(config.getConfig().getBoolean("setting.twitter.useTwitter", true)){
+		if(config.getConfig().getBoolean("setting.twitter.useTwitter", false)){
 			handler.registerCommand("tweet", new WhiteEggTwitterCommand());
 		}
 	}
@@ -224,7 +232,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * 言語ファイルの読み込み、言語設定
 	 */
 	private void settingLanguage(){
-		copyLangFiles(false);
+		this.copyLangFiles(false);
 		try {
 			msg.loadLangFile();
 		} catch (IOException | InvalidConfigurationException e) {}
