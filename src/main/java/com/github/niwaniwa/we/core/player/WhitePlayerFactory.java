@@ -88,6 +88,9 @@ public class WhitePlayerFactory {
 			e.printStackTrace();
 		}
 		instance.saveVariable(from.serialize().toString());
+		if(instance.getClass().getSuperclass().getSimpleName().equalsIgnoreCase("EggPlayer")){
+			((EggPlayer) instance).update();
+		}
 		return instance;
 	}
 
@@ -103,7 +106,7 @@ public class WhitePlayerFactory {
 	 * プレイヤーデータの読み込み
 	 */
 	public static void load(){
-		if(Bukkit.getOnlinePlayers().size() == 0){ return; }
+		if(Bukkit.getOnlinePlayers().isEmpty()){ return; }
 		new BukkitRunnable() {
 			@Override
 			public void run() {
