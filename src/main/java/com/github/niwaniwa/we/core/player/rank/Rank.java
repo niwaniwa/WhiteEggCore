@@ -3,6 +3,7 @@ package com.github.niwaniwa.we.core.player.rank;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -177,9 +178,7 @@ public class Rank implements ConfigurationSerializable{
 			isLoad = true;
 			return;
 		}
-		for(File f : path.listFiles()){
-			load(f);
-		}
+		Arrays.asList(path.listFiles()).forEach(f -> load(f));
 		isLoad = true;
 	}
 
@@ -193,9 +192,7 @@ public class Rank implements ConfigurationSerializable{
 		}
 		Element root = document.getDocumentElement();
 		Node rankNode = root.getChildNodes().item(0);
-
 		Map<String, Object> result = new HashMap<>();
-
 		if (rankNode.getNodeType() == Node.ELEMENT_NODE){
 			Element rankElement = (Element) rankNode;
 			for (int i = 0; i < rankElement.getChildNodes().getLength(); i++) {

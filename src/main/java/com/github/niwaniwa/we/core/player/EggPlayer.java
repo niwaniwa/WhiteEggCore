@@ -122,15 +122,15 @@ public abstract class EggPlayer implements Tweet, WhitePlayer {
 	}
 
 	@Override
-	public void updateStatus(StatusUpdate update) {  throw new UnsupportedOperationException(getClass().getSimpleName());  }
+	public void updateStatus(StatusUpdate update) { throw new UnsupportedOperationException(getClass().getSimpleName()); }
 
 	@Override
-	public void updateStatus(StatusUpdate update, Callback callback) {  throw new UnsupportedOperationException(getClass().getSimpleName());  }
+	public void updateStatus(StatusUpdate update, Callback callback) { throw new UnsupportedOperationException(getClass().getSimpleName()); }
 
 	@Override
-	public void updateStatus(String tweet) {  throw new UnsupportedOperationException(getClass().getSimpleName());  }
+	public void updateStatus(String tweet) { throw new UnsupportedOperationException(getClass().getSimpleName()); }
 
 	@Override
-	public List<Status> getTimeLine() { throw new UnsupportedOperationException(getClass().getSimpleName());  }
+	public List<Status> getTimeLine() { throw new UnsupportedOperationException(getClass().getSimpleName()); }
 
 }

@@ -25,7 +25,7 @@ public class WhitePlayerFactory {
 	private WhitePlayerFactory(){}
 
 	private static final List<WhitePlayer> players = new ArrayList<>();
-	private static boolean isLock = false;
+	private static boolean isLock = WhiteEggCore.isLock;
 
 	/**
 	 * プレイヤーのインスタンスを返します

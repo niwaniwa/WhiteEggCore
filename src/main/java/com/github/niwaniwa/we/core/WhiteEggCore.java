@@ -63,6 +63,8 @@ public class WhiteEggCore extends JavaPlugin {
 	public static Logger logger;
 	public static Versioning version;
 
+	public static boolean isLock = false;
+
 	@Override
 	public void onLoad() {
 		logger = this.getLogger();
@@ -157,6 +159,7 @@ public class WhiteEggCore extends JavaPlugin {
 		saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
+		isLock = config.getConfig().getBoolean("lock", false);
 	}
 
 	private void settingCheck(){
@@ -305,7 +308,7 @@ public class WhiteEggCore extends JavaPlugin {
 				continue;
 			}
 			if(send){ logger.info(" " + type.getString() + " : loading now..."); }
-			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + "/lang/"),
+			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator),
 					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
 			if(send){ logger.info(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }
 		}
