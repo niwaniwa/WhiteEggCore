@@ -10,7 +10,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.jar.JarEntry;
@@ -22,7 +21,6 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.md_5.bungee.api.ChatColor;
@@ -121,9 +119,7 @@ public class Util {
 		} catch (IOException e1) {
 		}
 		Map<String, Object> map = new HashMap<>();
-		for (Map.Entry<Object, Object> e : props.entrySet()) {
-			map.put(String.valueOf(e.getKey()), e.getValue());
-		}
+		props.entrySet().forEach(entry -> map.put(String.valueOf(entry.getKey()), entry.getValue()));
 		return map;
 	}
 
@@ -148,9 +144,7 @@ public class Util {
 	 */
 	public static Map<String, Object> toMap(JsonObject j){
 		Map<String, Object> map = new HashMap<>();
-		for(Entry<String, JsonElement> entry : j.entrySet()){
-			map.put(entry.getKey(), entry.getValue());
-		}
+		j.entrySet().forEach(entry -> map.put(entry.getKey(), entry.getValue()));
 		return map;
 	}
 
@@ -161,16 +155,16 @@ public class Util {
 	 * @return 再構成された文字列
 	 */
 	public static String build(String[] strings, int start) {
+		StringBuilder sb = new StringBuilder();
 		if (strings.length >= start + 1) {
-			String str = strings[start];
+			sb.append(strings[start]);
 			if (strings.length >= start + 2) {
 				for (int i = start + 1; i < strings.length; i++) {
-					str = str + " " + strings[i];
+					sb.append(" ").append(strings[i]);
 				}
 			}
-			return str;
 		}
-		return null;
+		return sb.toString();
 	}
 
 	/**
