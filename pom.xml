@@ -34,6 +34,7 @@
 							<artifactSet>
 								<includes>
 									<include>org.twitter4j:*</include>
+									<include>org.mongodb:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -79,6 +80,17 @@
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
 			<version>[4.0,)</version>
+		</dependency>
+		<!-- database -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.35</version>
 		</dependency>
 	</dependencies>
 </project>
