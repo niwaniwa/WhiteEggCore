@@ -33,13 +33,13 @@ public abstract class AbstractWhiteEggCoreCommand extends AbstractWhiteEggComman
 	 * @return 説明文
 	 * @deprecated 正常な動作をしない場合があるので使用しないでください {@link #description(WhiteCommandSender)}
 	 */
-	protected abstract String description();
+	protected String description(){ return new String(); }
 
 	/**
 	 * コマンドの説明
 	 * @param sender プレイヤー
 	 * @return String 説明文
 	 */
-	public abstract String description(WhiteCommandSender sender);
+	public String description(WhiteCommandSender sender){ return new String(); }
 
 }

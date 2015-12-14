@@ -23,7 +23,7 @@ public abstract class AbstractWhiteEggCommand {
 	 * 使い方の送信
 	 * @param sender プレイヤー
 	 */
-	public abstract void sendUsing(final WhitePlayer sender);
+	public void sendUsing(final WhitePlayer sender){ return; }
 
 	/**
 	 * コマンドのpermission
