@@ -79,16 +79,4 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 		return list;
 	}
 
-	@Override
-	public String description() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
 }

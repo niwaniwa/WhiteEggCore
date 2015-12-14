@@ -134,16 +134,4 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 		return permission;
 	}
 
-	@Override
-	public String description() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
 }

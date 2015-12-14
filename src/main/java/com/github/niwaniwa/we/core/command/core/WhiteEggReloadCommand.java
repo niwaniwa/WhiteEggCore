@@ -6,9 +6,7 @@ import org.bukkit.command.Command;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abstracts.WhiteEggChildCommand;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
-import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
-import com.github.niwaniwa.we.core.player.rank.Rank;
 
 /**
  * Coreコマンドのリロードクラス
@@ -26,10 +24,8 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 			sender.sendMessage(msg.getMessage(sender, error_Permission, msgPrefix, true));
 			return true;
 		}
-		WhitePlayerFactory.saveAll();
-		WhitePlayerFactory.load();
-		Rank.saveAll();
-		Rank.load();
+		Bukkit.getPluginManager().disablePlugin(WhiteEggCore.getInstance());
+		Bukkit.getPluginManager().enablePlugin(WhiteEggCore.getInstance());
 		if(args.length >= 2){
 			if(args[1].equalsIgnoreCase("-b")){
 				Bukkit.broadcastMessage(msgPrefix + "§aReload complete.");
@@ -48,24 +44,8 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 	}
 
 	@Override
-	public void sendUsing(WhitePlayer sender) {
-	}
-
-	@Override
 	public String getPermission() {
 		return permission;
-	}
-
-	@Override
-	public String description() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
 	}
 
 }
