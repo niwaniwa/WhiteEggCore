@@ -226,8 +226,9 @@ public class JavaScript {
 	 * @return JavaScript インスタンス
 	 */
 	public static JavaScript loadScript(){
+		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.script.enableScript", false)){ return null; }
 		// TODO: Scriptファイルごとにインスタンスを生成するかすべてまとめてしまうか
-		File path = new File("script" + File.separator);
+		File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.script.path", "script" + File.separator));
 		if(!path.exists()){ return null; }
 		if(path.listFiles().length == 0){ return null; }
 		StringBuilder sb = new StringBuilder();
