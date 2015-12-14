@@ -221,11 +221,11 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void runTask(){
-		final int run = config.getConfig().getInt("setting.autoSave.time", 300000);
+		final int run = config.getConfig().getInt("setting.player.autoSave.time", 3600 * 20);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if(!config.getConfig().getBoolean("setting.autoSave.enable", false)){ this.cancel(); }
+				if(!config.getConfig().getBoolean("setting.player.autoSave.enable", false)){ this.cancel(); }
 				WhitePlayerFactory.saveAll();
 			}
 		}.runTaskTimerAsynchronously(instance, run, run);
