@@ -1,12 +1,30 @@
+# plugin lock
 lock: false
+# settings...
 setting:
-  savePlayerData: true
-  enableScript: false
-  autoSave:
-    enable: false
-    time: 300000 # ms
+  # database setting
+  database:
+    # MySQL, MongoDB.
+    type: ''
+  # player setting
+  player:
+    # use database? check database setting
+    savePlayerData: true
+    # default `plugins/WhiteEggCore/players/`
+    path: ''
+    autoSave:
+      enable: false
+      # custom time
+      time: 3600 # second
+  script:
+    enableScript: false
+    # default `script/`
+    path: ''
+  # do not edit this
   enablecCommands: true
   twitter:
+    # enable?
     useTwitter: true
+    # twitter app
     consumerKey: ''
     consumerSecret: ''
