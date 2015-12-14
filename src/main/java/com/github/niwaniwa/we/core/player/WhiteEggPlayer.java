@@ -48,8 +48,9 @@ public class WhiteEggPlayer extends EggPlayer {
 	private AltAccount accounts;
 	private boolean isVanish;
 	private TwitterManager twitter;
+
 	// not use database
-	private final File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator);
+	public static final File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.savePlayerData", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
 
 	public WhiteEggPlayer(Player player){
 		super(player);
@@ -125,8 +126,8 @@ public class WhiteEggPlayer extends EggPlayer {
 
 	@Override
 	public boolean saveVariable(String jsonString) {
-		JsonObject j = jm.createJsonObject(jsonString);
-		JsonObject json = j.getAsJsonObject("WhiteEggPlayer");
+		JsonObject source = jm.createJsonObject(jsonString);
+		JsonObject json = source.getAsJsonObject("WhiteEggPlayer");
 		JsonObject player = json.getAsJsonObject("player");
 		this.isVanish = player.get("isvanish").getAsBoolean();
 		if(json.get("twitter").isJsonObject()){
@@ -143,6 +144,12 @@ public class WhiteEggPlayer extends EggPlayer {
 	private void setRank(JsonObject j){
 		if(j.get("rank") != null){
 			JsonArray rank = j.getAsJsonArray("rank");
+			for(Rank r : Rank.getRanks()){
+				for (Object rank1 : rank) {
+					if(!(rank1 instanceof JsonObject)){ continue; }
+					if(r.getName().equalsIgnoreCase(String.valueOf(rank1))){ this.addRank(r); }
+				}
+			}
 			for (Object rank1 : rank) {
 				if(!(rank1 instanceof JsonObject)){ continue; }
 				Rank r = Rank.parserRank(Util.toMap(((JsonObject) rank1).toString()));
@@ -154,12 +161,11 @@ public class WhiteEggPlayer extends EggPlayer {
 
 	private void setToggle(JsonObject json){
 		this.getToggleSettings().clear();
-		JsonObject t = json.getAsJsonObject("toggles");
-		for(Entry<String, JsonElement> entry : t.entrySet()){
+		JsonObject settings = json.getAsJsonObject("toggles");
+		for(Entry<String, JsonElement> entry : settings.entrySet()){
 			JsonObject toggleJ = entry.getValue().getAsJsonObject();
 			ToggleSettings instance = ToggleSettings.deserializeJ(toggleJ);
-			if(instance == null){ continue; }
-			if(!ToggleSettings.containsInstance(instance)){ continue; }
+			if(instance == null && !ToggleSettings.containsInstance(instance)){ continue; }
 			this.getToggleSettings().add(instance);
 		}
 	}
@@ -218,11 +224,8 @@ public class WhiteEggPlayer extends EggPlayer {
 		JsonObject serialize = jm.createJsonObject(jsonString);
 		JsonObject fileJson = jm.getJson(new File(path, this.getUniqueId().toString() + ".json"));
 		if(fileJson == null){ return serialize; }
-		for(Entry<String, JsonElement> entry : fileJson.entrySet()){
-			if(!entry.getKey().equalsIgnoreCase(this.getClass().getSimpleName())){
-				serialize.add(entry.getKey(), entry.getValue());
-			}
-		}
+		fileJson.entrySet().stream().filter(entry -> !entry.getKey().equalsIgnoreCase(this.getClass().getSimpleName()))
+										.forEach(entry -> serialize.add(entry.getKey(), entry.getValue()));
 		return serialize;
 	}
 
@@ -235,7 +238,7 @@ public class WhiteEggPlayer extends EggPlayer {
 		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
-		player.put("rank", this.getRanks()); // TODO: 必要のない情報が入ってしまう
+		player.put("rank", this.serializeRankData());
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", toggle);
 		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
@@ -246,6 +249,12 @@ public class WhiteEggPlayer extends EggPlayer {
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
 		white.put(this.getClass().getSimpleName(), result);
 		return white;
+	}
+
+	private List<String> serializeRankData(){
+		List<String> ranks = new ArrayList<>(this.getRanks().size());
+		this.getRanks().forEach(rank -> ranks.add(rank.getName()));
+		return ranks;
 	}
 
 	private Map<String, Object> serializeTwitter() {
