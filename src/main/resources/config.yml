@@ -4,6 +4,7 @@ lock: false
 setting:
   # database setting
   database:
+    enable: false
     # MySQL, MongoDB.
     type: ''
   # player setting
@@ -17,11 +18,13 @@ setting:
       # custom time
       time: 3600 # second
   script:
-    enableScript: false
+    enable: false
     # default `script/`
     path: ''
   # do not edit this
-  enablecCommands: true
+  enableCommands: true
+  # do not edit this
+  enableListener: true
   twitter:
     # enable?
     useTwitter: true
