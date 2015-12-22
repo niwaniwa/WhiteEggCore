@@ -9,14 +9,18 @@ setting:
     type: ''
   # player setting
   player:
+    enable: true
     # use database? check database setting
     savePlayerData: true
     # default `plugins/WhiteEggCore/players/`
     path: ''
-    autoSave:
-      enable: false
-      # custom time
-      time: 3600 # second
+    save:
+      # database or local
+      type: 'local'
+      autoSave:
+        enable: false
+        # custom time
+        time: 3600 # second
   script:
     enable: false
     # default `script/`
