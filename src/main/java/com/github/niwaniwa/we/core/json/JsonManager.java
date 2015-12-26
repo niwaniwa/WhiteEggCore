@@ -102,6 +102,10 @@ public class JsonManager {
 		return gson.fromJson(json, JsonObject.class);
 	}
 
+	public static String toJsonString(Map<String, Object> datas){
+		return new Gson().toJson(datas);
+	}
+
 	public  static Map<String, Object> toMap(JsonObject json){
 		Map<String, Object> map = new HashMap<>();
 		for(Entry<String, JsonElement> entry : json.entrySet()){
