@@ -19,33 +19,33 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
  */
 public abstract class WhiteEggAPI {
 
-	private static WhiteEggAPI instance = new WhiteEggAPIImpl();
+	private static WhiteEggAPIImpl instance = new WhiteEggAPIImpl();
 
 	/**
 	 * 現在のオンラインプレイヤーを返す
 	 * @return List 現在接続しているプレイヤーを取得
 	 */
-	public abstract List<WhitePlayer> getOnlinePlayers();
+	public static List<WhitePlayer> getOnlinePlayers(){ return instance.getOnlinePlayers(); }
 
 	/**
 	 * 現在登録されているランクを返す
 	 * @return List 現在サーバーに登録されているランクの取得
 	 */
-	public abstract List<Rank> getRanks();
+	public static List<Rank> getRanks(){ return instance.getRanks(); }
 
 	/**
 	 * RankBroadcast
 	 * @param rank rank
 	 * @param message message
 	 */
-	public abstract void RankBroadcastMessage(Rank rank, String message);
+	public static void RankBroadcastMessage(Rank rank, String message){ instance.RankBroadcastMessage(rank, message); }
 
 	/**
 	 * WorldBroadcast
 	 * @param world world
 	 * @param message message
 	 */
-	public abstract void WorldBroadcastMessage(World world, String message);
+	public static void WorldBroadcastMessage(World world, String message){ instance.WorldBroadcastMessage(world, message); }
 
 	/**
 	 * オフラインのプレイヤーインスタンスを返す
@@ -53,7 +53,7 @@ public abstract class WhiteEggAPI {
 	 * @return OfflineWhitePlayer
 	 * @deprecated
 	 */
-	public abstract OfflineWhitePlayer getOfflinePlayer(String name);
+	public static OfflineWhitePlayer getOfflinePlayer(String name){ return instance.getOfflinePlayer(name); }
 
 	/**
 	 *
@@ -61,7 +61,7 @@ public abstract class WhiteEggAPI {
 	 * @return WhitePlayer
 	 *
 	 */
-	public abstract WhitePlayer getPlayer(String name);
+	public static WhitePlayer getPlayer(String name){ return instance.getPlayer(name); }
 
 	/**
 	 * uuidからオンラインプレイヤーを取得する
@@ -69,14 +69,14 @@ public abstract class WhiteEggAPI {
 	 * @return WhitePlayer プレイヤー
 	 *
 	 */
-	public abstract WhitePlayer getPlayer(UUID uuid);
+	public static WhitePlayer getPlayer(UUID uuid){ return instance.getPlayer(uuid); }
 
 	/**
 	 * プレイヤーを取得します
 	 * @param player プレイヤー
 	 * @return WhitePlayer プレイヤー
 	 */
-	public abstract WhitePlayer getPlayer(Player player);
+	public static WhitePlayer getPlayer(Player player){ return instance.getPlayer(player); }
 
 	/**
 	 * 新たな設定を追加します
@@ -89,26 +89,26 @@ public abstract class WhiteEggAPI {
 	 * @return 成功したか
 	 * @deprecated 使用しないでください
 	 */
-	public abstract boolean registerToggle(Plugin plugin, String tag, String permission,
-			String custam, Map<String, Object> toggles, boolean isHide);
+	public static boolean registerToggle(Plugin plugin, String tag, String permission,
+			String custam, Map<String, Object> toggles, boolean isHide){ return instance.registerToggle(plugin, tag, permission, custam, toggles, isHide); }
 
 	/**
 	 * データベースを使用するか
 	 * @return データベースを使用するか
 	 */
-	public abstract boolean useDataBase();
+	public static boolean useDataBase(){ return instance.useDataBase(); }
 
 	/**
 	 * ツイートを送信します
 	 * @param tweet ツイートする文字列
 	 */
-	public abstract void tweet(String tweet);
+	public static void tweet(String tweet){ instance.tweet(tweet); }
 
 	/**
 	 * APIインスタンスの取得
 	 * @return WhiteEggAPI instance
 	 */
-	public static WhiteEggAPI getAPI(){
+	public static WhiteEggAPIImpl getAPI(){
 		return instance;
 	}
 }

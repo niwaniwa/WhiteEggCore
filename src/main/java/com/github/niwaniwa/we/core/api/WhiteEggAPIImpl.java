@@ -24,12 +24,12 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author niwaniwa
  *
  */
-public class WhiteEggAPIImpl extends WhiteEggAPI {
+public class WhiteEggAPIImpl {
 
 	public WhiteEggAPIImpl() {
 	}
 
-	@Override
+
 	public List<WhitePlayer> getOnlinePlayers() {
 		List<WhitePlayer> result = new ArrayList<>();
 		for(Player p : Bukkit.getOnlinePlayers()){
@@ -38,31 +38,31 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 		return result;
 	}
 
-	@Override
+
 	public List<Rank> getRanks() {
 		return Rank.getRanks();
 	}
 
-	@Override
+
 	public void RankBroadcastMessage(Rank rank, String message) {
-		WhiteEggCore.getAPI().getOnlinePlayers().stream()
+		WhiteEggAPI.getOnlinePlayers().stream()
 						.filter(p -> p.getRanks().contains(rank))
 						.forEach(p -> p.sendMessage(message));
 	}
 
-	@Override
+
 	public void WorldBroadcastMessage(World world, String message) {
 		world.getPlayers().forEach(p -> p.sendMessage(message));
 	}
 
-	@Override
+
 	public OfflineWhitePlayer getOfflinePlayer(String name) {
 		@SuppressWarnings("deprecation")
 		OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
 		return WhitePlayerFactory.newInstance((Player) offline);
 	}
 
-	@Override
+
 	public WhitePlayer getPlayer(String name) {
 		Player player = Util.getOnlinePlayer(name);
 		if(player == null){
@@ -71,7 +71,7 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 		return WhitePlayerFactory.newInstance(player);
 	}
 
-	@Override
+
 	public WhitePlayer getPlayer(UUID uuid) {
 		Player player = Util.getOnlinePlayer(uuid);
 		if(player == null){
@@ -81,24 +81,24 @@ public class WhiteEggAPIImpl extends WhiteEggAPI {
 		return WhitePlayerFactory.newInstance(player);
 	}
 
-	@Override
+
 	public WhitePlayer getPlayer(Player player) {
 		return WhitePlayerFactory.newInstance(player);
 	}
 
 	@Deprecated
-	@Override
+
 	public boolean registerToggle(Plugin plugin, String tag, String permission, String custam,
 			Map<String, Object> toggles, boolean isHide) {
 		return false;
 	}
 
-	@Override
+
 	public boolean useDataBase() {
-		return false;
+		return WhiteEggCore.getConf().useDataBase();
 	}
 
-	@Override
+
 	public void tweet(String tweet) {
 		ServerTwitterManager.getInstance().tweet(tweet);
 	}
