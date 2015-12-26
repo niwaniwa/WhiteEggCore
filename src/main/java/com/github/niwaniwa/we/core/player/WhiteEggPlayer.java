@@ -40,8 +40,6 @@ import twitter4j.auth.AccessToken;
  */
 public class WhiteEggPlayer extends EggPlayer {
 
-	private static WhiteEggAPI api = WhiteEggCore.getAPI();
-
 	private Player player;
 	private final List<ToggleSettings> toggle = new ArrayList<>();
 	private final List<Rank> ranks = new ArrayList<>();
@@ -49,7 +47,6 @@ public class WhiteEggPlayer extends EggPlayer {
 	private boolean isVanish;
 	private TwitterManager twitter;
 
-	// not use database
 	public static final File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.savePlayerData", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
 
 	public WhiteEggPlayer(Player player){
@@ -188,7 +185,7 @@ public class WhiteEggPlayer extends EggPlayer {
 
 	@Override
 	public boolean load() {
-		if(api.useDataBase()){
+		if(WhiteEggAPI.useDataBase()){
 			// sql
 			return true;
 		}
@@ -201,7 +198,8 @@ public class WhiteEggPlayer extends EggPlayer {
 
 	@Override
 	public boolean save() {
-		if(api.useDataBase()){
+		if(WhiteEggCore.getConf().savePlayerData())
+		if(WhiteEggAPI.useDataBase()){
 			// sql
 			return true;
 		}
@@ -235,13 +233,16 @@ public class WhiteEggPlayer extends EggPlayer {
 		Map<String, Object> player = new HashMap<>();
 		Map<String, Object> white = new HashMap<>();
 		Map<String, Object> toggle = new HashMap<>();
+		Map<String, Object> lastOnline = new HashMap<>();
 		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
 		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.serializeRankData());
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", toggle);
-		player.put("lastonline", new Date()+":"+Bukkit.getServerName());
+		lastOnline.put("server", Bukkit.getServerName());
+		lastOnline.put("sec", new Date().getTime());
+		player.put("lastonline", lastOnline);
 		player.put("address", this.getAddress());
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
