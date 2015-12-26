@@ -36,12 +36,12 @@ public class Util {
 	 * @param path Jar内のファイル
 	 */
 	public static void copyFileFromJar(File target, File jarFile, String path){
-		if(!jarFile.exists()){return;}
+		if(!jarFile.exists()){ return; }
 		BufferedWriter writer = null;
 		BufferedReader reader = null;
 		JarFile jar = null;
 		try {
-			if(!path.contains(".")){
+			if(!path.split("/")[path.split("/").length - 1].contains(".")){
 				new File(target, File.separator + path).mkdirs();
 				return;
 			}
@@ -49,9 +49,7 @@ public class Util {
 			JarEntry entry = jar.getJarEntry(path);
 			if (entry != null) {
 				reader = new BufferedReader(new InputStreamReader(jar.getInputStream(entry), "UTF-8"));
-				if (!target.exists()) {
-					target.mkdirs();
-				}
+				if (!target.exists()) { target.mkdirs(); }
 				writer = new BufferedWriter(new OutputStreamWriter(
 						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1])) ,"UTF-8"));
 				String s;
@@ -86,9 +84,7 @@ public class Util {
 	 */
 	public static Player getOnlinePlayer(UUID uuid){
 		for(Player player : Bukkit.getOnlinePlayers()){
-			if(player.getUniqueId().equals(uuid)){
-				return player;
-			}
+			if(player.getUniqueId().equals(uuid)){ return player; }
 		}
 		return null;
 	}
