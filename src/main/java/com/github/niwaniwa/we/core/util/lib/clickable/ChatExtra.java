@@ -51,7 +51,7 @@ public class ChatExtra {
 	 * 設定をJsonObjectとして返します
 	 * @return JsonObject json
 	 */
-	public JsonObject toJSON() {
+	public JsonObject toJson() {
 		return json;
 	}
 
