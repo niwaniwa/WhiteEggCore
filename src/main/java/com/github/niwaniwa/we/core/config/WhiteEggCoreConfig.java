@@ -7,10 +7,8 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 public class WhiteEggCoreConfig extends WhiteConfig {
 
 	private boolean lock;
-	private boolean useDataBase;
-	private boolean useTwitter;
-	private boolean savePlayerData;
-	private boolean disableListener;
+
+	private static final String settingPath = "setting.";
 
 	public WhiteEggCoreConfig() {
 		super(WhiteEggCore.getInstance().getDataFolder(), "config.yml");
@@ -23,10 +21,6 @@ public class WhiteEggCoreConfig extends WhiteConfig {
 		}
 		load();
 		lock = yaml.getBoolean("lock", false);
-		useDataBase = yaml.getBoolean("useDataBase", false);
-		useTwitter = yaml.getBoolean("useTwitter", true);
-		savePlayerData = yaml.getBoolean("savePlayerData", true);
-		disableListener = yaml.getBoolean("disableListener", false);
 	}
 
 	public void set(String key, Object value){
@@ -38,19 +32,27 @@ public class WhiteEggCoreConfig extends WhiteConfig {
 	}
 
 	public boolean useDataBase(){
-		return useDataBase;
+		return yaml.getBoolean(settingPath + "database.enable", false);
 	}
 
 	public boolean useTwitter(){
-		return useTwitter;
+		return yaml.getBoolean(settingPath + "twitter.useTwitter", true);
 	}
 
 	public boolean savePlayerData(){
-		return savePlayerData;
+		return yaml.getBoolean(settingPath + "player.savePlayerData", true);
 	}
 
-	public boolean isDisableListener(){
-		return disableListener;
+	public boolean isEnableCommand(){
+		return yaml.getBoolean(settingPath + "enableCommands", true);
+	}
+
+	public boolean isEnableListener(){
+		return yaml.getBoolean(settingPath + "enableListener", true);
+	}
+
+	public boolean isEnableScript() {
+		return yaml.getBoolean(settingPath + "script.enable", false);
 	}
 
 }
