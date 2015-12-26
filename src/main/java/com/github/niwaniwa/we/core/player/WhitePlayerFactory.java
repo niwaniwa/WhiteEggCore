@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 
 /**
  * WhitePlayerのfactoryクラス
@@ -33,7 +34,7 @@ public class WhitePlayerFactory {
 	 * @return プレイヤー
 	 */
 	public static WhitePlayer newInstance(Player player){
-		if(isLock){ throw new IllegalStateException("Cannot use newInstance for data load."); }
+		if(isLock || !WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true)){ throw new IllegalStateException("Cannot use newInstance for data load."); }
 		for(WhitePlayer p : players){
 			if(p.getUniqueId().equals(player.getUniqueId())){
 				((EggPlayer) p).update();
@@ -98,7 +99,6 @@ public class WhitePlayerFactory {
 	 * プレイヤーデータの保存
 	 */
 	public static void saveAll(){
-		System.out.println("Saving players (WhiteEgg)");
 		WhitePlayerFactory.getPlayers().forEach(p -> p.save());
 	}
 
@@ -110,7 +110,7 @@ public class WhitePlayerFactory {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				WhiteEggCore.getAPI().getOnlinePlayers().forEach(p -> p.reload());
+				WhiteEggAPI.getOnlinePlayers().forEach(p -> p.reload());
 			}
 		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}

@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.player.AltAccount;
 import com.github.niwaniwa.we.core.player.WhiteEggPlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -27,7 +28,7 @@ public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onJoin(PlayerJoinEvent event) {
-		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
 		Arrays.asList(RankProperty.values()).forEach(property -> {
 			 Rank.getRanks().stream().filter(r -> r.getProperty().equals(property))
 			 					.forEach(rank -> { if (player.hasPermission(rank.getPermission())) { player.addRank(rank); }});
@@ -38,13 +39,13 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onQuit(PlayerQuitEvent event){
 		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
-		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
 	}
 
 	public void onKick(PlayerKickEvent event){
 		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
-		WhitePlayer player = WhiteEggCore.getAPI().getPlayer(event.getPlayer());
+		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
 		((WhiteEggPlayer) player).saveTask();
 	}
 
