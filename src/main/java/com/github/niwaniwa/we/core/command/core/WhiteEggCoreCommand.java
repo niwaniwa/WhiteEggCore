@@ -41,7 +41,7 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 	}
 
 	private void sendVersion(WhiteCommandSender sender){
-		sender.sendMessage("&7 ----- &6WhiteEggCore &7-----");
+		sender.sendMessage("&7 ----- - &6WhiteEggCore &7- -----");
 		sender.sendMessage("&7 : &6Version &7: &r" + WhiteEggCore.getInstance().getDescription().getVersion());
 		sender.sendMessage("&7 : &6Author &7: &rKokekoKko_");
 		sender.sendMessage("&7 : &6Server Version &7: &r" + Bukkit.getVersion());
