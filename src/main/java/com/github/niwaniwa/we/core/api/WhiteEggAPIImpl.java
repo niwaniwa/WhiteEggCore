@@ -33,7 +33,7 @@ public class WhiteEggAPIImpl {
 	public List<WhitePlayer> getOnlinePlayers() {
 		List<WhitePlayer> result = new ArrayList<>();
 		for(Player p : Bukkit.getOnlinePlayers()){
-			result.add(WhitePlayerFactory.newInstance(p));
+			result.add(WhitePlayerFactory.getInstance(p));
 		}
 		return result;
 	}
@@ -59,7 +59,7 @@ public class WhiteEggAPIImpl {
 	public OfflineWhitePlayer getOfflinePlayer(String name) {
 		@SuppressWarnings("deprecation")
 		OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-		return WhitePlayerFactory.newInstance((Player) offline);
+		return WhitePlayerFactory.getInstance((Player) offline);
 	}
 
 
@@ -68,22 +68,22 @@ public class WhiteEggAPIImpl {
 		if(player == null){
 			return null;
 		}
-		return WhitePlayerFactory.newInstance(player);
+		return WhitePlayerFactory.getInstance(player);
 	}
 
 
 	public WhitePlayer getPlayer(UUID uuid) {
 		Player player = Util.getOnlinePlayer(uuid);
 		if(player == null){
-			WhitePlayer white = WhitePlayerFactory.newInstance((Player) Bukkit.getPlayer(uuid));
+			WhitePlayer white = WhitePlayerFactory.getInstance((Player) Bukkit.getPlayer(uuid));
 			return white;
 		}
-		return WhitePlayerFactory.newInstance(player);
+		return WhitePlayerFactory.getInstance(player);
 	}
 
 
 	public WhitePlayer getPlayer(Player player) {
-		return WhitePlayerFactory.newInstance(player);
+		return WhitePlayerFactory.getInstance(player);
 	}
 
 	@Deprecated
