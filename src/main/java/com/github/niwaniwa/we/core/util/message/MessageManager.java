@@ -166,7 +166,7 @@ public class MessageManager {
 		if(!(sender instanceof Player)){
 			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
 		}
-		return getMessage(WhitePlayerFactory.newInstance((Player) sender), key, prefix, replaceColorCode);
+		return getMessage(WhitePlayerFactory.getInstance((Player) sender), key, prefix, replaceColorCode);
 	}
 
 	/**

@@ -46,6 +46,8 @@ public class AltAccount implements ConfigurationSerializable {
 			if(getAddress(egg.getAddress()).equalsIgnoreCase(getAddress(egg2.getAddress()))){
 				egg.addAccount(p);
 				egg2.addAccount(egg);
+//				WhiteEggSubAccountJoinEvent event = new WhiteEggSubAccountJoinEvent(egg2, egg);
+//				Util.callEvent(event);
 			}
 		}
 	}
@@ -71,8 +73,7 @@ public class AltAccount implements ConfigurationSerializable {
 	public static AltAccount parser(JsonObject json){
 		AltAccount alt = new AltAccount();
 		JsonElement obj = json.get("account");
-		if(obj == null
-				|| !obj.isJsonArray()){ return alt; }
+		if(obj == null || !obj.isJsonArray()){ return alt; }
 		JsonArray array = obj.getAsJsonArray();
 		array.forEach(element -> alt.add(UUID.fromString(element.getAsString())));
 		return alt;
