@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
+import com.github.niwaniwa.we.core.database.DataBase;
 import com.github.niwaniwa.we.core.initialization.Initialization;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
@@ -36,9 +37,7 @@ public class WhiteEggCore extends JavaPlugin {
 	private static MessageManager msg;
 	private static LanguageType type = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
-
-	private PluginManager pm = Bukkit.getPluginManager();
-	private JavaScript script;
+	private static DataBase database;
 
 	public static final String logPrefix = "[WhiteEggCore]";
 	public static final String msgPrefix = "§7[§bWhiteEggCore§7]§r";
@@ -47,6 +46,9 @@ public class WhiteEggCore extends JavaPlugin {
 	public static Versioning version;
 
 	public static boolean isLock = false;
+
+	private PluginManager pm = Bukkit.getPluginManager();
+	private JavaScript script;
 
 	@Override
 	public void onLoad() {
@@ -77,6 +79,7 @@ public class WhiteEggCore extends JavaPlugin {
 		logger.info("Saving players (WhiteEgg)");
 		WhitePlayerFactory.saveAll();
 		Rank.saveAll();
+		config.save();
 	}
 
 	/**
@@ -113,13 +116,13 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private void init(){
 		instance = this;
-		Initialization.disable();
 		this.saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
 		Initialization init = Initialization.getInstance(this);
 		init.start(false);
 		msg = init.getMessageManager();
+		database = init.getDatabase();
 		isLock = config.isLock();
 		this.script = init.getScript();
 		runTask();
@@ -132,7 +135,7 @@ public class WhiteEggCore extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		WhiteCommandSender whiteCommandSender;
 		if(sender instanceof Player){
-			whiteCommandSender = WhitePlayerFactory.newInstance((Player) sender);
+			whiteCommandSender = WhitePlayerFactory.getInstance((Player) sender);
 		} else {
 			whiteCommandSender = new WhiteConsoleSender(true);
 		}
@@ -189,8 +192,13 @@ public class WhiteEggCore extends JavaPlugin {
 		return script;
 	}
 
+	public static DataBase getDataBase() {
+		return database;
+	}
+
 	public void setScript(JavaScript s){
 		this.script = s;
 	}
+
 
 }
