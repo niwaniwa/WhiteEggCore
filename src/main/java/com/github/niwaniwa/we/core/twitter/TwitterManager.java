@@ -2,8 +2,11 @@ package com.github.niwaniwa.we.core.twitter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -21,7 +24,7 @@ import twitter4j.auth.RequestToken;
  * @author niwaniwa
  *
  */
-public abstract class TwitterManager {
+public abstract class TwitterManager implements ConfigurationSerializable {
 
 	private Twitter twitter;
 
@@ -213,6 +216,14 @@ public abstract class TwitterManager {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Map<String, Object> serialize() {
+		Map<String, Object> result = new HashMap<>();
+		result.put("accesstoken", this.getAccessToken().getToken());
+		result.put("accesstokensecret", this.getAccessToken().getTokenSecret());
+		return result;
 	}
 
 }
