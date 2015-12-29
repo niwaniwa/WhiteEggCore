@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
@@ -35,7 +36,7 @@ public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implemen
 			return true;
 		}
 		WhitePlayer player = (WhitePlayer) sender;
-		WhitePlayer target = api.getPlayer(args[0]);
+		WhitePlayer target = WhiteEggAPI.getPlayer(args[0]);
 		if(target == null){
 			sender.sendMessage(msg.getMessage(player, error_Player, msgPrefix, true));
 			return true;

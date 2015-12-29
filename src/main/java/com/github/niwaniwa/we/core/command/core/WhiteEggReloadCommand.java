@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.abstracts.WhiteEggChildCommand;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
@@ -32,7 +33,7 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 				return true;
 			}
 		}
-		for(WhitePlayer p : WhiteEggCore.getAPI().getOnlinePlayers())
+		for(WhitePlayer p : WhiteEggAPI.getOnlinePlayers())
 			if(p.isOp())
 				p.sendMessage(msgPrefix + "&aReload complete.");
 		return true;

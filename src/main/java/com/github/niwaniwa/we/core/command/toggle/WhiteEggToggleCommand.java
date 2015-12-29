@@ -10,6 +10,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
 import com.github.niwaniwa.we.core.event.WhiteEggToggleCommandEvent;
@@ -41,7 +42,7 @@ public class WhiteEggToggleCommand extends AbstractWhiteEggCoreCommand implement
 				this.sendUsing(player);
 				return true;
 			}
-			WhitePlayer target = api.getPlayer(args[0]);
+			WhitePlayer target = WhiteEggAPI.getPlayer(args[0]);
 			if(target != null){
 				this.sendInformation(target);
 				return true;
