@@ -1,5 +1,6 @@
 # plugin lock
 lock: false
+warn: true
 # settings...
 setting:
   # database setting
@@ -7,6 +8,8 @@ setting:
     enable: false
     # MySQL, MongoDB.
     type: ''
+    host: ''
+    port: 27017
   # player setting
   player:
     enable: true
