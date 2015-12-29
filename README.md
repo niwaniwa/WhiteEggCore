@@ -1,4 +1,4 @@
-# WhiteEggCore - v2.0.0
+# WhiteEggCore - v2.1
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
@@ -47,27 +47,15 @@ JavaScriptを利用してゲーム内に干渉できます
 
 * [Twitter4j](http://twitter4j.org/ "Twitter4j")
 
+* [MongoDB](https://www.mongodb.org/ "MongoDB")
+
+* ~~[MySQL](https://www.mysql.com/ "MySQL")~~ __現在対応は未定です__
+
 ## license
 
 * [MIT License](https://github.com/niwaniwa/WhiteEggCore/blob/master/License.txt "License")
 
-* 本プラグインはTwitterのapiを使用するためTwitter4jを含んでおります(Twitter4jはApache License 2.0licenseを使用しています)
-
->Copyright 2007 Yusuke Yamamoto
-
->Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
->      http://www.apache.org/licenses/LICENSE-2.0
-
->Unless required by applicable law or agreed to in writing, software
-Distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
->>Twitter4J は JSON レスポンスの解析のため JSON.org のソフトウェアを含んでいます。JSON.org のソフトウェアのライセンスについてはThe JSON Licenseをご覧ください。
+* 本プラグインはTwitter4j、MongoDB driverを含んでおります(Apache License 2.0を使用しています)
 
 ## その他
 
