@@ -20,7 +20,7 @@ import net.minecraft.server.v1_8_R3.EntityPlayer;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 
-public abstract class EggPlayer implements Tweet, WhitePlayer {
+public abstract class EggPlayer implements Twitter, WhitePlayer {
 
 	private Player player;
 
