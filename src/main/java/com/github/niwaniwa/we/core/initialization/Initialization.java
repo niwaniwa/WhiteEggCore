@@ -1,8 +1,13 @@
 package com.github.niwaniwa.we.core.initialization;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.PluginManager;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
@@ -16,6 +21,9 @@ import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterCommand;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
+import com.github.niwaniwa.we.core.database.DataBase;
+import com.github.niwaniwa.we.core.database.DataBaseManager;
+import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseManager;
 import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.listener.ScriptListener;
@@ -24,7 +32,7 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
-public class Initialization implements Base {
+public class Initialization implements Base, Listener {
 
 	private static boolean enable = false;
 
@@ -32,10 +40,12 @@ public class Initialization implements Base {
 	private JavaScript script;
 	private WhiteEggCore mainClassInstance;
 	private MessageManager msg;
+	private DataBase database;
 
 	private Initialization(WhiteEggCore instance){
 		mainClassInstance = instance;
 		config = WhiteEggCore.getConf();
+		Bukkit.getPluginManager().registerEvents(this, mainClassInstance);
 	}
 
 	@Override
@@ -59,6 +69,7 @@ public class Initialization implements Base {
 		this.registerCommands();
 		this.registerListener();
 		this.load();
+		this.settingDatabase();
 		this.settingCheck();
 	}
 
@@ -71,6 +82,7 @@ public class Initialization implements Base {
 	 * 各種登録
 	 */
 	private void register(){
+		this.registerDatabaseClass();
 		if(!config.isEnableScript()){ return; }
 		try {
 			JavaScript.copyScript();
@@ -115,7 +127,12 @@ public class Initialization implements Base {
 		return script;
 	}
 
+	public DataBase getDatabase() {
+		return database;
+	}
+
 	private void settingCheck(){
+		if(!config.getConfig().getBoolean("warn", true)){ return; }
 		if(config.getConfig().getString("setting.twitter.consumerKey", "").isEmpty()
 				|| config.getConfig().getString("setting.twitter.consumerSecret", "").isEmpty()){
 			WhiteEggCore.logger.warning("Twitter Consumer key or Consumer Secret is empty");
@@ -127,6 +144,25 @@ public class Initialization implements Base {
 		}
 	}
 
+	private void registerDatabaseClass(){
+		DataBaseManager.register("MongoDB", MongoDataBaseManager.class);
+	}
+
+	private void settingDatabase(){
+		if(!config.useDataBase()){ return; }
+		for(Entry<String, Class<? extends DataBase>> entry : DataBaseManager.getDatabaseClass().entrySet()){
+			if(entry.getKey().equalsIgnoreCase(config.getConfig().getString("setting.database.type"))){
+				try {
+					Constructor<? extends DataBase> constructor = entry.getValue().getConstructor(String.class, int.class);
+					this.database = constructor.newInstance(config.getConfig().getString("setting.database.host"), config.getConfig().getInt("setting.database.port"));
+				} catch (Exception e) {
+					config.getConfig().set("setting.database.enable", false);
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 	public MessageManager getMessageManager(){
 		return msg;
 	}
@@ -135,13 +171,14 @@ public class Initialization implements Base {
 		return config;
 	}
 
-	public static void disable(){
-		enable = false;
-	}
-
 	public static Initialization getInstance(WhiteEggCore instance){
 		if(enable){ return null; }
 		return new Initialization(instance);
+	}
+
+	@EventHandler
+	public void onDisable(PluginDisableEvent event){
+		if(event.getPlugin().getName().equalsIgnoreCase("WhiteEggCore")){ enable = false; }
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,6 +17,9 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
+import com.github.niwaniwa.we.core.database.DataBase;
+import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseCollection;
+import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseManager;
 import com.github.niwaniwa.we.core.json.JsonManager;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
@@ -186,7 +190,14 @@ public class WhiteEggPlayer extends EggPlayer {
 	@Override
 	public boolean load() {
 		if(WhiteEggAPI.useDataBase()){
-			// sql
+			DataBase database = WhiteEggCore.getDataBase();
+			if(database.getName().equalsIgnoreCase("mongodb")){ // MongoDB
+				MongoDataBaseManager mongo = (MongoDataBaseManager) database;
+				MongoDataBaseCollection collection = new MongoDataBaseCollection(mongo, mongo.getDatabase("WhiteEgg"), "player");
+				this.saveVariable(collection.getString(new Document("uuid", this.getUniqueId().toString()), this.getClass().getSimpleName()));
+				return true;
+			}
+			// mysql
 			return true;
 		}
 		// local
@@ -200,8 +211,20 @@ public class WhiteEggPlayer extends EggPlayer {
 	public boolean save() {
 		if(WhiteEggCore.getConf().savePlayerData())
 		if(WhiteEggAPI.useDataBase()){
-			// sql
-			return true;
+			DataBase database = WhiteEggCore.getDataBase();
+			if(database.getName().equalsIgnoreCase("mongodb")){ // MongoDB
+				MongoDataBaseManager mongo = (MongoDataBaseManager) database;
+				MongoDataBaseCollection collection = new MongoDataBaseCollection(mongo, mongo.getDatabase("WhiteEgg"), "player");
+				Object obj = collection.get(new Document("uuid", this.getUniqueId().toString()), this.getClass().getSimpleName());
+				Document data = new Document(this.serialize());
+				if(obj != null){
+					collection.update(new Document("uuid", this.getUniqueId().toString()), new Document("$pull", data));
+					return true;
+				}
+				collection.insert(data);
+				return true;
+			}
+			if(database.getName().equalsIgnoreCase("mysql")){ /* MySql */ }
 		}
 		JsonObject json = unionJson();
 		return jm.writeJson(path, getUniqueId().toString() + ".json", json);
@@ -243,11 +266,10 @@ public class WhiteEggPlayer extends EggPlayer {
 		lastOnline.put("server", Bukkit.getServerName());
 		lastOnline.put("sec", new Date().getTime());
 		player.put("lastonline", lastOnline);
-		player.put("address", this.getAddress());
+		player.put("address", this.serializeAddress());
 		player.put("account", this.getAccounts().get());
 		result.put("player", player);
-		result.put("ver", WhiteEggCore.getInstance().getDescription().getVersion());
-		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.serializeTwitter());
+		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.twitter.serialize());
 		white.put(this.getClass().getSimpleName(), result);
 		return white;
 	}
@@ -258,11 +280,11 @@ public class WhiteEggPlayer extends EggPlayer {
 		return ranks;
 	}
 
-	private Map<String, Object> serializeTwitter() {
-		Map<String, Object> result = new HashMap<>();
-		result.put("accesstoken", getTwitterManager().getAccessToken().getToken());
-		result.put("accesstokensecret", getTwitterManager().getAccessToken().getTokenSecret());
-		return result;
+	private Map<String, Object> serializeAddress(){
+		Map<String, Object> address = new HashMap<>();
+		address.put("host", getAddress().getHostString());
+		address.put("port", getAddress().getPort());
+		return address;
 	}
 
 	@Override
