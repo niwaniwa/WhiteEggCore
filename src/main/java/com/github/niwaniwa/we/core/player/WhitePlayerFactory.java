@@ -33,7 +33,7 @@ public class WhitePlayerFactory {
 	 * @param player プレイヤー
 	 * @return プレイヤー
 	 */
-	public static WhitePlayer newInstance(Player player){
+	public static WhitePlayer getInstance(Player player){
 		if(isLock || !WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true)){ throw new IllegalStateException("Cannot use newInstance for data load."); }
 		for(WhitePlayer p : players){
 			if(p.getUniqueId().equals(player.getUniqueId())){
@@ -54,7 +54,7 @@ public class WhitePlayerFactory {
 	 * @param player プレイヤー
 	 * @return T 指定したクラスのinstance
 	 */
-	public static <T extends WhitePlayer> T newInstance(Player player, Class<T> clazz){
+	public static <T extends WhitePlayer> T getInstance(Player player, Class<T> clazz){
 		if(clazz.isInterface()){ throw new IllegalArgumentException(clazz.getSimpleName() + " is Interface"); }
 		if(Modifier.isAbstract(clazz.getModifiers())){ throw new IllegalArgumentException(clazz.getSimpleName() + " is Abstract class"); }
 		T instance = null;
