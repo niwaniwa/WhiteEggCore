@@ -16,7 +16,7 @@ import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.database.DataBase;
-import com.github.niwaniwa.we.core.initialization.Initialization;
+import com.github.niwaniwa.we.core.init.Initialization;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;

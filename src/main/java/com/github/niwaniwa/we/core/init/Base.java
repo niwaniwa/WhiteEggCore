@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.initialization;
+package com.github.niwaniwa.we.core.init;
 
 public interface Base {
 
