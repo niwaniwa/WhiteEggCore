@@ -38,6 +38,9 @@ JavaScriptを利用してゲーム内に干渉できます
 
 [詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script "Script")
 
+### データベースについて
+
+現在MongoDB(不具合あり)、~~MySQL~~(現在未定)に対応しております
 
 ## Javadoc
 
@@ -49,7 +52,7 @@ JavaScriptを利用してゲーム内に干渉できます
 
 * [MongoDB](https://www.mongodb.org/ "MongoDB")
 
-* ~~[MySQL](https://www.mysql.com/ "MySQL")~~ __現在対応は未定です__
+* ~~[MySQL](https://www.mysql.com/ "MySQL")~~ __現在使用されていません__
 
 ## license
 
@@ -87,14 +90,6 @@ JavaScriptを利用してゲーム内に干渉できます
 階層内に設置されている言語ファイルを編集することができます
 
 - カラーコードは`&<code>`とすることで装飾が出来ます
-
-## 更新履歴
-
-### version 2
-
-Spigot 1.8.8
-
-- none
 
 ## 謝辞
 
