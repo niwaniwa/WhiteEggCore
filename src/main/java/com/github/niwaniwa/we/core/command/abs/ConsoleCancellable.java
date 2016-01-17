@@ -1,4 +1,4 @@
-package com.github.niwaniwa.we.core.command.abstracts;
+package com.github.niwaniwa.we.core.command.abs;
 
 /**
  * Consoleからの実行をブロック
