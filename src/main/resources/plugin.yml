@@ -1,5 +1,5 @@
 name: WhiteEggCore
-version: 2.1
+version: 2.2
 main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:
@@ -12,7 +12,7 @@ commands:
   head:
     description: give player head
     permission: whiteegg.core.command.head
-  tweet:
+  twitter:
     aliases: tw
     permission: whiteegg.core.command.twitter
   register:
