@@ -10,7 +10,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Versioning;
@@ -20,7 +20,7 @@ import com.github.niwaniwa.we.core.util.Versioning;
  * @author niwaniwa
  *
  */
-public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements TabCompleter {
+public class WhiteEggCoreCommand extends WhiteEggCoreLowCommandExecutor implements TabCompleter {
 
 	private final String permission = commandPermission + ".whiteegg";
 
@@ -77,6 +77,16 @@ public class WhiteEggCoreCommand extends AbstractWhiteEggCoreCommand implements 
 			StringUtil.copyPartialMatches(args[0], tabs, list);
 		}
 		return list;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "whiteeggcore";
+	}
+
+	@Override
+	public List<String> getUsing() {
+		return new ArrayList<String>(0);
 	}
 
 }

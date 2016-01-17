@@ -1,14 +1,16 @@
 package com.github.niwaniwa.we.core.command;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
@@ -18,7 +20,7 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author nwianiwa
  *
  */
-public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
+public class WhiteEggWhisperCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable{
 
 	private static final Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
 
@@ -57,16 +59,6 @@ public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implemen
 	}
 
 	@Override
-	public String description() {
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		return msg.getMessage(sender, key, msgPrefix, true);
-	}
-
-	@Override
 	public void sendUsing(WhitePlayer sender) {
 		sender.sendMessage("");
 	}
@@ -78,6 +70,16 @@ public class WhiteEggWhisperCommand extends AbstractWhiteEggCoreCommand implemen
 
 	public static Map<WhitePlayer, WhitePlayer> getPlayer(){
 		return replay;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "whisper";
+	}
+
+	@Override
+	public List<String> getUsing() {
+		return Arrays.asList("");
 	}
 
 }

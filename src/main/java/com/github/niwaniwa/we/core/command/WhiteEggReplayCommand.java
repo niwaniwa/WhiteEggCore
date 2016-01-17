@@ -1,12 +1,14 @@
 package com.github.niwaniwa.we.core.command;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
@@ -16,7 +18,7 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author niwaniwa
  *
  */
-public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable{
+public class WhiteEggReplayCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable{
 
 	private final String key = commandMessageKey + ".replay";
 	private final String permission = commandPermission + ".replay";
@@ -52,16 +54,6 @@ public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand implement
 	}
 
 	@Override
-	protected String description() {
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		return msg.getMessage(sender, key, "", true);
-	}
-
-	@Override
 	public void sendUsing(WhitePlayer sender) {
 
 	}
@@ -69,6 +61,16 @@ public class WhiteEggReplayCommand extends AbstractWhiteEggCoreCommand implement
 	@Override
 	public String getPermission() {
 		return permission;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "reply";
+	}
+
+	@Override
+	public List<String> getUsing() {
+		return Arrays.asList(new String());
 	}
 
 }

@@ -1,14 +1,17 @@
 package com.github.niwaniwa.we.core.command;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.script.JavaScript;
 
-public class WhiteEggScriptCommand extends AbstractWhiteEggCoreCommand {
+public class WhiteEggScriptCommand extends WhiteEggCoreLowCommandExecutor {
 
 	private final String key = commandMessageKey + ".script";
 	private final String permission = commandPermission + ".script";
@@ -19,7 +22,7 @@ public class WhiteEggScriptCommand extends AbstractWhiteEggCoreCommand {
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0){
 			if(sender instanceof WhitePlayer){ sendUsing((WhitePlayer) sender); return true;}
-			sender.sendMessage(description(sender));
+			sender.sendMessage(getUsing().toArray(new String[0]));
 			return true;
 		}
 		switch(args[0]){
@@ -34,23 +37,24 @@ public class WhiteEggScriptCommand extends AbstractWhiteEggCoreCommand {
 	}
 
 	@Override
-	protected String description() {
-		return null;
-	}
-
-	@Override
-	public String description(WhiteCommandSender sender) {
-		return msg.getMessage(sender, key, "", true);
-	}
-
-	@Override
 	public void sendUsing(WhitePlayer sender) {
-		sender.sendMessage("&7----- &6/script -----");
+		sender.sendMessage("&7----- &6/script &7-----");
 	}
 
 	@Override
 	public String getPermission() {
 		return permission;
+	}
+
+	@Override
+	public String getCommandName() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
+	public List<String> getUsing() {
+		return new ArrayList<String>(0);
 	}
 
 }

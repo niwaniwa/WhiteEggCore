@@ -7,8 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.api.callback.Callback;
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
@@ -17,9 +17,8 @@ import com.github.niwaniwa.we.core.util.lib.clickable.ChatFormat;
 import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.lib.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.lib.clickable.HoverEventType;
-import com.github.niwaniwa.we.core.util.message.LanguageType;
 
-public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
+public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
@@ -83,13 +82,13 @@ public class WhiteEggTwitterRegisterCommand extends AbstractWhiteEggCoreCommand 
 	}
 
 	@Override
-	public String description() {
-		return msg.getMessage(LanguageType.en_US, key + ".description", "", true);
+	public String getCommandName() {
+		return "twitter";
 	}
 
 	@Override
-	public String description(WhiteCommandSender sender) {
-		return msg.getMessage(sender, key + ".description", "", true);
+	public List<String> getUsing() {
+		return new ArrayList<String>(0);
 	}
 
 }

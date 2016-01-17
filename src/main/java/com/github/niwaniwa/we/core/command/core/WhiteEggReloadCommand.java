@@ -1,11 +1,15 @@
 package com.github.niwaniwa.we.core.command.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
-import com.github.niwaniwa.we.core.command.abstracts.WhiteEggChildCommand;
+import com.github.niwaniwa.we.core.command.abs.WhiteEggChildCommandExeutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 
@@ -14,7 +18,7 @@ import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
  * @author niwaniwa
  *
  */
-public class WhiteEggReloadCommand extends WhiteEggChildCommand {
+public class WhiteEggReloadCommand extends WhiteEggCoreLowCommandExecutor implements WhiteEggChildCommandExeutor {
 
 	private final String permission = commandPermission + ".whiteegg.reload";
 	private final String parentCommand = "whiteeggcore";
@@ -47,6 +51,16 @@ public class WhiteEggReloadCommand extends WhiteEggChildCommand {
 	@Override
 	public String getPermission() {
 		return permission;
+	}
+
+	@Override
+	public List<String> getUsing() {
+		return new ArrayList<String>(0);
+	}
+
+	@Override
+	public String getCommandName() {
+		return "whiteeggcore";
 	}
 
 }

@@ -1,12 +1,15 @@
 package com.github.niwaniwa.we.core.command;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
-import com.github.niwaniwa.we.core.command.abstracts.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 
@@ -15,7 +18,7 @@ import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
  * @author niwaniwa
  *
  */
-public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand implements ConsoleCancellable {
+public class WhiteEggHeadCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".head";
 	private final String permission = commandPermission + ".head";
@@ -58,15 +61,13 @@ public class WhiteEggHeadCommand extends AbstractWhiteEggCoreCommand implements 
 	}
 
 	@Override
-	public String description() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+	public String getCommandName() {
+		return "head";
 	}
 
 	@Override
-	public String description(WhiteCommandSender sender) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+	public List<String> getUsing() {
+		return Arrays.asList("/head <target name>");
 	}
 
 }
