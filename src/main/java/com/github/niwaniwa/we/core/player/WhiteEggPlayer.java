@@ -172,7 +172,7 @@ public class WhiteEggPlayer extends EggPlayer {
 	}
 
 	public void setName(String name){
-		player.setCustomName("");
+		player.setCustomName(name);
 	}
 
 	public void tweet(String[] tweet){

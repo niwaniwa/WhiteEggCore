@@ -31,9 +31,13 @@ public class Debug implements Listener {
 		MongoDataBaseManager manager = new MongoDataBaseManager("192.168.99.100", 32768);
 		MongoDataBase database = manager.getDatabase("WhiteEgg");
 		MongoDataBaseCollection collection = new MongoDataBaseCollection(manager, database, "player");
-//		Document uuid = new Document().append("uuid", player.getUniqueId().toString());
 		Document playerData = new Document().append("player", new Document(player.serialize())).append("uuid", player.getUniqueId().toString());
-//		Document updatedoc = new Document("$addToSet", playerData);
+		if(collection.get(playerData, "uuid") != null){
+			Document uuid = new Document().append("uuid", player.getUniqueId().toString());
+			Document updatedoc = new Document("$addToSet", playerData);
+			collection.update(uuid, updatedoc);
+			return;
+		}
 		collection.getCollection().insertOne(playerData);
 		// database end
 	}

@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
-import com.github.niwaniwa.we.core.command.abstracts.AbstractWhiteEggCoreCommand;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.database.DataBase;
 import com.github.niwaniwa.we.core.init.Initialization;
@@ -184,7 +184,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * このプラグインに登録されているコマンドの取得
 	 * @return Map
 	 */
-	public Map<String, AbstractWhiteEggCoreCommand> getCommands(){
+	public Map<String, WhiteEggCoreLowCommandExecutor> getCommands(){
 		return WhiteEggCoreCommandHandler.getCommans();
 	}
 

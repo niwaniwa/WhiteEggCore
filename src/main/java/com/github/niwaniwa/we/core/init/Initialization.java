@@ -34,6 +34,7 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 public class Initialization implements Base, Listener {
 
 	private static boolean enable = false;
+	private static Initialization init = new Initialization(WhiteEggCore.getInstance());
 
 	private WhiteEggCoreConfig config;
 	private JavaScript script;
@@ -104,7 +105,7 @@ public class Initialization implements Base, Listener {
 		handler.registerCommand("whisper", new WhiteEggWhisperCommand());
 		handler.registerCommand("replay", new WhiteEggReplayCommand());
 		handler.registerCommand("script", new WhiteEggScriptCommand());
-		if(config.useTwitter()){ handler.registerCommand("tweet", new WhiteEggTwitterCommand()); }
+		handler.registerCommand("twitter", new WhiteEggTwitterCommand());
 	}
 
 	/**
@@ -172,7 +173,7 @@ public class Initialization implements Base, Listener {
 
 	public static Initialization getInstance(WhiteEggCore instance){
 		if(enable){ return null; }
-		return new Initialization(instance);
+		return init;
 	}
 
 	@EventHandler
