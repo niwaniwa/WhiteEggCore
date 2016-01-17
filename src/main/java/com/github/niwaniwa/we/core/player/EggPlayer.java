@@ -1,6 +1,7 @@
 package com.github.niwaniwa.we.core.player;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +67,11 @@ public abstract class EggPlayer implements Twitter, WhitePlayer {
 	@Override
 	public void sendMessage(String message) {
 		this.sendMessage(message, true);
+	}
+
+	@Override
+	public void sendMessage(String[] message) {
+		Arrays.asList(message).forEach(msg -> sendMessage(msg, true));
 	}
 
 	@Override

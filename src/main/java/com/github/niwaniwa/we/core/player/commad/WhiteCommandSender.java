@@ -6,6 +6,8 @@ public interface WhiteCommandSender {
 
 	public abstract void sendMessage(String message);
 
+	public abstract void sendMessage(String[] message);
+
 	public abstract void sendMessage(String message, boolean replaceColorCode);
 
 	public abstract boolean hasPermission(String permission);

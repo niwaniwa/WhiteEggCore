@@ -1,5 +1,6 @@
 package com.github.niwaniwa.we.core.player.commad;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -20,6 +21,11 @@ public class WhiteConsoleSender implements WhiteCommandSender {
 	@Override
 	public void sendMessage(String message) {
 		sendMessage(message, true);
+	}
+
+	@Override
+	public void sendMessage(String[] message) {
+		Arrays.asList(message).forEach(msg -> sendMessage(msg, true));
 	}
 
 	@Override
