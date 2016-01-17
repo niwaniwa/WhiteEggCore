@@ -20,9 +20,6 @@ import com.github.niwaniwa.we.core.api.WhiteEggAPI;
  */
 public class WhitePlayerFactory {
 
-	/**
-	 * instance化不可
-	 */
 	private WhitePlayerFactory(){}
 
 	private static final List<WhitePlayer> players = new ArrayList<>();
@@ -34,7 +31,7 @@ public class WhitePlayerFactory {
 	 * @return プレイヤー
 	 */
 	public static WhitePlayer getInstance(Player player){
-		if(isLock || !WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true)){ throw new IllegalStateException("Cannot use newInstance for data load."); }
+		if(isLock || !WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true)){ throw new IllegalStateException("Cannot use getInstance for data load."); }
 		for(WhitePlayer p : players){
 			if(p.getUniqueId().equals(player.getUniqueId())){
 				((EggPlayer) p).update();
