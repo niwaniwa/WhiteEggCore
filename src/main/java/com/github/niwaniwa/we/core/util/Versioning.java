@@ -7,7 +7,7 @@ public class Versioning {
 	private static Versioning instance = new Versioning();
 
 	private boolean support = false;
-	private String craftBukkitVersion = "v1_8_R3";
+	private String craftBukkitVersion;
 	private int javaVersion;
 
 	private Versioning() {
