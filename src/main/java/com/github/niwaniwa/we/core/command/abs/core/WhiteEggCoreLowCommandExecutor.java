@@ -28,7 +28,7 @@ public abstract class WhiteEggCoreLowCommandExecutor implements WhiteEggCommandE
 	/**
 	 * コマンドの実行
 	 * @param sender sender
-	 * @param cmd command
+	 * @param command command
 	 * @param label label
 	 * @param args args
 	 * @return boolean

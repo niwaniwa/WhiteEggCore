@@ -34,7 +34,7 @@ public class Clickable extends Extension {
 
 	/**
 	 * Eventなどを追加します
-	 * @param extraObject ChatExtra
+	 * @param extraInstance ChatExtra
 	 */
 	public void addExtra(ChatExtra extraInstance) {
 		if (json.get("extra") == null) { return; }
