@@ -1,4 +1,4 @@
-# WhiteEggCore - v2.1
+# WhiteEggCore - v2.2
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
@@ -20,7 +20,7 @@
 `/WhiteEggCore` | プラグイン情報など | whiteegg.core.command.* |  
 `/toggle` | 各種設定を確認、設定できます| whiteegg.core.command.toggle |
 `/head <Player名>` | プレイヤーの頭を取得します | whiteegg.core.command.toggle |
-`/tweet <呟き>` | Twitterに呟きを送信します | whiteegg.core.command.twitter | 初実行時は/registerを行ってください
+`/twitter <呟き>` | Twitterに呟きを送信します | whiteegg.core.command.twitter | 初実行時は/registerを行ってください
 `/register` | Twitterに接続するための登録を行います | whiteegg.core.command.twitter.register |
 `/whisper` <Player> <メッセージ> | 特定の相手にプライベートメッセージを送信します | whiteegg.core.command.whisper |
 `/replay` <メッセージ> | 返信します | whiteegg.core.command.replay |
