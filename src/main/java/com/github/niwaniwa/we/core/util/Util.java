@@ -41,7 +41,7 @@ public class Util {
 		BufferedReader reader = null;
 		JarFile jar = null;
 		try {
-			if(!path.split("/")[path.split("/").length - 1].contains(".")){
+			if(!path.split("/")[path.split("/").length - 1].contains(".")){ // × File.separator
 				new File(target, File.separator + path).mkdirs();
 				return;
 			}
