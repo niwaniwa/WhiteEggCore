@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
+import com.google.gson.Gson;
 
 /**
  * WhitePlayerのfactoryクラス
@@ -61,7 +62,8 @@ public class WhitePlayerFactory {
 		} catch (Exception e){
 		}
 		if(instance == null){ return null; }
-		instance.load();
+		if(!isLock){ instance.saveVariable(new Gson().toJson(getInstance(player).serialize())); }
+		else { instance.load(); }
 		return instance;
 	}
 
@@ -73,22 +75,18 @@ public class WhitePlayerFactory {
 	 * @return 指定したクラスのinstance(データ引き継ぎ)
 	 */
 	public static <T extends WhitePlayer> T cast(WhitePlayer from, Class<T> to){
-		if(Modifier.isAbstract(to.getModifiers())
-				|| from.getClass().getSimpleName().equals(to.getSimpleName())){
+		if(Modifier.isAbstract(to.getModifiers()) || from.getClass().getSimpleName().equals(to.getSimpleName())){
 			throw new IllegalArgumentException(to.getSimpleName() + " is Abstract class or Same as '" + to.getSimpleName() + "'");
 		}
 		from.save();
 		T instance = null;
 		try {
 			instance = (T) to.getConstructor(Player.class).newInstance(from.getPlayer());
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
-		instance.saveVariable(from.serialize().toString());
-		if(instance.getClass().getSuperclass().getSimpleName().equalsIgnoreCase("EggPlayer")){
-			((EggPlayer) instance).update();
-		}
+		instance.saveVariable(new Gson().toJson(from.serialize()));
+		if(instance.getClass().getSuperclass().getSimpleName().equalsIgnoreCase("EggPlayer")){ ((EggPlayer) instance).update(); }
 		return instance;
 	}
 
