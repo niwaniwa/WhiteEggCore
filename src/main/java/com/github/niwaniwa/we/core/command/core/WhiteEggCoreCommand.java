@@ -55,7 +55,7 @@ public class WhiteEggCoreCommand extends WhiteEggCoreLowCommandExecutor implemen
 		sender.sendMessage("&7 ----- &6WhiteEggCore &7-----");
 		sender.sendMessage("&6/whiteeggcore reload &f: &7Serverをリロードします。");
 		sender.sendMessage("&6/whiteeggcore lock &f: &7プラグインをロックします。");
-		sender.sendMessage("&6/whiteeggcore tweet &f: &7サーバの投稿としてツイートします");
+		sender.sendMessage("&6/whiteeggcore tweet <message> &f: &7サーバの投稿としてツイートします");
 	}
 
 	@Override
