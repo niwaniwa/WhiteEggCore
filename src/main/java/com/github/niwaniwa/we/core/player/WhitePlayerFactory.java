@@ -1,18 +1,26 @@
+
 package com.github.niwaniwa.we.core.player;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
+import com.github.niwaniwa.we.core.database.DataBase;
+import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseCollection;
+import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseManager;
+import com.github.niwaniwa.we.core.json.JsonManager;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * WhitePlayerのfactoryクラス
@@ -25,6 +33,7 @@ public class WhitePlayerFactory {
 
 	private static final List<WhitePlayer> players = new ArrayList<>();
 	private static boolean isLock = WhiteEggCore.isLock;
+	private static boolean enable = WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true);
 
 	/**
 	 * プレイヤーのインスタンスを返します
@@ -32,15 +41,16 @@ public class WhitePlayerFactory {
 	 * @return プレイヤー
 	 */
 	public static WhitePlayer getInstance(Player player){
-		if(isLock || !WhiteEggCore.getConf().getConfig().getBoolean("setting.player.enable", true)){ throw new IllegalStateException("Cannot use getInstance for data load."); }
+		if(isLock || !enable){ throw new IllegalStateException("Cannot use getInstance for data load."); }
+		if(player == null){ throw new NullPointerException("player is null"); }
 		for(WhitePlayer p : players){
 			if(p.getUniqueId().equals(player.getUniqueId())){
 				((EggPlayer) p).update();
 				return p;
 			}
 		}
-		WhitePlayer white = new WhiteEggPlayer(player);
-		white.load();
+		WhiteEggPlayer white = new WhiteEggPlayer(player);
+		white.loadTask();
 		players.add(white);
 		return white;
 	}
@@ -53,6 +63,7 @@ public class WhitePlayerFactory {
 	 * @return T 指定したクラスのinstance
 	 */
 	public static <T extends WhitePlayer> T getInstance(Player player, Class<T> clazz){
+		if(player == null){ throw new NullPointerException("player is null"); }
 		if(clazz.isInterface()){ throw new IllegalArgumentException(clazz.getSimpleName() + " is Interface"); }
 		if(Modifier.isAbstract(clazz.getModifiers())){ throw new IllegalArgumentException(clazz.getSimpleName() + " is Abstract class"); }
 		T instance = null;
@@ -62,10 +73,11 @@ public class WhitePlayerFactory {
 		} catch (Exception e){
 		}
 		if(instance == null){ return null; }
-		if(!isLock){ instance.saveVariable(new Gson().toJson(getInstance(player).serialize())); }
+		if(!isLock && enable){ instance.saveVariable(new Gson().toJson(getInstance(player).serialize())); }
 		else { instance.load(); }
 		return instance;
 	}
+
 
 	/**
 	 * 型を指定したクラスへ変換する
@@ -116,6 +128,35 @@ public class WhitePlayerFactory {
 	 */
 	public static List<WhitePlayer> getPlayers(){
 		return players;
+	}
+
+	/**
+	 * プレイヤーのデータを取得します
+	 * @param uuid uuid
+	 * @param clazz クラス
+	 * @return json
+	 */
+	public static <T extends WhitePlayer> String getPlayerData(String uuid, Class<T> clazz){
+		if(WhiteEggAPI.useDataBase()){
+			try{
+			DataBase database = WhiteEggCore.getDataBase();
+			if(database.getName().equalsIgnoreCase("mongodb")){ // MongoDB
+				MongoDataBaseManager mongo = (MongoDataBaseManager) database;
+				MongoDataBaseCollection collection = new MongoDataBaseCollection(mongo, mongo.getDatabase("WhiteEgg"), "player");
+				Object object = collection.get(new Document("uuid", uuid), clazz.getSimpleName());
+				if(object != null){
+					return ((Document) object).toJson();
+				}
+			}
+			// mysql
+			} catch (Exception ex){}
+			return new String();
+		}
+		// local
+		File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.savePlayerData", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
+		JsonObject json = new JsonManager().getJson(new File(path + File.separator + uuid + ".json"));
+		if(json == null){ return new String(); }
+		return json.toString();
 	}
 
 }
