@@ -147,7 +147,10 @@ public class WhiteEggCore extends JavaPlugin {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if(!config.getConfig().getBoolean("setting.player.save.autoSave.enable", false)){ this.cancel(); }
+				if(!config.getConfig().getBoolean("setting.player.save.autoSave.enable", false)){
+					this.cancel();
+					return;
+				}
 				WhitePlayerFactory.saveAll();
 			}
 		}.runTaskTimerAsynchronously(instance, run, run);
