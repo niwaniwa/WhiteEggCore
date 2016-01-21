@@ -55,12 +55,12 @@ public class WhiteEggWhisperCommand extends WhiteEggCoreLowCommandExecutor imple
 	}
 
 	private String replace(String s, WhitePlayer from, WhitePlayer to, String message){
-		return s.replace("%from", from.getName()).replace("%to", to.getName()).replace("%message", message);
+		return s.replace("%from%", from.getName()).replace("%to%", to.getName()).replace("%message%", message);
 	}
 
 	@Override
 	public void sendUsing(WhitePlayer sender) {
-		sender.sendMessage("");
+		sender.sendMessage("&6! ω !");
 	}
 
 	@Override
