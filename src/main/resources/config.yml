@@ -16,7 +16,7 @@ setting:
     # use database? check database setting
     savePlayerData: true
     # default `plugins/WhiteEggCore/players/`
-    path: ''
+    path:
     save:
       # database or local
       type: 'local'
