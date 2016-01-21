@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
+import com.github.niwaniwa.we.core.json.JsonManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -70,7 +71,8 @@ public class AltAccount implements ConfigurationSerializable {
 		return null;
 	}
 
-	public static AltAccount parser(JsonObject json){
+	public static AltAccount parser(String jsonString){
+		JsonObject json = new JsonManager().createJsonObject(jsonString);
 		AltAccount alt = new AltAccount();
 		JsonElement obj = json.get("account");
 		if(obj == null || !obj.isJsonArray()){ return alt; }
