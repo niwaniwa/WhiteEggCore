@@ -59,7 +59,12 @@ public class WhiteEggAPIImpl {
 	public OfflineWhitePlayer getOfflinePlayer(String name) {
 		@SuppressWarnings("deprecation")
 		OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-		return WhitePlayerFactory.getInstance((Player) offline);
+		return WhitePlayerFactory.getInstance(offline.getPlayer());
+	}
+
+	public OfflineWhitePlayer getOfflinePlayer(UUID uuid) {
+		OfflinePlayer offline = Bukkit.getOfflinePlayer(uuid);
+		return WhitePlayerFactory.getInstance(offline.getPlayer());
 	}
 
 
@@ -74,10 +79,7 @@ public class WhiteEggAPIImpl {
 
 	public WhitePlayer getPlayer(UUID uuid) {
 		Player player = Util.getOnlinePlayer(uuid);
-		if(player == null){
-			WhitePlayer white = WhitePlayerFactory.getInstance((Player) Bukkit.getPlayer(uuid));
-			return white;
-		}
+		if(player == null){ return null; }
 		return WhitePlayerFactory.getInstance(player);
 	}
 
