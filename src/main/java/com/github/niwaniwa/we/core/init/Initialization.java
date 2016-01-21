@@ -133,11 +133,13 @@ public class Initialization implements Base, Listener {
 
 	private void settingCheck(){
 		if(!config.getConfig().getBoolean("warn", true)){ return; }
-		if(config.getConfig().getString("setting.twitter.consumerKey", "").isEmpty()
-				|| config.getConfig().getString("setting.twitter.consumerSecret", "").isEmpty()){
-			WhiteEggCore.logger.warning("Twitter Consumer key or Consumer Secret is empty");
-			WhiteEggCore.logger.warning("Twitter command disable");
-			config.getConfig().set("setting.twitter.useTwitter", false);
+		if(config.getConfig().getBoolean("setting.twitter.useTwitter", true)){
+			if(config.getConfig().getString("setting.twitter.consumerKey", "").isEmpty()
+					|| config.getConfig().getString("setting.twitter.consumerSecret", "").isEmpty()){
+				WhiteEggCore.logger.warning("Twitter Consumer key or Consumer Secret is empty");
+				WhiteEggCore.logger.warning("Twitter command disable");
+				config.getConfig().set("setting.twitter.useTwitter", false);
+			}
 		}
 		if(!config.isEnableListener() || !config.isEnableCommand()){
 			WhiteEggCore.logger.warning("Listener or Command is disabled. Not recommended.");
