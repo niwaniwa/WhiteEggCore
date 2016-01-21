@@ -18,7 +18,7 @@ whiteegg:
           line_2: 'Twitterにて表示されたPinを入力します。'
     whisper:
       description: '個人メッセージの送信'
-      format: '&7[ %from &d-> %to &7: &7%message &7]'
+      format: '&7[ %from% &d-> %to% &7: &7%message% &7]'
     replay:
       description: '個人メッセージの送信'
-      format: '&7[ %from &d-> %to &7: &7%message &7]'
+      format: '&7[ %from% &d-> %to% &7: &7%message% &7]'
