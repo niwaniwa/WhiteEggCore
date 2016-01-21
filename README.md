@@ -94,7 +94,7 @@ JavaScriptを利用してゲーム内に干渉できます
 ## 謝辞
 
 ### アドバイス、修正
-- [Nekoneko](https://www.nekonekoserver.net/)様
+- [Nekoneko](https://www.nekonekoserver.net/)様 [Twitter↗](https://twitter.com/NekonekoServer)
 
 御礼を申し上げます
 
@@ -106,3 +106,4 @@ Twitter : @[haniwa_koke](https://twitter.com/haniwa_koke "haniwa_koke")
 不備がありましたらこちらへ連絡をしていただけると幸いです
 
 javajava勉強中...
+(1/8 ~ 1/21までのコミットメッセージが荒れていますがご了承ください)
