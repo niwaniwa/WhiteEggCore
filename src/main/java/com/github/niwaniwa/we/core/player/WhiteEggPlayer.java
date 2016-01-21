@@ -51,7 +51,7 @@ public class WhiteEggPlayer extends EggPlayer {
 	private boolean isVanish;
 	private TwitterManager twitter;
 
-	public static final File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.savePlayerData", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
+	public static File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.path", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
 
 	public WhiteEggPlayer(Player player){
 		super(player);
@@ -127,7 +127,9 @@ public class WhiteEggPlayer extends EggPlayer {
 
 	@Override
 	public boolean saveVariable(String jsonString) {
+		if(jsonString.isEmpty() || jsonString == null){ throw new IllegalArgumentException(); }
 		JsonObject source = jm.createJsonObject(jsonString);
+		if(!source.has("WhiteEggPlayer")){ return false; }
 		JsonObject json = source.getAsJsonObject("WhiteEggPlayer");
 		JsonObject player = json.getAsJsonObject("player");
 		this.isVanish = player.get("isvanish").getAsBoolean();
@@ -138,7 +140,7 @@ public class WhiteEggPlayer extends EggPlayer {
 		}
 		this.setRank(player);
 		this.setToggle(player);
-		AltAccount.parser(player);
+		AltAccount.parser(player.toString());
 		return true;
 	}
 
@@ -190,51 +192,73 @@ public class WhiteEggPlayer extends EggPlayer {
 	@Override
 	public boolean load() {
 		if(WhiteEggAPI.useDataBase()){
+			try{
 			DataBase database = WhiteEggCore.getDataBase();
 			if(database.getName().equalsIgnoreCase("mongodb")){ // MongoDB
 				MongoDataBaseManager mongo = (MongoDataBaseManager) database;
 				MongoDataBaseCollection collection = new MongoDataBaseCollection(mongo, mongo.getDatabase("WhiteEgg"), "player");
-				this.saveVariable(collection.getString(new Document("uuid", this.getUniqueId().toString()), this.getClass().getSimpleName()));
+				Document doc = collection.findOne(new Document("uuid", this.getUniqueId().toString()));
+				if(doc == null){
+					return false;
+				}
+				this.saveVariable(doc.toJson());
 				return true;
 			}
 			// mysql
+			} catch(Exception ex){
+				WhiteEggCore.logger.warning("Error establishing a database connection");
+				WhiteEggCore.getConf().set("setting.database.enable", false);
+			}
 			return true;
 		}
 		// local
 		JsonObject json = jm.getJson(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
 		if(json == null){ return false; }
-		this.saveVariable(json.toString());
+		this.saveVariable(json.get(this.getClass().getSimpleName()).getAsJsonObject().toString());
 		return true;
 	}
 
 	@Override
 	public boolean save() {
-		if(WhiteEggCore.getConf().savePlayerData())
+		if(!WhiteEggCore.getConf().savePlayerData()){ return false; }
 		if(WhiteEggAPI.useDataBase()){
+			try{
 			DataBase database = WhiteEggCore.getDataBase();
 			if(database.getName().equalsIgnoreCase("mongodb")){ // MongoDB
 				MongoDataBaseManager mongo = (MongoDataBaseManager) database;
 				MongoDataBaseCollection collection = new MongoDataBaseCollection(mongo, mongo.getDatabase("WhiteEgg"), "player");
 				Object obj = collection.get(new Document("uuid", this.getUniqueId().toString()), this.getClass().getSimpleName());
-				Document data = new Document(this.serialize());
 				if(obj != null){
-					collection.update(new Document("uuid", this.getUniqueId().toString()), new Document("$pull", data));
+					collection.update(new Document("uuid", this.getUniqueId().toString()), new Document("$set", this.serialize()));
 					return true;
 				}
-				collection.insert(data);
+				collection.insert(new Document(this.serialize()));
 				return true;
 			}
 			if(database.getName().equalsIgnoreCase("mysql")){ /* MySql */ }
+			} catch(Exception ex){
+				WhiteEggCore.logger.warning("Error establishing a database connection");
+				WhiteEggCore.getConf().set("setting.database.enable", false);
+			}
 		}
 		JsonObject json = unionJson();
 		return jm.writeJson(path, getUniqueId().toString() + ".json", json);
 	}
 
-	public void saveTask(){
+	public void saveTask() {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				save();
+			}
+		}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 1);
+	}
+
+	public void loadTask() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				load();
 			}
 		}.runTaskLaterAsynchronously(WhiteEggCore.getInstance(), 1);
 	}
@@ -259,7 +283,6 @@ public class WhiteEggPlayer extends EggPlayer {
 		Map<String, Object> lastOnline = new HashMap<>();
 		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
-		player.put("uuid", this.getUniqueId().toString());
 		player.put("rank", this.serializeRankData());
 		player.put("isvanish", this.isVanish);
 		player.put("toggles", toggle);
@@ -271,6 +294,7 @@ public class WhiteEggPlayer extends EggPlayer {
 		result.put("player", player);
 		result.put("twitter", this.getTwitterManager().getAccessToken() == null ? "null" : this.twitter.serialize());
 		white.put(this.getClass().getSimpleName(), result);
+		white.put("uuid", this.getUniqueId().toString());
 		return white;
 	}
 
