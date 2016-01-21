@@ -7,7 +7,9 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreChildCommandExecutor;
 import com.github.niwaniwa.we.core.json.JsonManager;
@@ -25,37 +27,47 @@ public class WhiteEggAltSearchCommand extends WhiteEggCoreChildCommandExecutor {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onCommand(WhiteCommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(final WhiteCommandSender sender, Command command, String label, final String[] args) {
 		WhitePlayer player = this.getPlayer(args[1]);
-		String name;
-		AltAccount account = null;
 		if(player != null){
 			if(!(player instanceof WhiteEggPlayer)){ throw new IllegalArgumentException(String.format("Class %s does not extends WhiteEggPlayer", new Object[] { player.getClass().getSimpleName() })); }
 			WhiteEggPlayer eggPlayer = (WhiteEggPlayer)  player;
-			account = eggPlayer.getAccounts();
-			name = player.getFullName();
+			this.callback(sender, eggPlayer.getAccounts(), player.getFullName());
 		} else {
-			UUID uuid = null;
-			if(args[1].startsWith("$")){ uuid = Bukkit.getOfflinePlayer(UUID.fromString(args[1].replace("$", ""))).getUniqueId(); }
-			else {
-				OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
-				if(offlinePlayer == null){
-					sender.sendMessage(msg.getMessage(sender, error_Player, "", true));
-					return true;
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					UUID uuid = null;
+					if(args[1].startsWith("$")){ uuid = Bukkit.getOfflinePlayer(UUID.fromString(args[1].replace("$", ""))).getUniqueId(); }
+					else {
+						OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+						if(offlinePlayer == null){
+							sender.sendMessage(msg.getMessage(sender, error_Player, "", true));
+							return;
+						}
+						uuid = offlinePlayer.getUniqueId();
+					}
+					String jsonString = WhitePlayerFactory.getPlayerData(uuid.toString(), WhiteEggPlayer.class);
+					if(jsonString.isEmpty()){
+						sender.sendMessage("&cerror");
+						return;
+					}
+					JsonObject json = new JsonManager().createJsonObject(jsonString);
+					if(json == null){
+						sender.sendMessage(msg.getMessage(sender, error_Player, "", true));
+						return;
+					}
+					callback(sender, AltAccount.parser(json.getAsJsonObject("player").toString()), json.getAsJsonObject("player").get("name").getAsString());
 				}
-				uuid = offlinePlayer.getUniqueId();
-			}
-			JsonObject json = new JsonManager().createJsonObject(WhitePlayerFactory.getPlayerData(uuid.toString(), WhiteEggPlayer.class));
-			if(json == null){
-				sender.sendMessage(msg.getMessage(sender, error_Player, "", true));
-				return true;
-			}
-			account = AltAccount.parser(json.getAsJsonObject("player").toString());
-			name = json.getAsJsonObject("player").get("name").getAsString();
+			}.runTaskAsynchronously(WhiteEggCore.getInstance());
 		}
+		return true;
+	}
+
+	private void callback(WhiteCommandSender sender,AltAccount account, String name){
 		if(account.get().isEmpty()){
-			sender.sendMessage("none");
-			return true;
+			sender.sendMessage("&cEmpty");
+			return;
 		}
 		int loop = 1;
 		sender.sendMessage("&7 ----- &6" + name + "'s account");
@@ -63,7 +75,6 @@ public class WhiteEggAltSearchCommand extends WhiteEggCoreChildCommandExecutor {
 			sender.sendMessage("&7: &b" + loop + " &7: &6" + uuid + " &7: &6" + this.getPlayerName(uuid) + " &7:");
 			loop++;
 		}
-		return true;
 	}
 
 	public String getPlayerName(String uuid){
