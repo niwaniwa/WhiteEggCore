@@ -35,6 +35,11 @@ public class MongoDataBaseCollection {
 		return this.getCollection().find(bson);
 	}
 
+	public Document findOne(Document bson){
+		FindIterable<Document> lists = this.find(bson);
+		return lists.first();
+	}
+
 	public boolean contains(Object obj){
 		while (this.getDocuments().iterator().hasNext()) {
 			Document doc = this.getDocuments().iterator().next();
