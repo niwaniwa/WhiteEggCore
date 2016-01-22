@@ -13,7 +13,7 @@ import com.github.niwaniwa.we.core.script.JavaScript;
 
 public class WhiteEggScriptCommand extends WhiteEggCoreLowCommandExecutor {
 
-	private final String key = commandMessageKey + ".script";
+//	private final String key = commandMessageKey + ".script";
 	private final String permission = commandPermission + ".script";
 
 //	private final String[] arg = new String[]{"reload", "off"};
