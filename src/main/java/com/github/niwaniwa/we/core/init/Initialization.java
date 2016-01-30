@@ -23,6 +23,7 @@ import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterRegisterComman
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.database.DataBase;
 import com.github.niwaniwa.we.core.database.DataBaseManager;
+import com.github.niwaniwa.we.core.database.DataBaseType;
 import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseManager;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.listener.ScriptListener;
@@ -46,14 +47,14 @@ public class Initialization implements Base, Listener {
 		mainClassInstance = instance;
 		config = WhiteEggCore.getConf();
 		Bukkit.getPluginManager().registerEvents(this, mainClassInstance);
+		LoadLanguage lang = LoadLanguage.getInstance();
+		lang.start(false);
+		msg = lang.getManager();
 	}
 
 	@Override
 	public boolean start(boolean debug){
 		this.setting(debug);
-		LoadLanguage lang = LoadLanguage.getInstance();
-		lang.start(false);
-		msg = lang.getManager();
 		enable = true;
 		return enable;
 	}
@@ -63,14 +64,12 @@ public class Initialization implements Base, Listener {
 	}
 
 	private void setting(boolean debug){
-//		debugMessage("commands", debug);
-//		debugMessage("listener", debug);
+		this.settingCheck();
 		this.register();
 		this.registerCommands();
 		this.registerListener();
 		this.load();
 		this.settingDatabase();
-		this.settingCheck();
 	}
 
 	private void load(){
@@ -152,8 +151,10 @@ public class Initialization implements Base, Listener {
 
 	private void settingDatabase(){
 		if(!config.useDataBase()){ return; }
+		DataBaseType type = DataBaseType.valueOf(config.getConfig().getString("setting.database.type"));
+		if(type == null){ return; }
 		for(Entry<String, Class<? extends DataBase>> entry : DataBaseManager.getDatabaseClass().entrySet()){
-			if(entry.getKey().equalsIgnoreCase(config.getConfig().getString("setting.database.type"))){
+			if(entry.getKey().equalsIgnoreCase(type.getType())){
 				try {
 					Constructor<? extends DataBase> constructor = entry.getValue().getConstructor(String.class, int.class);
 					this.database = constructor.newInstance(config.getConfig().getString("setting.database.host"), config.getConfig().getInt("setting.database.port"));

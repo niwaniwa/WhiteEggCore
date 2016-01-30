@@ -18,7 +18,7 @@ public class LoadLanguage implements Base{
 	private MessageManager manager ;
 
 	private LoadLanguage(){
-		this.manager = new MessageManager(WhiteEggCore.getInstance().getDataFolder() + File.pathSeparator +"lang" + File.pathSeparator);
+		this.manager = new MessageManager(WhiteEggCore.getInstance().getDataFolder() + File.separator +"lang" + File.separator);
 	}
 
 	@Override
@@ -69,12 +69,13 @@ public class LoadLanguage implements Base{
 		for(LanguageType type : LanguageType.values()){
 			File path = new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator  + type.getString() + ".yml");
 			if(path.exists()){
+				if(send){ WhiteEggCore.logger.info(" " + type.getString() + " : file already exists "); }
 				continue;
 			}
 			if(send){ WhiteEggCore.logger.info(" " + type.getString() + " : loading now..."); }
 			Util.copyFileFromJar(new File(WhiteEggCore.getInstance().getDataFolder() + File.separator + "lang" + File.separator),
 					WhiteEggCore.getInstance().getFile(), "lang/" + type.getString() + ".yml");
-			if(send){ WhiteEggCore.logger.info(" " + type.getString() + " : " + (path.exists() ? "complete" : "failure")); }
+			if(send){ WhiteEggCore.logger.info(" " + type.getString() + " : " + (path.exists() ? "complete" : "failed")); }
 		}
 	}
 
