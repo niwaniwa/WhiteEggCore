@@ -2,9 +2,11 @@ package com.github.niwaniwa.we.core.util.message;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -151,7 +153,7 @@ public class MessageManager {
 		if(!(sender instanceof WhitePlayer)){
 			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
 		}
-		return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
+		return getMessage(LanguageType.valueOf(((WhitePlayer) sender).getHandle().locale), key, prefix, replaceColorCode);
 	}
 
 	/**
@@ -182,7 +184,7 @@ public class MessageManager {
 			File langF = new File(path + File.separator + type.getString() + ".yml");
 			if(!langF.exists()){ continue; }
 			YamlConfiguration yaml = new YamlConfiguration();
-			yaml.load(langF);
+			yaml.load(new BufferedReader(new InputStreamReader(new FileInputStream(langF), Charset.forName("UTF-8"))));
 			result.put(type, yaml);
 			continue;
 		}
