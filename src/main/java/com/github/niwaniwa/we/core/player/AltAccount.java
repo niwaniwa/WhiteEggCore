@@ -9,7 +9,9 @@ import java.util.UUID;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
+import com.github.niwaniwa.we.core.event.WhiteEggSubAccountJoinEvent;
 import com.github.niwaniwa.we.core.json.JsonManager;
+import com.github.niwaniwa.we.core.util.Util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,7 +41,7 @@ public class AltAccount implements ConfigurationSerializable {
 	}
 
 	public static void determine(WhitePlayer player) {
-		if(!(player instanceof WhiteEggPlayer)){ throw new IllegalArgumentException(String.format("Class %s does not extends WhiteEggPlayer", new Object[] { player.getClass().getSimpleName() })); }
+		if(!(player instanceof WhiteEggPlayer)){ throw new IllegalArgumentException("Class " + player.getClass().getSimpleName() +" does not extends WhiteEggPlayer"); }
 		WhiteEggPlayer egg = (WhiteEggPlayer) player;
 		for(WhitePlayer p : WhitePlayerFactory.getPlayers()){
 			if(!(p instanceof WhiteEggPlayer)){ continue; }
@@ -47,8 +49,8 @@ public class AltAccount implements ConfigurationSerializable {
 			if(getAddress(egg.getAddress()).equalsIgnoreCase(getAddress(egg2.getAddress()))){
 				egg.addAccount(p);
 				egg2.addAccount(egg);
-//				WhiteEggSubAccountJoinEvent event = new WhiteEggSubAccountJoinEvent(egg2, egg);
-//				Util.callEvent(event);
+				WhiteEggSubAccountJoinEvent event = new WhiteEggSubAccountJoinEvent(egg2, egg);
+				Util.callEvent(event);
 			}
 		}
 	}
