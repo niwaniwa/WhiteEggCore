@@ -12,11 +12,6 @@ commands:
   head:
     description: give player head
     permission: whiteegg.core.command.head
-  twitter:
-    aliases: tw
-    permission: whiteegg.core.command.twitter
-  register:
-    permission: whiteegg.core.command.twitter.register
   whisper:
     aliases: [tell, message, m, t, w]
     permission: whiteegg.core.command.whisper
