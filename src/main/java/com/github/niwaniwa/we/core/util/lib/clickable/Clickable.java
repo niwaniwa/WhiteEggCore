@@ -37,8 +37,7 @@ public class Clickable extends Extension {
 	 * @param extraInstance ChatExtra
 	 */
 	public void addExtra(ChatExtra extraInstance) {
-		if (json.get("extra") == null) { return; }
-		JsonArray extra = json.getAsJsonArray("extra");
+		JsonArray extra = new JsonArray();
 		extra.add(extraInstance.toJson());
 		json.add("extra", extra);
 	}
