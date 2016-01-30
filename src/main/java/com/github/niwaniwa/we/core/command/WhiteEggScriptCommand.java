@@ -6,12 +6,12 @@ import java.util.List;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.script.JavaScript;
 
-public class WhiteEggScriptCommand extends WhiteEggCoreLowCommandExecutor {
+public class WhiteEggScriptCommand extends WhiteEggCoreBaseCommandExecutor {
 
 //	private final String key = commandMessageKey + ".script";
 	private final String permission = commandPermission + ".script";

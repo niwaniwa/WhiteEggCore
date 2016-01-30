@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 
@@ -18,7 +18,7 @@ import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
  * @author niwaniwa
  *
  */
-public class WhiteEggHeadCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable {
+public class WhiteEggHeadCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".head";
 	private final String permission = commandPermission + ".head";

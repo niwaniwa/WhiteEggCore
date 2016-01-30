@@ -8,7 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
@@ -18,7 +18,7 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author niwaniwa
  *
  */
-public class WhiteEggReplayCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable{
+public class WhiteEggReplayCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable{
 
 	private final String key = commandMessageKey + ".replay";
 	private final String permission = commandPermission + ".replay";

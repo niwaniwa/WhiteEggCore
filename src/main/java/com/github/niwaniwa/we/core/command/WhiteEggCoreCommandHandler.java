@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.command.Command;
-import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
-import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
+import com.github.niwaniwa.we.core.util.CommandUtil;
 
 /**
  * CommandHandler
@@ -20,7 +18,7 @@ import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
  */
 public class WhiteEggCoreCommandHandler {
 
-	private static final Map<String, WhiteEggCoreLowCommandExecutor> commands = new HashMap<>();
+	private static final Map<String, WhiteEggCoreBaseCommandExecutor> commands = new HashMap<>();
 
 	private static final String msgPrefix = "§7[§bWEC§7]§r";
 	private static final String error_Console = "whiteegg.command.console";
@@ -31,7 +29,7 @@ public class WhiteEggCoreCommandHandler {
 	 * @param instance 呼び出すインスタンス
 	 * @return true
 	 */
-	public boolean registerCommand(String command, WhiteEggCoreLowCommandExecutor instance){
+	public boolean registerCommand(String command, WhiteEggCoreBaseCommandExecutor instance){
 		commands.put(command, instance);
 		return true;
 	}
@@ -59,8 +57,8 @@ public class WhiteEggCoreCommandHandler {
 		}
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
-				WhiteEggCoreLowCommandExecutor instance = commands.get(key);
-				if(isConsoleCancel(instance)){
+				WhiteEggCoreBaseCommandExecutor instance = commands.get(key);
+				if(CommandUtil.isConsoleCancel(instance)){
 					if(!(sender instanceof WhitePlayer)){
 						sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
 						return true;
@@ -77,7 +75,7 @@ public class WhiteEggCoreCommandHandler {
 	 * 登録されているコマンドを返す
 	 * @return Map コマンド
 	 */
-	public static Map<String, WhiteEggCoreLowCommandExecutor> getCommans(){
+	public static Map<String, WhiteEggCoreBaseCommandExecutor> getCommans(){
 		return commands;
 	}
 
@@ -90,19 +88,5 @@ public class WhiteEggCoreCommandHandler {
 //		for(String command : commands.keySet()){
 //			sender.sendMessage("&6/" + command + " &f:" + commands.get(command).description(sender));
 //		}
-	}
-
-	public static boolean isConsoleCancel(final WhiteEggCoreLowCommandExecutor command){
-		Class<?>[] clazz = command.getClass().getInterfaces();
-		if(clazz.length != 0){
-			for(Class<?> s : clazz){
-				if(s.equals(ConsoleCancellable.class)){ return true; }
-			}
-		}
-		return false;
-	}
-
-	public static boolean isConsole(Object sender){
-		return (!(sender instanceof Player) || sender instanceof WhiteConsoleSender);
 	}
 }

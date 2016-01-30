@@ -5,15 +5,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.abs.WhiteEggCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
+import com.github.niwaniwa.we.core.util.CommandUtil;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
-public abstract class WhiteEggCoreLowCommandExecutor implements WhiteEggCommandExecutor {
+public abstract class WhiteEggCoreBaseCommandExecutor implements WhiteEggCommandExecutor {
 
 
 	protected final String commandMessageKey = "whiteegg.command";
@@ -37,7 +37,7 @@ public abstract class WhiteEggCoreLowCommandExecutor implements WhiteEggCommandE
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		return this.onCommand((WhiteEggCoreCommandHandler.isConsole(sender) ? new WhiteConsoleSender(true) : WhitePlayerFactory.getInstance((Player) sender)), command, label, args);
+		return this.onCommand((CommandUtil.isConsole(sender) ? new WhiteConsoleSender(true) : WhitePlayerFactory.getInstance((Player) sender)), command, label, args);
 	}
 
 	public void sendUsing(Player player){ this.sendUsing(WhitePlayerFactory.getInstance(player)); }

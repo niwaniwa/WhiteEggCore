@@ -9,14 +9,20 @@ import org.bukkit.command.Command;
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.util.CommandUtil;
 
-public class WhiteEggTwitterCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable {
+public class WhiteEggTwitterCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".twitter";
 	private final String permission = commandPermission + ".twitter";
+	private final String commandName = "twitter";
+
+	public WhiteEggTwitterCommand() {
+		if(WhiteEggCore.getConf().useTwitter()){ CommandUtil.registerCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, Arrays.asList("tw"), null, null, permission, WhiteEggCore.getInstance(), null); }
+	}
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
@@ -41,7 +47,7 @@ public class WhiteEggTwitterCommand extends WhiteEggCoreLowCommandExecutor imple
 		// tweet
 		player.getTwitterManager().tweet(sb.toString(), new Callback() {
 			@Override
-			public void onTwitter(Boolean twitter) {
+			public void onTwitter(boolean twitter) {
 				if(twitter){
 					player.sendMessage(msg.getMessage(player, key + ".successfull", msgPrefix, true));
 					return;

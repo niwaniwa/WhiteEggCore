@@ -10,7 +10,7 @@ import org.bukkit.command.Command;
 
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
@@ -20,7 +20,7 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author nwianiwa
  *
  */
-public class WhiteEggWhisperCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable{
+public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable{
 
 	private static final Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
 

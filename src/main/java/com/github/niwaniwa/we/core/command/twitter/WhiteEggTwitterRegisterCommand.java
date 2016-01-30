@@ -6,22 +6,29 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.callback.Callback;
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
+import com.github.niwaniwa.we.core.util.CommandUtil;
 import com.github.niwaniwa.we.core.util.lib.clickable.ChatExtra;
 import com.github.niwaniwa.we.core.util.lib.clickable.ChatFormat;
 import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
 import com.github.niwaniwa.we.core.util.lib.clickable.Clickable;
 import com.github.niwaniwa.we.core.util.lib.clickable.HoverEventType;
 
-public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecutor implements ConsoleCancellable {
+public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable {
 
 	private final String key = commandMessageKey + ".twitter.register";
 	private final String permission = commandPermission + ".twitter.register";
+	private final String commandName = "register";
+
+	public WhiteEggTwitterRegisterCommand() {
+		if(WhiteEggCore.getConf().useTwitter()){ CommandUtil.registerCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, null, null, null, permission, WhiteEggCore.getInstance(), null); }
+	}
 
 	@Override
 	public boolean onCommand(final WhiteCommandSender sender, final Command cmd, final String label,
@@ -32,6 +39,10 @@ public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecut
 		}
 		final WhitePlayer player = (WhitePlayer) sender;
 		final TwitterManager tw = player.getTwitterManager();
+		if(tw == null){
+			sender.sendMessage("&cAn internal error occurred while attempting to perform this command");
+			return true;
+		}
 		if(tw.getAccessToken() != null){
 			//
 			return true;
@@ -42,9 +53,9 @@ public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecut
 		} else if(args.length == 1){
 			tw.OAuthAccess(args[0], new Callback(){
 				@Override
-				public void onTwitter(Boolean isSuccess) {
+				public void onTwitter(boolean isSuccess) {
 					if(isSuccess){
-						sender.sendMessage(msg.getMessage(player, key + ".failure", msgPrefix, true)); // success
+						sender.sendMessage(msg.getMessage(player, key + ".fail", msgPrefix, true)); // success
 						return;
 					}
 					sender.sendMessage(msg.getMessage(player, key + ".success", msgPrefix, true)); // failure
@@ -59,8 +70,8 @@ public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecut
 		// 要修正
 		List<ChatFormat> f = new ArrayList<>();
 		f.add(ChatFormat.BOLD);
-		Clickable click = new Clickable("Click -->", ChatColor.GOLD, f);
-		ChatExtra extra = new ChatExtra("Open URL", ChatColor.GRAY, f);
+		Clickable click = new Clickable("->", ChatColor.GOLD, f);
+		ChatExtra extra = new ChatExtra("Click", ChatColor.GOLD, f);
 		extra.setClickEvent(ClickEventType.OPEN_URL, p.getTwitterManager().getOAuthRequestURL());
 		extra.setHoverEvent(HoverEventType.SHOW_TEXT, "§bTwitter OAuth Request URL");
 		click.addExtra(extra);
@@ -83,7 +94,7 @@ public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreLowCommandExecut
 
 	@Override
 	public String getCommandName() {
-		return "twitter";
+		return commandName;
 	}
 
 	@Override
