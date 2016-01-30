@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreLowCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.database.DataBase;
 import com.github.niwaniwa.we.core.init.Initialization;
@@ -67,7 +67,7 @@ public class WhiteEggCore extends JavaPlugin {
 		long time = System.nanoTime();
 		this.init();
 		long finish = (System.nanoTime() - time);
-		logger.info(String.format("Done : %.3f  s", new Object[] { Double.valueOf(finish / 1.0E9D) }));
+		logger.info(String.format("Done : %.3f s", new Object[] { Double.valueOf(finish / 1.0E9D) }));
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class WhiteEggCore extends JavaPlugin {
 		config = new WhiteEggCoreConfig();
 		config.load();
 		Initialization init = Initialization.getInstance(this);
-		init.start(false);
 		msg = init.getMessageManager();
+		init.start(false);
 		database = init.getDatabase();
 		isLock = config.isLock();
 		this.script = init.getScript();
@@ -187,7 +187,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 * このプラグインに登録されているコマンドの取得
 	 * @return Map
 	 */
-	public Map<String, WhiteEggCoreLowCommandExecutor> getCommands(){
+	public Map<String, WhiteEggCoreBaseCommandExecutor> getCommands(){
 		return WhiteEggCoreCommandHandler.getCommans();
 	}
 
