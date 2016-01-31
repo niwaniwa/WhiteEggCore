@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
 public class ChatExtra {
 
-	private JsonObject json;
+	private JsonObject json = new JsonObject();;
 
 	/**
 	 * Constructor
@@ -17,11 +18,17 @@ public class ChatExtra {
 	 * @param formats 使用するフォーマット
 	 */
 	public ChatExtra(String text, ChatColor color, List<ChatFormat> formats) {
-		json = new JsonObject();
 		json.addProperty("text", text);
-		json.addProperty("color", color.toString().toLowerCase());
+		if(color != null){ json.addProperty("color", color.toString().toLowerCase()); }
+		else { json.addProperty("color", ChatColor.WHITE.toString().toLowerCase()); }
 		formats.forEach(f -> json.addProperty(f.getFormat(), true));
 	}
+
+	public ChatExtra(String text){ this(text, ChatColor.WHITE, Lists.newArrayList()); }
+
+	public void setColor(ChatColor color){ json.addProperty("color", color.toString().toLowerCase()); }
+
+	public void setFormat(List<ChatFormat> formats){ formats.forEach(f -> json.addProperty(f.getFormat(), true)); }
 
 	/**
 	 * ClickEventの設定をします
