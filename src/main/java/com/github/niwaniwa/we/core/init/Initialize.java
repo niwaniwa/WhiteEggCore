@@ -32,10 +32,10 @@ import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
-public class Initialization implements Base, Listener {
+public class Initialize implements Base, Listener {
 
 	private static boolean enable = false;
-	private static Initialization init = new Initialization(WhiteEggCore.getInstance());
+	private static Initialize init = new Initialize(WhiteEggCore.getInstance());
 
 	private WhiteEggCoreConfig config;
 	private JavaScript script;
@@ -43,7 +43,7 @@ public class Initialization implements Base, Listener {
 	private MessageManager msg;
 	private DataBase database;
 
-	private Initialization(WhiteEggCore instance){
+	private Initialize(WhiteEggCore instance){
 		mainClassInstance = instance;
 		config = WhiteEggCore.getConf();
 		Bukkit.getPluginManager().registerEvents(this, mainClassInstance);
@@ -174,7 +174,7 @@ public class Initialization implements Base, Listener {
 		return config;
 	}
 
-	public static Initialization getInstance(WhiteEggCore instance){
+	public static Initialize getInstance(WhiteEggCore instance){
 		if(enable){ return null; }
 		return init;
 	}
