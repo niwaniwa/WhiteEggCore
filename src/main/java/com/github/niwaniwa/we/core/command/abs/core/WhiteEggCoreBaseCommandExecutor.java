@@ -10,7 +10,7 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
-import com.github.niwaniwa.we.core.util.CommandUtil;
+import com.github.niwaniwa.we.core.util.command.CommandManager;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
 
 public abstract class WhiteEggCoreBaseCommandExecutor implements WhiteEggCommandExecutor {
@@ -37,7 +37,7 @@ public abstract class WhiteEggCoreBaseCommandExecutor implements WhiteEggCommand
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		return this.onCommand((CommandUtil.isConsole(sender) ? new WhiteConsoleSender(true) : WhitePlayerFactory.getInstance((Player) sender)), command, label, args);
+		return this.onCommand((CommandManager.isConsole(sender) ? new WhiteConsoleSender(true) : WhitePlayerFactory.getInstance((Player) sender)), command, label, args);
 	}
 
 	public void sendUsing(Player player){ this.sendUsing(WhitePlayerFactory.getInstance(player)); }

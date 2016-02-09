@@ -31,7 +31,7 @@ import twitter4j.UploadedMedia;
  * @author niwaniwa
  *
  */
-public class TweetTask extends BukkitRunnable {
+public class TweetScheduler extends BukkitRunnable {
 
 	private static final Pattern urlPattern =  Pattern.compile("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+",
 			Pattern.CASE_INSENSITIVE);
@@ -52,7 +52,7 @@ public class TweetTask extends BukkitRunnable {
 	 * @param tweet ツイート
 	 * @param wait 待機時間
 	 */
-	public TweetTask(TwitterManager twitter, String tweet, int wait){
+	public TweetScheduler(TwitterManager twitter, String tweet, int wait){
 		this.twitter = twitter;
 		checkURL(tweet);
 		useMedia = !url.isEmpty();
@@ -66,7 +66,7 @@ public class TweetTask extends BukkitRunnable {
 	 * @param wait 待機時間
 	 * @param callback ツイート後に呼び出す(戻り値はboolean)
 	 */
-	public TweetTask(TwitterManager twitter, String tweet, int wait, Callback callback){
+	public TweetScheduler(TwitterManager twitter, String tweet, int wait, Callback callback){
 		this(twitter, tweet, wait);
 		this.callback = callback;
 	}
@@ -76,7 +76,7 @@ public class TweetTask extends BukkitRunnable {
 	 * @param twitter TwitterManager
 	 * @param tweet ツイート
 	 */
-	public TweetTask(TwitterManager twitter, String tweet){
+	public TweetScheduler(TwitterManager twitter, String tweet){
 		this(twitter, tweet, 2);
 	}
 
@@ -86,7 +86,7 @@ public class TweetTask extends BukkitRunnable {
 	 * @param tweet ツイート
 	 * @param callback ツイート後に呼び出す(戻り値はboolean)
 	 */
-	public TweetTask(TwitterManager twitter, String tweet, Callback callback){
+	public TweetScheduler(TwitterManager twitter, String tweet, Callback callback){
 		this(twitter, tweet, 2);
 		this.callback = callback;
 	}

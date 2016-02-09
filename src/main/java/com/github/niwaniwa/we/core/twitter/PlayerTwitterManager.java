@@ -17,7 +17,7 @@ public class PlayerTwitterManager extends TwitterManager {
 
 	@Override
 	public void tweet(String tweet, Callback callback) {
-		TweetTask task = new TweetTask(this, tweet, callback);
+		TweetScheduler task = new TweetScheduler(this, tweet, callback);
 		task.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
