@@ -242,7 +242,7 @@ public class WhiteEggPlayer extends EggPlayer {
 			}
 		}
 		JsonObject json = unionJson();
-		return jm.writeJson(path, getUniqueId().toString() + ".json", json);
+		return jm.writeJson(path, getUniqueId().toString() + ".json", json.toString());
 	}
 
 	public void saveTask() {
