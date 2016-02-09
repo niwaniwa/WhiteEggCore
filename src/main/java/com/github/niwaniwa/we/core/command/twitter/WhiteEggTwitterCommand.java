@@ -12,7 +12,7 @@ import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
 import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
-import com.github.niwaniwa.we.core.util.CommandUtil;
+import com.github.niwaniwa.we.core.util.command.CommandFactory;
 
 public class WhiteEggTwitterCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable {
 
@@ -21,7 +21,7 @@ public class WhiteEggTwitterCommand extends WhiteEggCoreBaseCommandExecutor impl
 	private final String commandName = "twitter";
 
 	public WhiteEggTwitterCommand() {
-		if(WhiteEggCore.getConf().useTwitter()){ CommandUtil.registerCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, Arrays.asList("tw"), null, null, permission, WhiteEggCore.getInstance(), null); }
+		if(WhiteEggCore.getConf().useTwitter()){ CommandFactory.newCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, Arrays.asList("tw"), null, null, permission, WhiteEggCore.getInstance(), null); }
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
-import com.github.niwaniwa.we.core.util.CommandUtil;
+import com.github.niwaniwa.we.core.util.command.CommandManager;
 
 /**
  * CommandHandler
@@ -58,7 +58,7 @@ public class WhiteEggCoreCommandHandler {
 		for(String key : commands.keySet()){
 			if(key.equalsIgnoreCase(cmd.getName())){
 				WhiteEggCoreBaseCommandExecutor instance = commands.get(key);
-				if(CommandUtil.isConsoleCancel(instance)){
+				if(CommandManager.isConsoleCancel(instance)){
 					if(!(sender instanceof WhitePlayer)){
 						sender.sendMessage(WhiteEggCore.getMessageManager().getMessage(sender, error_Console, "", true));
 						return true;

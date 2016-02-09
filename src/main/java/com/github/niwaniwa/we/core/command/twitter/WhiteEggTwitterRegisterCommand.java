@@ -13,7 +13,7 @@ import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecu
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
-import com.github.niwaniwa.we.core.util.CommandUtil;
+import com.github.niwaniwa.we.core.util.command.CommandFactory;
 import com.github.niwaniwa.we.core.util.lib.clickable.ChatExtra;
 import com.github.niwaniwa.we.core.util.lib.clickable.ChatFormat;
 import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
@@ -27,7 +27,7 @@ public class WhiteEggTwitterRegisterCommand extends WhiteEggCoreBaseCommandExecu
 	private final String commandName = "register";
 
 	public WhiteEggTwitterRegisterCommand() {
-		if(WhiteEggCore.getConf().useTwitter()){ CommandUtil.registerCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, null, null, null, permission, WhiteEggCore.getInstance(), null); }
+		if(WhiteEggCore.getConf().useTwitter()){ CommandFactory.newCommand(WhiteEggCore.getInstance(), WhiteEggCore.msgPrefix, commandName, null, null, null, permission, WhiteEggCore.getInstance(), null); }
 	}
 
 	@Override
