@@ -84,7 +84,7 @@ public class LoadLanguage implements Base{
 	}
 
 	public static LoadLanguage getInstance(){
-		if(Initialization.isEnable()){ return null; }
+		if(Initialize.isEnable()){ return null; }
 		return new LoadLanguage();
 	}
 

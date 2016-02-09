@@ -16,7 +16,7 @@ import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
 import com.github.niwaniwa.we.core.database.DataBase;
-import com.github.niwaniwa.we.core.init.Initialization;
+import com.github.niwaniwa.we.core.init.Initialize;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
@@ -62,6 +62,7 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable(){
+		instance = this;
 		this.versionCheck();
 		if (!version.isSupport()) { return; }
 		long time = System.nanoTime();
@@ -115,11 +116,10 @@ public class WhiteEggCore extends JavaPlugin {
 	}
 
 	private void init(){
-		instance = this;
 		this.saveDefaultConfig();
 		config = new WhiteEggCoreConfig();
 		config.load();
-		Initialization init = Initialization.getInstance(this);
+		Initialize init = Initialize.getInstance(this);
 		msg = init.getMessageManager();
 		init.start(false);
 		database = init.getDatabase();
@@ -161,13 +161,13 @@ public class WhiteEggCore extends JavaPlugin {
 	 */
 	private void versionCheck(){
 		if(version.getJavaVersion() <= 1.7){
-			logger.warning("Unsupported Java Version >_< : " + version.getJavaVersion());
+			logger.warning("Unsupported Java version >_< : " + version.getJavaVersion());
 			logger.warning("Please use 1.8");
 			pm.disablePlugin(instance);
 			return;
 		}
 		if(!version.getCraftBukkitVersion().equalsIgnoreCase("v1_8_R3")){
-			logger.warning("Unsupported CraftBukkit Version >_< : " + version);
+			logger.warning("Unsupported CraftBukkit version >_< : " + version.getCraftBukkitVersion());
 			logger.warning("Please use v1_8_R3");
 			pm.disablePlugin(instance);
 			return;
