@@ -34,7 +34,7 @@ public class JsonManager {
 	 * @param chara 文字コード
 	 * @return 成功したか
 	 */
-	public boolean writeJson(File path, String file, JsonObject json, String chara) {
+	public boolean writeJson(File path, String file, String jsonString, String chara) {
 		if(!path.exists()){ path.mkdirs(); }
 		BufferedWriter bw = null;
 		try {
@@ -42,16 +42,16 @@ public class JsonManager {
 		} catch (UnsupportedEncodingException | FileNotFoundException e) {
 		}
 		PrintWriter pw = new PrintWriter(bw);
-		pw.write(json.toString());
+		pw.write(jsonString);
 		pw.close();
 		return true;
 	}
 
-	public boolean writeJson(File path, String file, JsonObject json) {
+	public boolean writeJson(File path, String file, String json) {
 		return writeJson(path, file, json, "UTF-8");
 	}
 
-	public boolean writeJson(File path, String file, JsonObject json, boolean backup) {
+	public boolean writeJson(File path, String file, String json, boolean backup) {
 		if(backup){
 			File f = new File(path, file);
 			if(f.exists()){
@@ -62,7 +62,7 @@ public class JsonManager {
 		return true;
 	}
 
-	public boolean writeJson(String path, String file, JsonObject json) throws IOException {
+	public boolean writeJson(String path, String file, String json) throws IOException {
 		return writeJson(new File(file), file, json);
 	}
 
