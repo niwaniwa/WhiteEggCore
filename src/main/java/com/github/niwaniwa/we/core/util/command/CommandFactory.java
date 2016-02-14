@@ -1,8 +1,8 @@
 package com.github.niwaniwa.we.core.util.command;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -151,7 +151,7 @@ public class CommandFactory {
 	 * prefixはプラグインの物が使用されます
 	 */
 	public void register(){
-		this.register(pluginInstance.getDescription().getPrefix());
+		this.register((pluginInstance.getDescription().getPrefix() == null ? pluginInstance.getName() : pluginInstance.getDescription().getPrefix()));
 	}
 
 	/**
@@ -166,12 +166,11 @@ public class CommandFactory {
 	 * @param instance PluginCommand
 	 */
 	public static void registerCommand(String prefix, PluginCommand instance){
-//		((CraftServer) Bukkit.getServer()).getCommandMap().register(prefix, instance);
 		try {
-			Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-			SimpleCommandMap map = SimpleCommandMap.class.cast(field.get(Bukkit.getServer()));
+			Method method = Bukkit.getServer().getClass().getMethod("getCommandMap");
+			SimpleCommandMap map = SimpleCommandMap.class.cast(method.invoke(Bukkit.getServer()));
 			map.register(prefix, instance);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
@@ -196,6 +195,7 @@ public class CommandFactory {
 		factory.setPermission((permission == null ? new String() : permission));
 		if(commandExecutor != null){ factory.setExecutor(commandExecutor); }
 		if(tabInstance != null){ factory.setTabCompleter(tabInstance); }
+		factory.register();
 	}
 
 }
