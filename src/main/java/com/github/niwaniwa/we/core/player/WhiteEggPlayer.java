@@ -135,8 +135,8 @@ public class WhiteEggPlayer extends EggPlayer {
 		this.isVanish = player.get("isvanish").getAsBoolean();
 		if(json.get("twitter").isJsonObject()){
 			JsonObject tw = json.getAsJsonObject("twitter");
-			this.getTwitterManager().setAccessToken(
-					new AccessToken(tw.get("accesstoken").getAsString(), tw.get("accesstokensecret").getAsString()));
+			AccessToken token = new AccessToken(tw.get("accesstoken").getAsString(), tw.get("accesstokensecret").getAsString());
+			this.getTwitterManager().setAccessToken(token);
 		}
 		this.setRank(player);
 		this.setToggle(player);
@@ -214,7 +214,7 @@ public class WhiteEggPlayer extends EggPlayer {
 		// local
 		JsonObject json = jm.getJson(new File(path + File.separator + this.getUniqueId().toString() + ".json"));
 		if(json == null){ return false; }
-		this.saveVariable(json.get(this.getClass().getSimpleName()).getAsJsonObject().toString());
+		this.saveVariable(json.toString());
 		return true;
 	}
 
