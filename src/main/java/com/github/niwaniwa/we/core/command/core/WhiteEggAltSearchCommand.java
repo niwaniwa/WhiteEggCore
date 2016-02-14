@@ -28,7 +28,7 @@ public class WhiteEggAltSearchCommand extends WhiteEggCoreChildCommandExecutor {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(final WhiteCommandSender sender, Command command, String label, final String[] args) {
-		if(args.length < 1){
+		if(args.length <= 1){
 			// error
 			System.out.println(args.length);
 			return true;

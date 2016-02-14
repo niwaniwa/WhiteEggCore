@@ -21,6 +21,7 @@ public class WhiteEggReloadCommand extends WhiteEggCoreChildCommandExecutor {
 
 	private final String permission = commandPermission + ".whiteegg.reload";
 	private final String parentCommand = "whiteeggcore";
+	private final String commandName = "reload";
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command cmd, String label, String[] args) {
@@ -59,7 +60,7 @@ public class WhiteEggReloadCommand extends WhiteEggCoreChildCommandExecutor {
 
 	@Override
 	public String getCommandName() {
-		return "whiteeggcore";
+		return commandName;
 	}
 
 }

@@ -25,6 +25,7 @@ import com.github.niwaniwa.we.core.database.DataBase;
 import com.github.niwaniwa.we.core.database.DataBaseManager;
 import com.github.niwaniwa.we.core.database.DataBaseType;
 import com.github.niwaniwa.we.core.database.mongodb.MongoDataBaseManager;
+import com.github.niwaniwa.we.core.listener.Debug;
 import com.github.niwaniwa.we.core.listener.PlayerListener;
 import com.github.niwaniwa.we.core.listener.ScriptListener;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
@@ -113,7 +114,7 @@ public class Initialize implements Base, Listener {
 	private void registerListener(){
 		if(!config.isEnableListener()){ return; }
 		PluginManager pm = Bukkit.getPluginManager();
-//		pm.registerEvents(new Debug(), mainClassInstance);
+		pm.registerEvents(new Debug(), mainClassInstance);
 		pm.registerEvents(new PlayerListener(), mainClassInstance);
 		new ScriptListener();
 	}

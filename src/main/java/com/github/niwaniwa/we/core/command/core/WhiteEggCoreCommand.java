@@ -49,6 +49,7 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
 		commands.put("reload", new WhiteEggReloadCommand());
 		commands.put("alt", new WhiteEggAltSearchCommand());
 		commands.put("settings", new WhiteEggSettingCommand());
+		commands.put("system", new WhiteEggSystemCommand());
 	}
 
 	private void sendVersion(WhiteCommandSender sender){
@@ -67,6 +68,7 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
 		sender.sendMessage("&6/whiteeggcore lock &f: &7プラグインをロックします。");
 		sender.sendMessage("&6/whiteeggcore tweet <message> &f: &7サーバの投稿としてツイートします");
 		sender.sendMessage("&6/whiteeggcore alt <name or '$' + uuid> &f: &7指定したプレイヤーの他のアカウントを調べます");
+		sender.sendMessage("&6/whiteeggcore system &f: &7システム詳細");
 	}
 
 	@Override
@@ -84,9 +86,13 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
 		if (args.length == 1) {
 			List<String> tabs = new ArrayList<>();
 			tabs.add("reload");
+			tabs.add("rl");
 			tabs.add("lock");
 			tabs.add("alt");
+			tabs.add("a");
 			tabs.add("settings");
+			tabs.add("system");
+			tabs.add("sys");
 			StringUtil.copyPartialMatches(args[0], tabs, list);
 		} else if(args.length >= 2){
 			List<String> players = new ArrayList<>();

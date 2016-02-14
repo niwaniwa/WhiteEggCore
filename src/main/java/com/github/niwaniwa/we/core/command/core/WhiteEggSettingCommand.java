@@ -14,6 +14,7 @@ public class WhiteEggSettingCommand extends WhiteEggCoreChildCommandExecutor {
 
 	private final String permission = commandPermission + ".whiteegg.setting";
 	private final String parentCommand = "whiteeggcore";
+	private final String commandName = "settings";
 
 	@Override
 	public boolean onCommand(WhiteCommandSender sender, Command command, String label, String[] args) {
@@ -42,7 +43,7 @@ public class WhiteEggSettingCommand extends WhiteEggCoreChildCommandExecutor {
 
 	@Override
 	public String getCommandName() {
-		return "settings";
+		return commandName;
 	}
 
 }
