@@ -13,6 +13,7 @@ import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.callback.Callback;
 
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -26,25 +27,18 @@ import twitter4j.auth.RequestToken;
  */
 public abstract class TwitterManager implements ConfigurationSerializable {
 
+	private static final String consumerKey = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerKey"); // app consumer key
+	private static final String consumerSecret = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerSecret"); // app consumer secret
+
 	private Twitter twitter;
 
 	private AccessToken access = null;
 	private RequestToken request = null;
-	private List<Status> tweets;
-
-	private final String consumerKey = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerKey"); // app consumer key
-	private final String consumerSecret = WhiteEggCore.getConf().getConfig().getString("setting.twitter.consumerSecret"); // app consumer secret
+	private final List<Status> tweets = new ArrayList<>();
 
 	public TwitterManager() {
 		this.twitter = new TwitterFactory().getInstance();
 		this.twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		this.tweets = new ArrayList<>();
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				OAuthRequest();
-			}
-		}.runTaskAsynchronously(WhiteEggCore.getInstance());
 	}
 
 	/**
@@ -59,10 +53,10 @@ public abstract class TwitterManager implements ConfigurationSerializable {
 	 * 初期化する
 	 * @return 成功したか
 	 */
-	protected boolean OAuthRequest(){
+	public boolean OAuthRequest(){
 		try {
 			request = twitter.getOAuthRequestToken();
-		} catch (Exception e) {}
+		} catch (Exception e) { e.printStackTrace(); }
 		return true;
 	}
 
@@ -110,6 +104,16 @@ public abstract class TwitterManager implements ConfigurationSerializable {
 			return false;
 		}
 		return true;
+	}
+
+	public Status updateStatus(StatusUpdate update){
+		Status status = null;
+		try {
+			status = twitter.updateStatus(update);
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 	/**
