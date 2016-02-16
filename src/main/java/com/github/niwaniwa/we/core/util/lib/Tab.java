@@ -1,14 +1,11 @@
 package com.github.niwaniwa.we.core.util.lib;
 
-import java.lang.reflect.Field;
-
+import com.github.niwaniwa.we.core.util.Extension;
+import com.github.niwaniwa.we.core.util.Reflection;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import com.github.niwaniwa.we.core.util.Extension;
-
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
+import java.lang.reflect.Field;
 
 public class Tab  extends Extension {
 
@@ -62,8 +59,7 @@ public class Tab  extends Extension {
 	@Override
 	public void send(Player player) {
 
-		PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
-		CraftPlayer craft = ((CraftPlayer) player);
+		Object packet = Reflection.createPacketInstance("PacketPlayOutPlayerListHeaderFooter", null);
 
 		try {
 
@@ -78,9 +74,11 @@ public class Tab  extends Extension {
 			f.set(packet, build(footer));
 			f.setAccessible(!f.isAccessible());
 
-			craft.getHandle().playerConnection.sendPacket(packet);
+			sendPacket(player, packet);
 
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {}
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
 
 	}
 

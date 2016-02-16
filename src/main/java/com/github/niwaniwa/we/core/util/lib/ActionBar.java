@@ -1,11 +1,9 @@
 package com.github.niwaniwa.we.core.util.lib;
 
+import com.github.niwaniwa.we.core.util.Extension;
+import com.github.niwaniwa.we.core.util.Reflection;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import com.github.niwaniwa.we.core.util.Extension;
-
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class ActionBar extends Extension {
 
@@ -29,8 +27,8 @@ public class ActionBar extends Extension {
 
 	@Override
 	public void send(Player player) {
-		PacketPlayOutChat packet = new PacketPlayOutChat(build(str), (byte) 2);
-		cast(player).getHandle().playerConnection.sendPacket(packet);
+		Object packet = Reflection.createPacketInstance("PacketPlayOutChat", new Class[]{String.class, Byte.class}, build(str), (byte) 2);
+		super.sendPacket(player, packet);
 	}
 
 }
