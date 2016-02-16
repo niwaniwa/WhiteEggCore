@@ -27,6 +27,11 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
 
+/**
+ * yaml形式のファイルを読み込みます
+ * @author mmott
+ *
+ */
 public class MessageManager {
 
 	private File path;
@@ -40,8 +45,12 @@ public class MessageManager {
 	 * @param langPathFolder 言語ファイルが格納されている階層
 	 */
 	public MessageManager(File langPathFolder) {
+		this(langPathFolder, WhiteEggCore.getLanguage());
+	}
+
+	public MessageManager(File langPathFolder, LanguageType defaultLanguage) {
 		this.path = langPathFolder;
-		this.type = WhiteEggCore.getType();
+		this.type = defaultLanguage;
 	}
 
 	/**
@@ -85,11 +94,11 @@ public class MessageManager {
 	 */
 	public MessageManager() {
 		try {
-			loadLangFile(WhiteEggCore.getType(),
+			loadLangFile(WhiteEggCore.getLanguage(),
 					new BufferedReader(
 							new InputStreamReader(
 									getClass().getClassLoader().getResourceAsStream(
-											"lang/" + WhiteEggCore.getType().toString() + ".yml"))));
+											"lang/" + WhiteEggCore.getLanguage().toString() + ".yml"))));
 		} catch (IOException | InvalidConfigurationException e) {}
 	}
 
@@ -151,7 +160,7 @@ public class MessageManager {
 	 */
 	public String getMessage(WhiteCommandSender sender, String key, String prefix, boolean replaceColorCode){
 		if(!(sender instanceof WhitePlayer)){
-			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
+			return getMessage(WhiteEggCore.getLanguage(), key, prefix, replaceColorCode);
 		}
 		return getMessage(LanguageType.valueOf(((WhitePlayer) sender).getHandle().locale), key, prefix, replaceColorCode);
 	}
@@ -166,7 +175,7 @@ public class MessageManager {
 	 */
 	public String getMessage(CommandSender sender, String key, String prefix, boolean replaceColorCode){
 		if(!(sender instanceof Player)){
-			return getMessage(WhiteEggCore.getType(), key, prefix, replaceColorCode);
+			return getMessage(WhiteEggCore.getLanguage(), key, prefix, replaceColorCode);
 		}
 		return getMessage(WhitePlayerFactory.getInstance((Player) sender), key, prefix, replaceColorCode);
 	}
@@ -206,6 +215,27 @@ public class MessageManager {
 		yaml.load(buffer);
 		langs.put(type, yaml);
 		return true;
+	}
+
+	/**
+	 * 言語ファイルのリロード
+	 * @return リロードが成功したか
+     */
+	public boolean reload(){
+		if(path == null){
+			try {
+				loadLangFile(WhiteEggCore.getLanguage(), new BufferedReader(new InputStreamReader(getClass()
+						.getClassLoader().getResourceAsStream("lang/" + WhiteEggCore.getLanguage().toString() + ".yml"))));
+			} catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
+			return true;
+		} else if(!path.exists()){ return false; }
+		clear();
+		try {
+			return loadLangFile();
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	/**
@@ -273,6 +303,10 @@ public class MessageManager {
 	 */
 	public Map<LanguageType, YamlConfiguration> getLangs(){
 		return langs;
+	}
+
+	public void clear(){
+		langs.clear();
 	}
 
 	/**
