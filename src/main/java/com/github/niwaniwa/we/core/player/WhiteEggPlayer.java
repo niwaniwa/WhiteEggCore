@@ -206,8 +206,10 @@ public class WhiteEggPlayer extends EggPlayer {
 			}
 			// mysql
 			} catch(Exception ex){
-				WhiteEggCore.logger.warning("Error establishing a database connection");
 				WhiteEggCore.getConf().set("setting.database.enable", false);
+				if(!WhiteEggCore.getConf().getConfig().getBoolean("warn", true)){ return false; }
+				WhiteEggCore.logger.warning("Error establishing a database connection");
+				return false;
 			}
 			return true;
 		}
@@ -284,7 +286,6 @@ public class WhiteEggPlayer extends EggPlayer {
 		this.getToggleSettings().forEach(list -> toggle.put(list.getPlugin().getName(), list.serialize()));
 		player.put("name", this.getName());
 		player.put("rank", this.serializeRankData());
-		player.put("isvanish", this.isVanish);
 		player.put("toggles", toggle);
 		lastOnline.put("server", Bukkit.getServerName());
 		lastOnline.put("sec", new Date().getTime());
@@ -308,6 +309,7 @@ public class WhiteEggPlayer extends EggPlayer {
 		Map<String, Object> address = new HashMap<>();
 		address.put("host", getAddress().getHostString());
 		address.put("port", getAddress().getPort());
+		address.put("hostName", getAddress().getHostName());
 		return address;
 	}
 

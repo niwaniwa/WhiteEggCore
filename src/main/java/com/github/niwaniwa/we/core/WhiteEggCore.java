@@ -35,7 +35,7 @@ public class WhiteEggCore extends JavaPlugin {
 
 	private static WhiteEggCore instance;
 	private static MessageManager msg;
-	private static LanguageType type = LanguageType.en_US;;
+	private static LanguageType defaultLanguage = LanguageType.en_US;;
 	private static WhiteEggCoreConfig config;
 	private static DataBase database;
 
@@ -103,8 +103,8 @@ public class WhiteEggCore extends JavaPlugin {
 	 * デフォルトの言語を取得
 	 * @return 言語
 	 */
-	public static LanguageType getType() {
-		return type;
+	public static LanguageType getLanguage() {
+		return defaultLanguage;
 	}
 
 	/**
