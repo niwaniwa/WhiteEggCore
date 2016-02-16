@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.github.niwaniwa.we.core.util.lib.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,6 +27,7 @@ import com.github.niwaniwa.we.core.event.WhiteEggPostTweetEvent;
 import com.github.niwaniwa.we.core.event.WhiteEggPreTweetEvent;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.util.command.CommandFactory;
+import com.github.niwaniwa.we.core.util.lib.clickable.Clickable;
 
 import twitter4j.TwitterException;
 
@@ -74,6 +76,10 @@ public class Debug implements Listener {
 			WhiteEggCore.getInstance().getLogger().info(
 					"-- " + player.getPlayer().getName() + "Join the game. --");
 		}
+		Title title = new Title("§6>>Main Title<<", "§7sub title");
+		title.send(player.getPlayer());
+		Clickable clickable = new Clickable("test");
+		clickable.send(player.getPlayer());
 		CommandFactory commandFactory = new CommandFactory(WhiteEggCore.getInstance(), "debug");
 		commandFactory.setExecutor(new WhiteEggCommandExecutor() {
 			@Override
