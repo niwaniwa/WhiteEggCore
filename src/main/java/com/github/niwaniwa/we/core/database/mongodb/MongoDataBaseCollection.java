@@ -97,7 +97,7 @@ public class MongoDataBaseCollection {
 		return Boolean.getBoolean(getString(key));
 	}
 
-	public boolean getBooleang(Document source, String key){
+	public boolean getBoolean(Document source, String key){
 		return Boolean.getBoolean(getString(source, key));
 	}
 
