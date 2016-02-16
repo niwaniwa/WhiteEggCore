@@ -52,13 +52,14 @@ public class Util {
 				if (!target.exists()) { target.mkdirs(); }
 				writer = new BufferedWriter(new OutputStreamWriter(
 						new FileOutputStream(new File(target, path.split("/")[path.split("/").length - 1])) ,"UTF-8"));
-				String s;
-				while ((s = reader.readLine()) != null) {
-					writer.write(s);
+				String line;
+				while ((line = reader.readLine()) != null) {
+					writer.write(line);
 					writer.newLine();
 				}
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				if(writer != null){ writer.close(); }
