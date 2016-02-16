@@ -1,21 +1,7 @@
 package com.github.niwaniwa.we.core.init;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.Map.Entry;
-
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.plugin.PluginManager;
-
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
-import com.github.niwaniwa.we.core.command.WhiteEggHeadCommand;
-import com.github.niwaniwa.we.core.command.WhiteEggReplayCommand;
-import com.github.niwaniwa.we.core.command.WhiteEggScriptCommand;
-import com.github.niwaniwa.we.core.command.WhiteEggWhisperCommand;
+import com.github.niwaniwa.we.core.command.*;
 import com.github.niwaniwa.we.core.command.core.WhiteEggCoreCommand;
 import com.github.niwaniwa.we.core.command.toggle.WhiteEggToggleCommand;
 import com.github.niwaniwa.we.core.command.twitter.WhiteEggTwitterCommand;
@@ -32,6 +18,15 @@ import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.plugin.PluginManager;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.Map.Entry;
 
 public class Initialize implements Base, Listener {
 
@@ -132,16 +127,17 @@ public class Initialize implements Base, Listener {
 	}
 
 	private void settingCheck(){
-		if(!config.getConfig().getBoolean("warn", true)){ return; }
 		if(config.getConfig().getBoolean("setting.twitter.useTwitter", true)){
 			if(config.getConfig().getString("setting.twitter.consumerKey", "").isEmpty()
 					|| config.getConfig().getString("setting.twitter.consumerSecret", "").isEmpty()){
+				config.getConfig().set("setting.twitter.useTwitter", false);
+				if(!config.getConfig().getBoolean("warn", true)){ return; }
 				WhiteEggCore.logger.warning("Twitter Consumer key or Consumer Secret is empty");
 				WhiteEggCore.logger.warning("Twitter command disable");
-				config.getConfig().set("setting.twitter.useTwitter", false);
 			}
 		}
 		if(!config.isEnableListener() || !config.isEnableCommand()){
+			if(!config.getConfig().getBoolean("warn", true)){ return; }
 			WhiteEggCore.logger.warning("Listener or Command is disabled. Not recommended.");
 		}
 	}
