@@ -1,18 +1,16 @@
 package com.github.niwaniwa.we.core.player;
 
-import java.net.InetSocketAddress;
-import java.util.List;
-
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.Inventory;
-
 import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
-
 import net.minecraft.server.v1_8_R3.EntityPlayer;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.inventory.Inventory;
+
+import java.net.InetSocketAddress;
+import java.util.List;
 
 /**
  * Playerクラス
