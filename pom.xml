@@ -69,6 +69,7 @@
 			<artifactId>spigot-api</artifactId>
 			<version>1.8.8-R0.1-SNAPSHOT</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>Spigot-Server</artifactId>
@@ -76,6 +77,7 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/spigot-1.8.8-R0.1-SNAPSHOT.jar</systemPath>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
