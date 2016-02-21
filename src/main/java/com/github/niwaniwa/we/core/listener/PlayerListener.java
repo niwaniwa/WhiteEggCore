@@ -21,39 +21,47 @@ import com.github.niwaniwa.we.core.player.rank.RankProperty;
 
 /**
  * 初期処理
- * @author niwaniwa
  *
+ * @author niwaniwa
  */
 public class PlayerListener implements Listener {
 
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onJoin(PlayerJoinEvent event) {
-		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
-		Arrays.asList(RankProperty.values()).forEach(property -> {
-			 Rank.getRanks().stream().filter(r -> r.getProperty().equals(property))
-			 					.forEach(rank -> { if (player.hasPermission(rank.getPermission())) { player.addRank(rank); }});
-		});
-		AltAccount.determine(player);
-	}
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onJoin(PlayerJoinEvent event) {
+        WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
+        Arrays.asList(RankProperty.values()).forEach(property -> {
+            Rank.getRanks().stream().filter(r -> r.getProperty().equals(property))
+                    .forEach(rank -> {
+                        if (player.hasPermission(rank.getPermission())) {
+                            player.addRank(rank);
+                        }
+                    });
+        });
+        AltAccount.determine(player);
+    }
 
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onQuit(PlayerQuitEvent event){
-		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
-		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
-		((WhiteEggPlayer) player).saveTask();
-	}
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onQuit(PlayerQuitEvent event) {
+        if (!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)) {
+            return;
+        }
+        WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
+        ((WhiteEggPlayer) player).saveTask();
+    }
 
-	public void onKick(PlayerKickEvent event){
-		if(!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)){ return; }
-		WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
-		((WhiteEggPlayer) player).saveTask();
-	}
+    public void onKick(PlayerKickEvent event) {
+        if (!WhiteEggCore.getConf().getConfig().getBoolean("setting.savePlayerData", true)) {
+            return;
+        }
+        WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
+        ((WhiteEggPlayer) player).saveTask();
+    }
 
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onSign(SignChangeEvent event) {
-		for (int i = 0; i <= 3; i++) {
-			event.setLine(i, ChatColor.translateAlternateColorCodes('&', event.getLine(i)));
-		}
-	}
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onSign(SignChangeEvent event) {
+        for (int i = 0; i <= 3; i++) {
+            event.setLine(i, ChatColor.translateAlternateColorCodes('&', event.getLine(i)));
+        }
+    }
 
 }

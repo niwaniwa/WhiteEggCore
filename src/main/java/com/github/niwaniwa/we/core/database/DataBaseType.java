@@ -2,17 +2,17 @@ package com.github.niwaniwa.we.core.database;
 
 public enum DataBaseType {
 
-	MongoDB("mongodb"),
-	MySQL("mysql");
+    MongoDB("mongodb"),
+    MySQL("mysql");
 
-	private final String type;
+    private final String type;
 
-	private DataBaseType(String type) {
-		this.type = type;
-	}
+    private DataBaseType(String type) {
+        this.type = type;
+    }
 
-	public String getType(){
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
 }

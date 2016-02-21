@@ -8,28 +8,28 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 public class PlayerTwitterManager extends TwitterManager {
 
-	private WhitePlayer player;
+    private WhitePlayer player;
 
-	public PlayerTwitterManager(WhitePlayer p){
-		super();
-		this.player = p;
-	}
+    public PlayerTwitterManager(WhitePlayer p) {
+        super();
+        this.player = p;
+    }
 
-	@Override
-	public void tweet(String tweet, Callback callback) {
-		TweetScheduler task = new TweetScheduler(this, tweet, callback);
-		task.runTaskAsynchronously(WhiteEggCore.getInstance());
-	}
+    @Override
+    public void tweet(String tweet, Callback callback) {
+        TweetScheduler task = new TweetScheduler(this, tweet, callback);
+        task.runTaskAsynchronously(WhiteEggCore.getInstance());
+    }
 
-	@Override
-	public void tweet(String[] tweet) {
-		StringBuilder sb = new StringBuilder();
-		Arrays.asList(tweet).forEach(s -> sb.append(s));
-		tweet(sb.toString());
-	}
+    @Override
+    public void tweet(String[] tweet) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.asList(tweet).forEach(s -> sb.append(s));
+        tweet(sb.toString());
+    }
 
-	public WhitePlayer getPlayer(){
-		return player;
-	}
+    public WhitePlayer getPlayer() {
+        return player;
+    }
 
 }

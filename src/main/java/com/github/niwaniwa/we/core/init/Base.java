@@ -2,6 +2,6 @@ package com.github.niwaniwa.we.core.init;
 
 public interface Base {
 
-	public boolean start(boolean debug);
+    public boolean start(boolean debug);
 
 }

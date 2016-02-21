@@ -42,7 +42,9 @@ public class Reflection {
     public static Object createPacketInstance(String packetClassName, Class<?>[] clazz, Object... args) {
         try {
             Class<?> packetClass = Class.forName(String.format("%s%s.%s", nmsPackage, version, packetClassName));
-            if(clazz == null || clazz.length == 0){ return packetClass.newInstance(); }
+            if (clazz == null || clazz.length == 0) {
+                return packetClass.newInstance();
+            }
             return packetClass.getConstructor(clazz).newInstance(args);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -50,7 +52,7 @@ public class Reflection {
         return null;
     }
 
-    public static Object getEntityPlayer(Player player){
+    public static Object getEntityPlayer(Player player) {
         Object object = null;
         try {
             object = player.getClass().getMethod("getHandle").invoke(player);

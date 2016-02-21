@@ -28,6 +28,7 @@ public abstract class Extension {
         }
         return null;
     }
+
     /**
      * 指定した権限を所持しているプレイヤーのみに送信します
      *

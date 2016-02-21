@@ -10,40 +10,40 @@ import twitter4j.Status;
 
 /**
  * ツイート後のイベント※キャンセル不可能
- * @author niwaniwa
  *
+ * @author niwaniwa
  */
 public class WhiteEggPostTweetEvent extends Event {
 
-	private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-	private TwitterManager twitter;
-	private Status status;
+    private TwitterManager twitter;
+    private Status status;
 
-	public WhiteEggPostTweetEvent(TwitterManager twitter, Status tweet){
-		this.twitter = twitter;
-		this.status = tweet;
-	}
+    public WhiteEggPostTweetEvent(TwitterManager twitter, Status tweet) {
+        this.twitter = twitter;
+        this.status = tweet;
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-	public TwitterManager getTwitter() {
-		return twitter;
-	}
+    public TwitterManager getTwitter() {
+        return twitter;
+    }
 
-	public Status getStatus() {
-		return status;
-	}
+    public Status getStatus() {
+        return status;
+    }
 
-	public boolean isPlayer(){
-		return (twitter instanceof PlayerTwitterManager);
-	}
+    public boolean isPlayer() {
+        return (twitter instanceof PlayerTwitterManager);
+    }
 
 }

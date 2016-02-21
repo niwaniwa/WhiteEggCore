@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface WhiteBaseCommandExeutor {
 
-	public String getPermission();
+    public String getPermission();
 
-	public List<String> getUsing();
+    public List<String> getUsing();
 
 }

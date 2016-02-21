@@ -132,7 +132,6 @@ public class WhiteEggPlayer extends EggPlayer {
 		if(!source.has("WhiteEggPlayer")){ return false; }
 		JsonObject json = source.getAsJsonObject("WhiteEggPlayer");
 		JsonObject player = json.getAsJsonObject("player");
-		this.isVanish = player.get("isvanish").getAsBoolean();
 		if(json.get("twitter").isJsonObject()){
 			JsonObject tw = json.getAsJsonObject("twitter");
 			AccessToken token = new AccessToken(tw.get("accesstoken").getAsString(), tw.get("accesstokensecret").getAsString());

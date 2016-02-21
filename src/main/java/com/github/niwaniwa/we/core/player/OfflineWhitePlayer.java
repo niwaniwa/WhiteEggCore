@@ -7,16 +7,16 @@ import org.bukkit.entity.Player;
 
 public interface OfflineWhitePlayer extends ConfigurationSerializable {
 
-	public abstract String getName();
+    public abstract String getName();
 
-	public abstract String getPrefix();
+    public abstract String getPrefix();
 
-	public abstract String getFullName();
+    public abstract String getFullName();
 
-	public abstract Player getPlayer();
+    public abstract Player getPlayer();
 
-	public abstract UUID getUniqueId();
+    public abstract UUID getUniqueId();
 
-	public abstract boolean isOnline();
+    public abstract boolean isOnline();
 
 }

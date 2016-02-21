@@ -8,54 +8,57 @@ import com.github.niwaniwa.we.core.player.WhitePlayer;
 
 /**
  * ツイートする前に発生するイベント
+ *
  * @author niwaniwa
- * Minecraft内で使用不可能な文字列を含む場合があります
+ *         Minecraft内で使用不可能な文字列を含む場合があります
  */
 public class WhiteEggPreTweetEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-	private boolean cancelled = false;
-	private WhitePlayer player;
-	private String tweet;
+    private boolean cancelled = false;
+    private WhitePlayer player;
+    private String tweet;
 
-	public WhiteEggPreTweetEvent(WhitePlayer player, String tweet) {
-		this.player = player;
-		this.tweet = tweet;
-	}
+    public WhiteEggPreTweetEvent(WhitePlayer player, String tweet) {
+        this.player = player;
+        this.tweet = tweet;
+    }
 
-	@Override
-	public boolean isCancelled() {
-		return cancelled;
-	}
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
 
-	@Override
-	public void setCancelled(boolean cancel) {
-		this.cancelled = cancel;
-	}
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-	public WhitePlayer getPlayer() {
-		return player;
-	}
+    public WhitePlayer getPlayer() {
+        return player;
+    }
 
-	public String getTweet() {
-		return tweet;
-	}
+    public String getTweet() {
+        return tweet;
+    }
 
-	public boolean setTweet(String tweet){
-		if(tweet.length() == 0
-				|| tweet.length() >= 140){ return false; }
-		this.tweet = tweet;
-		return true;
-	}
+    public boolean setTweet(String tweet) {
+        if (tweet.length() == 0
+                || tweet.length() >= 140) {
+            return false;
+        }
+        this.tweet = tweet;
+        return true;
+    }
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
 }

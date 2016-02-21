@@ -21,89 +21,91 @@ import com.github.niwaniwa.we.core.util.Util;
 
 /**
  * WhiteEggAPIの実装クラス
- * @author niwaniwa
  *
+ * @author niwaniwa
  */
 public class WhiteEggAPIImpl {
 
-	public WhiteEggAPIImpl() {
-	}
+    public WhiteEggAPIImpl() {
+    }
 
 
-	public List<WhitePlayer> getOnlinePlayers() {
-		List<WhitePlayer> result = new ArrayList<>();
-		for(Player p : Bukkit.getOnlinePlayers()){
-			result.add(WhitePlayerFactory.getInstance(p));
-		}
-		return result;
-	}
+    public List<WhitePlayer> getOnlinePlayers() {
+        List<WhitePlayer> result = new ArrayList<>();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            result.add(WhitePlayerFactory.getInstance(p));
+        }
+        return result;
+    }
 
 
-	public List<Rank> getRanks() {
-		return Rank.getRanks();
-	}
+    public List<Rank> getRanks() {
+        return Rank.getRanks();
+    }
 
 
-	public void RankBroadcastMessage(Rank rank, String message) {
-		WhiteEggAPI.getOnlinePlayers().stream()
-						.filter(p -> p.getRanks().contains(rank))
-						.forEach(p -> p.sendMessage(message));
-	}
+    public void RankBroadcastMessage(Rank rank, String message) {
+        WhiteEggAPI.getOnlinePlayers().stream()
+                .filter(p -> p.getRanks().contains(rank))
+                .forEach(p -> p.sendMessage(message));
+    }
 
 
-	public void WorldBroadcastMessage(World world, String message) {
-		world.getPlayers().forEach(p -> p.sendMessage(message));
-	}
+    public void WorldBroadcastMessage(World world, String message) {
+        world.getPlayers().forEach(p -> p.sendMessage(message));
+    }
 
 
-	public OfflineWhitePlayer getOfflinePlayer(String name) {
-		@SuppressWarnings("deprecation")
-		OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-		return WhitePlayerFactory.getInstance(offline.getPlayer());
-	}
+    public OfflineWhitePlayer getOfflinePlayer(String name) {
+        @SuppressWarnings("deprecation")
+        OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
+        return WhitePlayerFactory.getInstance(offline.getPlayer());
+    }
 
-	public OfflineWhitePlayer getOfflinePlayer(UUID uuid) {
-		OfflinePlayer offline = Bukkit.getOfflinePlayer(uuid);
-		return WhitePlayerFactory.getInstance(offline.getPlayer());
-	}
-
-
-	public WhitePlayer getPlayer(String name) {
-		Player player = Util.getOnlinePlayer(name);
-		if(player == null){
-			return null;
-		}
-		return WhitePlayerFactory.getInstance(player);
-	}
+    public OfflineWhitePlayer getOfflinePlayer(UUID uuid) {
+        OfflinePlayer offline = Bukkit.getOfflinePlayer(uuid);
+        return WhitePlayerFactory.getInstance(offline.getPlayer());
+    }
 
 
-	public WhitePlayer getPlayer(UUID uuid) {
-		Player player = Util.getOnlinePlayer(uuid);
-		if(player == null){ return null; }
-		return WhitePlayerFactory.getInstance(player);
-	}
+    public WhitePlayer getPlayer(String name) {
+        Player player = Util.getOnlinePlayer(name);
+        if (player == null) {
+            return null;
+        }
+        return WhitePlayerFactory.getInstance(player);
+    }
 
 
-	public WhitePlayer getPlayer(Player player) {
-		return WhitePlayerFactory.getInstance(player);
-	}
-
-	@Deprecated
-
-	public boolean registerToggle(Plugin plugin, String tag, String permission, String custam,
-			Map<String, Object> toggles, boolean isHide) {
-		return false;
-	}
+    public WhitePlayer getPlayer(UUID uuid) {
+        Player player = Util.getOnlinePlayer(uuid);
+        if (player == null) {
+            return null;
+        }
+        return WhitePlayerFactory.getInstance(player);
+    }
 
 
-	public boolean useDataBase() {
-		return WhiteEggCore.getConf().useDataBase();
-	}
+    public WhitePlayer getPlayer(Player player) {
+        return WhitePlayerFactory.getInstance(player);
+    }
+
+    @Deprecated
+
+    public boolean registerToggle(Plugin plugin, String tag, String permission, String custam,
+                                  Map<String, Object> toggles, boolean isHide) {
+        return false;
+    }
 
 
-	public void tweet(String tweet) {
-		ServerTwitterManager.getInstance().tweet(tweet);
-	}
+    public boolean useDataBase() {
+        return WhiteEggCore.getConf().useDataBase();
+    }
+
+
+    public void tweet(String tweet) {
+        ServerTwitterManager.getInstance().tweet(tweet);
+    }
 
 
 }

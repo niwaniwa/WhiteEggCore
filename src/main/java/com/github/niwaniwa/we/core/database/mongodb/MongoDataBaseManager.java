@@ -27,31 +27,14 @@ public class MongoDataBaseManager extends DataBase {
 		this.client = new MongoClient(host, port);
 	}
 
-	public MongoDataBase getDatabase(String name){
-		return new MongoDataBase(client.getDatabase(name));
+	public MongoDatabase getDatabase(String name){
+		return client.getDatabase(name);
 	}
 
 	public MongoClient getClient() {
 		return client;
 	}
 
-	public class MongoDataBase {
-
-		private final MongoDatabase database;
-
-		protected MongoDataBase(MongoDatabase database) {
-			this.database = database;
-		}
-
-		public MongoCollection<Document> getCollection(String collection){
-			return database.getCollection(collection);
-		}
-
-		public MongoDatabase getDatabase() {
-			return database;
-		}
-
-	}
 
 	public static Document toDocument(Map<String, Object> data){
 		return new Document(data);

@@ -78,22 +78,22 @@ public class Title extends Extension {
     public void send(Player player) {
         Class<?> iChatBaseComponentClass = Reflection.getNMSClass("IChatBaseComponent");
         Class<?> enumTitle = Reflection.getNMSClass("PacketPlayOutTitle$EnumTitleAction");
-        Object timePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{ enumTitle, iChatBaseComponentClass, int.class, int.class, int.class}, getTitleEnum("TIMES"), null,
+        Object timePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{enumTitle, iChatBaseComponentClass, int.class, int.class, int.class}, getTitleEnum("TIMES"), null,
                 fadeInTime, stayTime, fadeOutTick);
         this.sendPacket(player, timePacket);
 
         if (!mainTitle.isEmpty()) {
-            Object mainTitlePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{ enumTitle, iChatBaseComponentClass }, getTitleEnum("TITLE"), build(mainTitle));
+            Object mainTitlePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{enumTitle, iChatBaseComponentClass}, getTitleEnum("TITLE"), build(mainTitle));
             this.sendPacket(player, mainTitlePacket);
         }
         if (!subTitle.isEmpty()) {
-            Object subTitlePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{ enumTitle, iChatBaseComponentClass }, getTitleEnum("SUBTITLE"), build(subTitle));
+            Object subTitlePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{enumTitle, iChatBaseComponentClass}, getTitleEnum("SUBTITLE"), build(subTitle));
             this.sendPacket(player, subTitlePacket);
         }
 
     }
 
-    private Object getTitleEnum(String name){
+    private Object getTitleEnum(String name) {
         Class<?> enumTitle = Reflection.getNMSClass("PacketPlayOutTitle$EnumTitleAction");
         Object em = null;
         try {

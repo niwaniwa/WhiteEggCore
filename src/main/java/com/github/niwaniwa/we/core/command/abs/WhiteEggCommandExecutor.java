@@ -4,6 +4,6 @@ import org.bukkit.command.CommandExecutor;
 
 public interface WhiteEggCommandExecutor extends WhiteBaseCommandExeutor, CommandExecutor {
 
-	public String getCommandName();
+    public String getCommandName();
 
 }

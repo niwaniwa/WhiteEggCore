@@ -33,83 +33,94 @@ import twitter4j.TwitterException;
 
 public class Debug implements Listener {
 
-	private CachedServerIcon icon;
+    private CachedServerIcon icon;
 
-	public Debug() {
-		URL imageUrl = null;
-		InputStream input = null;
-		try {
-			imageUrl = new URL("https://minotar.net/helm/KokekoKko_");
-			input = imageUrl.openConnection().getInputStream();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		BufferedImage bufferedImage ;
-		CachedServerIcon icon = null;
-		try {
-			bufferedImage = ImageIO.read(input);
-			Image tmp = bufferedImage.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-			BufferedImage dimg = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+    public Debug() {
+        URL imageUrl = null;
+        InputStream input = null;
+        try {
+            imageUrl = new URL("https://minotar.net/helm/KokekoKko_");
+            input = imageUrl.openConnection().getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BufferedImage bufferedImage;
+        CachedServerIcon icon = null;
+        try {
+            bufferedImage = ImageIO.read(input);
+            Image tmp = bufferedImage.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            BufferedImage dimg = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
 
-			Graphics2D g2d = dimg.createGraphics();
-			g2d.drawImage(tmp, 0, 0, null);
-			g2d.dispose();
-			icon = Bukkit.getServer().loadServerIcon(dimg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(icon != null){ this.icon = icon; }
-		icon = null;
-	}
+            Graphics2D g2d = dimg.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
+            icon = Bukkit.getServer().loadServerIcon(dimg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (icon != null) {
+            this.icon = icon;
+        }
+        icon = null;
+    }
 
-	@EventHandler
-	public void onPing(ServerListPingEvent event){
-		if(icon == null){ return; }
-		event.setServerIcon(icon);
-	}
+    @EventHandler
+    public void onPing(ServerListPingEvent event) {
+        if (icon == null) {
+            return;
+        }
+        event.setServerIcon(icon);
+    }
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void onJoin(PlayerJoinEvent event) {
-		final WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
-		if(event.getPlayer().getUniqueId().toString()
-				.equalsIgnoreCase("f010845c-a9ac-4a04-bf27-61d92f8b03ff")){
-			WhiteEggCore.getInstance().getLogger().info(
-					"-- " + player.getPlayer().getName() + "Join the game. --");
-		}
-		Title title = new Title("§6>>Main Title<<", "§7sub title");
-		title.send(player.getPlayer());
-		Clickable clickable = new Clickable("test");
-		clickable.send(player.getPlayer());
-		CommandFactory commandFactory = new CommandFactory(WhiteEggCore.getInstance(), "debug");
-		commandFactory.setExecutor(new WhiteEggCommandExecutor() {
-			@Override
-			public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-				sender.sendMessage("test");
-				return true;
-			}
-			@Override
-			public List<String> getUsing() { return null; }
+    @EventHandler(priority = EventPriority.LOW)
+    public void onJoin(PlayerJoinEvent event) {
+        final WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
+        if (event.getPlayer().getUniqueId().toString()
+                .equalsIgnoreCase("f010845c-a9ac-4a04-bf27-61d92f8b03ff")) {
+            WhiteEggCore.getInstance().getLogger().info(
+                    "-- " + player.getPlayer().getName() + "Join the game. --");
+        }
+        Title title = new Title("§6>>Main Title<<", "§7sub title");
+        title.send(player.getPlayer());
+        Clickable clickable = new Clickable("test");
+        clickable.send(player.getPlayer());
+        CommandFactory commandFactory = new CommandFactory(WhiteEggCore.getInstance(), "debug");
+        commandFactory.setExecutor(new WhiteEggCommandExecutor() {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+                sender.sendMessage("test");
+                return true;
+            }
 
-			@Override
-			public String getPermission() { return "whiteegg.core.command.debug"; }
+            @Override
+            public List<String> getUsing() {
+                return null;
+            }
 
-			@Override
-			public String getCommandName() { return "debug"; }
-		});
-		commandFactory.register();
-	}
+            @Override
+            public String getPermission() {
+                return "whiteegg.core.command.debug";
+            }
 
-	@EventHandler
-	public void onTweet(WhiteEggPreTweetEvent event){
-		System.out.println(" : Event " + event.getEventName() + " : "
-				+ " Tweet " + event.getTweet() + " : Player " + event.getPlayer().getFullName());
-	}
+            @Override
+            public String getCommandName() {
+                return "debug";
+            }
+        });
+        commandFactory.register();
+    }
 
-	@EventHandler
-	public void postTweetEvent(WhiteEggPostTweetEvent event) throws IllegalStateException, TwitterException{
-		System.out.println(" : Event " + event.getEventName() + " : "
-				+ " Tweet " + event.getStatus().getText()
-				+ " : Twitter ID " + event.getTwitter().getTwitter().getScreenName());
-	}
+    @EventHandler
+    public void onTweet(WhiteEggPreTweetEvent event) {
+        System.out.println(" : Event " + event.getEventName() + " : "
+                + " Tweet " + event.getTweet() + " : Player " + event.getPlayer().getFullName());
+    }
+
+    @EventHandler
+    public void postTweetEvent(WhiteEggPostTweetEvent event) throws IllegalStateException, TwitterException {
+        System.out.println(" : Event " + event.getEventName() + " : "
+                + " Tweet " + event.getStatus().getText()
+                + " : Twitter ID " + event.getTwitter().getTwitter().getScreenName());
+    }
 
 }
