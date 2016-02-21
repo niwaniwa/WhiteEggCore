@@ -4,7 +4,6 @@ import com.github.niwaniwa.we.core.command.toggle.ToggleSettings;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
@@ -119,7 +118,7 @@ public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
 	 * EntityPlayerを返します
 	 * @return EntityPlayer player
 	 */
-	public abstract EntityPlayer getHandle();
+	public abstract Object getHandle();
 
 	/**
 	 * 現在いる座標を返します

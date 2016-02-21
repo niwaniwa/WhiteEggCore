@@ -1,31 +1,21 @@
 package com.github.niwaniwa.we.core.util.message;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.jar.JarFile;
-
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.util.Reflection;
 import com.github.niwaniwa.we.core.util.Util;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.jar.JarFile;
 
 /**
  * yaml形式のファイルを読み込みます
@@ -162,7 +152,7 @@ public class MessageManager {
 		if(!(sender instanceof WhitePlayer)){
 			return getMessage(WhiteEggCore.getLanguage(), key, prefix, replaceColorCode);
 		}
-		return getMessage(LanguageType.valueOf(((WhitePlayer) sender).getHandle().locale), key, prefix, replaceColorCode);
+		return getMessage(getLanguage((WhitePlayer) sender), key, prefix, replaceColorCode);
 	}
 
 	/**
@@ -324,9 +314,17 @@ public class MessageManager {
 	 * @return LanguageType 言語
 	 */
 	public static LanguageType getLanguage(Player player){
-		String locale = ((CraftPlayer) player).getHandle().locale;
-		LanguageType type = LanguageType.valueOf(locale);
-		return type == null ? LanguageType.en_US : type;
+		Object entity = Reflection.getEntityPlayer(player);
+		Object locale = null;
+		try {
+			locale = entity.getClass().getField("locale").get(entity);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			WhiteEggCore.logger.info(e.getMessage());
+			return WhiteEggCore.getLanguage();
+		}
+		if(locale == null){ return WhiteEggCore.getLanguage(); }
+		LanguageType type = LanguageType.valueOf(String.valueOf(locale));
+		return type == null ? WhiteEggCore.getLanguage() : type;
 	}
 
 }

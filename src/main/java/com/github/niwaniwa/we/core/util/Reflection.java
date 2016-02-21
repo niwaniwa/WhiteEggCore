@@ -1,6 +1,7 @@
 package com.github.niwaniwa.we.core.util;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -47,6 +48,16 @@ public class Reflection {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Object getEntityPlayer(Player player){
+        Object object = null;
+        try {
+            object = player.getClass().getMethod("getHandle").invoke(player);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 
 }
