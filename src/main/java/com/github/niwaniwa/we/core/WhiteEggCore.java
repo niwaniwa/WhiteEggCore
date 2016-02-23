@@ -35,7 +35,7 @@ import com.github.niwaniwa.we.core.util.message.MessageManager;
 public class WhiteEggCore extends JavaPlugin {
 
     private static WhiteEggCore instance;
-    private static MessageManager msg;
+    private static MessageManager messageManager;
     private static LanguageType defaultLanguage = LanguageType.en_US;
     ;
     private static WhiteEggCoreConfig config;
@@ -49,7 +49,7 @@ public class WhiteEggCore extends JavaPlugin {
 
     public static boolean isLock = false;
 
-    private PluginManager pm = Bukkit.getPluginManager();
+    private PluginManager pluginManager = Bukkit.getPluginManager();
     private JavaScript script;
 
     @Override
@@ -104,7 +104,7 @@ public class WhiteEggCore extends JavaPlugin {
      * @return メッセージマネージャー
      */
     public static MessageManager getMessageManager() {
-        return msg;
+        return messageManager;
     }
 
     /**
@@ -130,7 +130,7 @@ public class WhiteEggCore extends JavaPlugin {
         config = new WhiteEggCoreConfig();
         config.load();
         Initialize init = Initialize.getInstance(this);
-        msg = init.getMessageManager();
+        messageManager = init.getMessageManager();
         init.start(false);
         database = init.getDatabase();
         isLock = config.isLock();
@@ -170,19 +170,19 @@ public class WhiteEggCore extends JavaPlugin {
      * バージョンチェック
      */
     private void versionCheck() {
-        if (version.getJavaVersion() <= 1.7) {
+        if (version.getJavaVersion() <= Double.valueOf(Versioning.JAVA_SUPPORT_VERSION)) {
             logger.warning("Unsupported Java version >_< : " + version.getJavaVersion());
             logger.warning("Please use 1.8");
-            pm.disablePlugin(instance);
+            pluginManager.disablePlugin(instance);
             return;
         }
-        if (!version.getCraftBukkitVersion().equalsIgnoreCase("v1_8_R3")) {
+/*        if (!version.getCraftBukkitVersion().equalsIgnoreCase("v1_8_R3")) {
             logger.warning("Unsupported CraftBukkit version >_< : " + version.getCraftBukkitVersion());
             logger.warning("Please use v1_8_R3");
-            pm.disablePlugin(instance);
+            pluginManager.disablePlugin(instance);
             return;
         }
-        return;
+*/      return;
     }
 
     /**

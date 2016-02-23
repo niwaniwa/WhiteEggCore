@@ -10,6 +10,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import com.github.niwaniwa.we.core.util.lib.Title;
+import com.github.niwaniwa.we.core.util.lib.clickable.ChatExtra;
+import com.github.niwaniwa.we.core.util.lib.clickable.ClickEventType;
+import com.github.niwaniwa.we.core.util.lib.clickable.HoverEventType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -58,9 +61,6 @@ public class Debug implements Listener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (icon != null) {
-            this.icon = icon;
-        }
         icon = null;
     }
 
@@ -82,7 +82,11 @@ public class Debug implements Listener {
         }
         Title title = new Title("§6>>Main Title<<", "§7sub title");
         title.send(player.getPlayer());
-        Clickable clickable = new Clickable("test");
+        Clickable clickable = new Clickable("§6おめでとうございます！\nあなたは当選しました！");
+        ChatExtra extra = new ChatExtra("\n§6このテキストをクリックすると豪華賞品が手に入ります！");
+        extra.setClickEvent(ClickEventType.OPEN_URL, "https://twitter.com/");
+        extra.setHoverEvent(HoverEventType.SHOW_TEXT, "ここをクリック！");
+        clickable.addExtra(extra);
         clickable.send(player.getPlayer());
         CommandFactory commandFactory = new CommandFactory(WhiteEggCore.getInstance(), "debug");
         commandFactory.setExecutor(new WhiteEggCommandExecutor() {

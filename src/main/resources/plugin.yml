@@ -1,5 +1,5 @@
 name: WhiteEggCore
-version: 2.5
+version: 2.6
 main: com.github.niwaniwa.we.core.WhiteEggCore
 commands:
   whiteeggcore:

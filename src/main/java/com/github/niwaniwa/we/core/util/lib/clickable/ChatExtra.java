@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 public class ChatExtra {
 
     private JsonObject json = new JsonObject();
-    ;
 
     /**
      * Constructor

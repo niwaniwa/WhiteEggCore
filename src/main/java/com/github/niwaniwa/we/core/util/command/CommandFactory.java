@@ -212,9 +212,9 @@ public class CommandFactory {
     public static void newCommand(Plugin pluginInstance, String prefix, String commandName, List<String> aliases, String using, String description, String permission, CommandExecutor commandExecutor, TabCompleter tabInstance) {
         CommandFactory factory = new CommandFactory(pluginInstance, commandName);
         factory.setAliases((aliases == null ? new ArrayList<>(0) : aliases));
-        factory.setDescription((description == null ? new String() : description));
-        factory.setUsage((using == null ? new String() : using));
-        factory.setPermission((permission == null ? new String() : permission));
+        factory.setDescription((description == null ? "" : description));
+        factory.setUsage((using == null ? "" : using));
+        factory.setPermission((permission == null ? "" : permission));
         if (commandExecutor != null) {
             factory.setExecutor(commandExecutor);
         }

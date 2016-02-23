@@ -4,12 +4,12 @@ import org.bukkit.Bukkit;
 
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 
+@Deprecated
 public class Vanish {
 
     private Vanish() {
     }
 
-    @SuppressWarnings("deprecation")
     public static boolean hide(WhitePlayer player) {
         if (player.isVanish()) {
             return false;
@@ -20,7 +20,6 @@ public class Vanish {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     public static boolean show(WhitePlayer player) {
         if (!player.isVanish()) {
             return false;

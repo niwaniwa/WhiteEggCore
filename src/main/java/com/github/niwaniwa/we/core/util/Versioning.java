@@ -4,6 +4,9 @@ import org.bukkit.Bukkit;
 
 public class Versioning {
 
+    public static final String JAVA_SUPPORT_VERSION = "1.8";
+    public static final String SEVER_SUPPORT_VERSION = "v1_8_R";
+
     private static Versioning instance = new Versioning();
 
     private boolean support = false;

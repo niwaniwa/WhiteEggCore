@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Clickable extends Extension {
 
-    private JsonObject json;
+    private JsonObject json = new JsonObject();
 
     /**
      * Constructor
@@ -23,7 +23,6 @@ public class Clickable extends Extension {
      * @param formats フォーマット
      */
     public Clickable(String text, ChatColor color, List<ChatFormat> formats) {
-        json = new JsonObject();
         json.addProperty("text", text);
         if (color != null) {
             json.addProperty("color", color.toString().toLowerCase());

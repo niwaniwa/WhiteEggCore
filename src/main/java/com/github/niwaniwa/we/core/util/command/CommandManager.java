@@ -1,10 +1,11 @@
 package com.github.niwaniwa.we.core.util.command;
 
-import org.bukkit.entity.Player;
-
 import com.github.niwaniwa.we.core.command.abs.ConsoleCancellable;
 import com.github.niwaniwa.we.core.command.abs.WhiteBaseCommandExeutor;
 import com.github.niwaniwa.we.core.player.commad.WhiteConsoleSender;
+import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 public class CommandManager {
 
@@ -18,15 +19,7 @@ public class CommandManager {
      * @return boolean キャンセルする場合true、しない場合はfalse
      */
     public static boolean isConsoleCancel(final WhiteBaseCommandExeutor command) {
-        Class<?>[] clazz = command.getClass().getInterfaces();
-        if (clazz.length != 0) {
-            for (Class<?> s : clazz) {
-                if (s.equals(ConsoleCancellable.class)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return command instanceof ConsoleCancellable;
     }
 
     /**
@@ -36,7 +29,7 @@ public class CommandManager {
      * @return boolean consoleの場合true、他はfalse
      */
     public static boolean isConsole(Object sender) {
-        return (!(sender instanceof Player) || sender instanceof WhiteConsoleSender);
+        return !(sender instanceof Player) || sender instanceof WhiteConsoleSender;
     }
 
 }
