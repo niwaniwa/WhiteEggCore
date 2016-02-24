@@ -86,7 +86,7 @@ public class TweetScheduler extends BukkitRunnable {
 
     private List<String> getURL() {
         List<String> result = new ArrayList<>();
-        final Matcher matcher = TwitterMediaUploader.urlPattern.matcher(tweet);
+        final Matcher matcher = TwitterMediaUploader.URL_PATTERN.matcher(tweet);
         while (matcher.find()) {
             String url = matcher.group();
             if (TwitterMediaUploader.checkMediaExtension(url)) {

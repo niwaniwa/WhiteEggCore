@@ -20,8 +20,10 @@ import twitter4j.UploadedMedia;
  */
 public class TwitterMediaUploader {
 
-    public static final Pattern urlPattern = Pattern.compile("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+",
+    public static final Pattern URL_PATTERN = Pattern.compile("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+",
             Pattern.CASE_INSENSITIVE);
+
+    public static final String[] EXTENSIONS = new String[]{".jpg", ".gif", ".png", ".mp4"};
 
     private final Twitter twitter;
     private final StatusUpdate update;
@@ -69,7 +71,9 @@ public class TwitterMediaUploader {
         long[] mediaId = new long[this.urls.size()];
         for (int i = 0; i < urls.size(); i++) {
             InputStream media = responce(urls.get(i));
-            mediaId[i] = uploadMedia(UUID.randomUUID().toString(), media);
+            if(media != null){
+                mediaId[i] = uploadMedia(UUID.randomUUID().toString(), media);
+            }
         }
         return mediaId;
     }
@@ -127,7 +131,7 @@ public class TwitterMediaUploader {
      * @return URLを含む場合true、それ以外の場合はfalseを返します
      */
     public static boolean checkMediaURL(String string) {
-        final Matcher matcher = urlPattern.matcher(string);
+        final Matcher matcher = URL_PATTERN.matcher(string);
         while (matcher.find()) {
             String url = matcher.group();
             if (checkMediaExtension(url)) {
@@ -144,8 +148,7 @@ public class TwitterMediaUploader {
      * @return URLを含む場合true、それ以外の場合はfalseを返します
      */
     public static boolean checkMediaExtension(String url) {
-        String[] format = new String[]{".jpg", ".gif", ".png", ".mp4"};
-        for (String s : format) {
+        for (String s : EXTENSIONS) {
             if (url.endsWith(s)) {
                 return true;
             }
