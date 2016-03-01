@@ -60,7 +60,7 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
         sender.sendMessage("&7 : &6Author &7: &rKokekoKko_");
         sender.sendMessage("&7 : &6Server Version &7: &r" + Bukkit.getVersion());
         sender.sendMessage("&7 : &6Bukkit Version &7: &r" + Bukkit.getBukkitVersion());
-        sender.sendMessage("&7 : &6CraftBukkit Version &7: &r" + Versioning.getInstance().getCraftBukkitVersion());
+        sender.sendMessage("&7 : &6Package Version &7: &r" + Versioning.getInstance().getPackageVersion());
         sender.sendMessage("&7 ----- ----- ----- ----- -----");
     }
 
@@ -88,13 +88,10 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
         if (args.length == 1) {
             List<String> tabs = new ArrayList<>();
             tabs.add("reload");
-            tabs.add("rl");
             tabs.add("lock");
             tabs.add("alt");
-            tabs.add("a");
             tabs.add("settings");
             tabs.add("system");
-            tabs.add("sys");
             StringUtil.copyPartialMatches(args[0], tabs, list);
         } else if (args.length >= 2) {
             List<String> players = new ArrayList<>();
