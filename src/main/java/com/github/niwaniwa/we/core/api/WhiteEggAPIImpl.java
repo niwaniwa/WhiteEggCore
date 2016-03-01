@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayerFactory;
 import com.github.niwaniwa.we.core.player.rank.Rank;
@@ -55,17 +54,6 @@ public class WhiteEggAPIImpl {
         world.getPlayers().forEach(p -> p.sendMessage(message));
     }
 
-
-    public OfflineWhitePlayer getOfflinePlayer(String name) {
-        @SuppressWarnings("deprecation")
-        OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-        return WhitePlayerFactory.getInstance(offline.getPlayer());
-    }
-
-    public OfflineWhitePlayer getOfflinePlayer(UUID uuid) {
-        OfflinePlayer offline = Bukkit.getOfflinePlayer(uuid);
-        return WhitePlayerFactory.getInstance(offline.getPlayer());
-    }
 
 
     public WhitePlayer getPlayer(String name) {

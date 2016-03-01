@@ -5,18 +5,33 @@ import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.net.InetSocketAddress;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Playerクラス
  *
  * @author KokekoKko_
  */
-public interface WhitePlayer extends OfflineWhitePlayer, WhiteCommandSender {
+public interface WhitePlayer extends WhiteCommandSender, ConfigurationSerializable {
+
+    public abstract String getName();
+
+    public abstract String getPrefix();
+
+    public abstract String getFullName();
+
+    public abstract Player getPlayer();
+
+    public abstract UUID getUniqueId();
+
+    public abstract boolean isOnline();
 
     /**
      * 現在登録されているランクを返します

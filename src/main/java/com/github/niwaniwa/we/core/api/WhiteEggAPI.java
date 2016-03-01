@@ -8,7 +8,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.github.niwaniwa.we.core.player.OfflineWhitePlayer;
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.rank.Rank;
 
@@ -57,26 +56,6 @@ public abstract class WhiteEggAPI {
      */
     public static void WorldBroadcastMessage(World world, String message) {
         instance.WorldBroadcastMessage(world, message);
-    }
-
-    /**
-     * オフラインのプレイヤーインスタンスを返す
-     *
-     * @param name Minecraft ID
-     * @return OfflineWhitePlayer
-     */
-    public static OfflineWhitePlayer getOfflinePlayer(String name) {
-        return instance.getOfflinePlayer(name);
-    }
-
-    /**
-     * オフラインのプレイヤーインスタンスを返す
-     *
-     * @param uuid uniqid
-     * @return OfflineWhitePlayer
-     */
-    public static OfflineWhitePlayer getOfflinePlayer(UUID uuid) {
-        return instance.getOfflinePlayer(uuid);
     }
 
     /**
