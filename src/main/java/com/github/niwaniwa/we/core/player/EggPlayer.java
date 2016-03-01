@@ -20,20 +20,24 @@ import java.util.UUID;
 
 public abstract class EggPlayer implements Twitter, WhitePlayer {
 
-    private Player player;
+    private UUID uuid;
 
     public EggPlayer(Player player) {
-        this.player = player;
+        this.uuid = player.getUniqueId();
+    }
+
+    public EggPlayer(UUID uuid){
+        this.uuid = uuid;
     }
 
     @Override
     public void remove() {
-        player.remove();
+        getPlayer().remove();
     }
 
     @Override
     public String getName() {
-        return player.getName();
+        return getPlayer().getName();
     }
 
     @Override
@@ -43,22 +47,22 @@ public abstract class EggPlayer implements Twitter, WhitePlayer {
 
     @Override
     public Player getPlayer() {
-        return player;
+        return Bukkit.getPlayer(uuid);
     }
 
     @Override
     public UUID getUniqueId() {
-        return player.getUniqueId();
+        return getPlayer().getUniqueId();
     }
 
     @Override
     public boolean isOp() {
-        return player.isOp();
+        return getPlayer().isOp();
     }
 
     @Override
     public boolean isOnline() {
-        return player.isOnline();
+        return getPlayer().isOnline();
     }
 
     @Override
@@ -73,7 +77,7 @@ public abstract class EggPlayer implements Twitter, WhitePlayer {
 
     @Override
     public void sendMessage(String message, boolean replaceColorCode) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
     @Override
@@ -83,28 +87,24 @@ public abstract class EggPlayer implements Twitter, WhitePlayer {
 
     @Override
     public boolean hasPermission(String permission) {
-        return player.hasPermission(permission);
+        return getPlayer().hasPermission(permission);
     }
 
     @Override
     public boolean hasPermission(Permission permission) {
-        return player.hasPermission(permission);
-    }
-
-    public void update() {
-        player = Bukkit.getPlayer(getUniqueId());
+        return getPlayer().hasPermission(permission);
     }
 
     @Override
     public InetSocketAddress getAddress() {
-        return player.getAddress();
+        return getPlayer().getAddress();
     }
 
     @Override
     public Object getHandle() {
         Object object = null;
         try {
-            object = player.getClass().getMethod("getHandle").invoke(player);
+            object = getPlayer().getClass().getMethod("getHandle").invoke(getPlayer());
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -114,22 +114,22 @@ public abstract class EggPlayer implements Twitter, WhitePlayer {
 
     @Override
     public Location getLocation() {
-        return player.getLocation();
+        return getPlayer().getLocation();
     }
 
     @Override
     public Inventory getInventory() {
-        return player.getInventory();
+        return getPlayer().getInventory();
     }
 
     @Override
     public void teleport(Location loc) {
-        player.teleport(loc);
+        getPlayer().teleport(loc);
     }
 
     @Override
     public void teleport(Entity entity) {
-        player.teleport(entity);
+        getPlayer().teleport(entity);
     }
 
     @Override
