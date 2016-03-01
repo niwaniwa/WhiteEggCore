@@ -67,6 +67,9 @@ public class WhiteEggCore extends JavaPlugin {
         instance = this;
         this.versionCheck();
         if (!version.isSupport()) {
+            if(this.isEnabled()){
+                Bukkit.getPluginManager().disablePlugin(this);
+            }
             return;
         }
         long time = System.nanoTime();
@@ -170,7 +173,7 @@ public class WhiteEggCore extends JavaPlugin {
      * バージョンチェック
      */
     private void versionCheck() {
-        if (version.getJavaVersion() <= Double.valueOf(Versioning.JAVA_SUPPORT_VERSION)) {
+        if (version.getJavaVersion() < Double.valueOf(Versioning.JAVA_SUPPORT_VERSION)) {
             logger.warning("Unsupported Java version >_< : " + version.getJavaVersion());
             logger.warning("Please use 1.8");
             pluginManager.disablePlugin(instance);

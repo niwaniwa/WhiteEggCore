@@ -10,7 +10,7 @@ public class Versioning {
     private static Versioning instance = new Versioning();
 
     private boolean support = false;
-    private String craftBukkitVersion;
+    private String packageVersion;
     private double javaVersion;
 
     private Versioning() {
@@ -21,15 +21,14 @@ public class Versioning {
     private boolean versionCheck() {
         String tempJavaVersion = System.getProperty("java.version").split("_")[0];
         String packageName = Bukkit.getServer().getClass().getPackage().getName();
-        craftBukkitVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
+        packageVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
         if (tempJavaVersion.lastIndexOf(".") == -1) {
-            this.javaVersion = 0;
+            javaVersion = 0;
             return false;
         }
-        this.javaVersion = Double.valueOf(tempJavaVersion.substring(0, tempJavaVersion.lastIndexOf(".")));
+        javaVersion = Double.valueOf(tempJavaVersion.substring(0, tempJavaVersion.lastIndexOf(".")));
         // TODO: CraftBukkit
-        if (!craftBukkitVersion.equalsIgnoreCase("v1_8_R3")
-                || javaVersion <= 1.7) {
+        if (javaVersion <= 1.7) {
             return false;
         }
         return true;
@@ -43,8 +42,8 @@ public class Versioning {
         return support;
     }
 
-    public String getCraftBukkitVersion() {
-        return craftBukkitVersion;
+    public String getPackageVersion() {
+        return packageVersion;
     }
 
     public double getJavaVersion() {

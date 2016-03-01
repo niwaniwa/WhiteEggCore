@@ -14,7 +14,7 @@ public class Reflection {
 
     private static final String nmsPackage = "net.minecraft.server.";
     private static final String cbPackage = "org.bukkit.craftbukkit.";
-    private static final String version = WhiteEggCore.version.getCraftBukkitVersion();
+    private static final String version = WhiteEggCore.version.getPackageVersion();
 
     private Reflection() {
     }
