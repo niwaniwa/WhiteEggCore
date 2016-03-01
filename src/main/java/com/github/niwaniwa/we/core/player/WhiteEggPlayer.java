@@ -1,18 +1,5 @@
 package com.github.niwaniwa.we.core.player;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import com.github.niwaniwa.we.core.WhiteEggCore;
 import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.api.callback.Callback;
@@ -26,16 +13,19 @@ import com.github.niwaniwa.we.core.twitter.PlayerTwitterManager;
 import com.github.niwaniwa.we.core.twitter.TwitterManager;
 import com.github.niwaniwa.we.core.util.Util;
 import com.github.niwaniwa.we.core.util.lib.Vanish;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
+import com.google.gson.*;
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
+
+import java.io.File;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * WhitePlayerの実装クラス
@@ -44,7 +34,6 @@ import twitter4j.auth.AccessToken;
  */
 public class WhiteEggPlayer extends EggPlayer {
 
-	private Player player;
 	private final List<ToggleSettings> toggle = new ArrayList<>();
 	private final List<Rank> ranks = new ArrayList<>();
 	private AltAccount accounts;
@@ -54,8 +43,11 @@ public class WhiteEggPlayer extends EggPlayer {
 	public static File path = new File(WhiteEggCore.getConf().getConfig().getString("setting.player.path", WhiteEggCore.getInstance().getDataFolder() + File.separator + "players" + File.separator));
 
 	public WhiteEggPlayer(Player player){
-		super(player);
-		this.player = player;
+		this(player.getUniqueId());
+	}
+
+	public WhiteEggPlayer(UUID uuid){
+		super(uuid);
 		this.isVanish = false;
 		this.twitter = new PlayerTwitterManager(this);
 		ToggleSettings.getList().forEach(list -> toggle.add(list.clone()));
@@ -173,7 +165,7 @@ public class WhiteEggPlayer extends EggPlayer {
 	}
 
 	public void setName(String name){
-		player.setCustomName(name);
+		getPlayer().setCustomName(name);
 	}
 
 	public void tweet(String[] tweet){

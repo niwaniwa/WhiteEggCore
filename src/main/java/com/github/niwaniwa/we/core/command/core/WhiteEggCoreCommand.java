@@ -1,21 +1,20 @@
 package com.github.niwaniwa.we.core.command.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
+import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreChildCommandExecutor;
+import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
+import com.github.niwaniwa.we.core.util.Versioning;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
-import com.github.niwaniwa.we.core.WhiteEggCore;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
-import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreChildCommandExecutor;
-import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
-import com.github.niwaniwa.we.core.util.Versioning;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Coreコマンドクラス
@@ -39,6 +38,7 @@ public class WhiteEggCoreCommand extends WhiteEggCoreBaseCommandExecutor impleme
             this.sendVersion(sender);
             return true;
         }
+
         WhiteEggCoreChildCommandExecutor commandObject = commands.get(args[0]);
         if (commandObject != null) {
             return commandObject.onCommand(sender, command, label, args);

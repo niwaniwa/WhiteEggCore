@@ -49,12 +49,6 @@ public class WhitePlayerFactory {
         if (player == null) {
             throw new NullPointerException("player is null");
         }
-        for (WhitePlayer p : players) {
-            if (p.getUniqueId().equals(player.getUniqueId())) {
-                ((EggPlayer) p).update();
-                return p;
-            }
-        }
         WhiteEggPlayer white = new WhiteEggPlayer(player);
         white.loadTask();
         players.add(white);
@@ -117,9 +111,6 @@ public class WhitePlayerFactory {
             e.printStackTrace();
         }
         instance.saveVariable(new Gson().toJson(from.serialize()));
-        if (instance.getClass().getSuperclass().getSimpleName().equalsIgnoreCase("EggPlayer")) {
-            ((EggPlayer) instance).update();
-        }
         return instance;
     }
 
