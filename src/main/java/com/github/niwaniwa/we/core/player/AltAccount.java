@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.Player;
 
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.event.WhiteEggSubAccountJoinEvent;
 import com.github.niwaniwa.we.core.json.JsonManager;
 import com.github.niwaniwa.we.core.util.Util;
@@ -44,25 +48,29 @@ public class AltAccount implements ConfigurationSerializable {
         if (!(player instanceof WhiteEggPlayer)) {
             throw new IllegalArgumentException("Class " + player.getClass().getSimpleName() + " does not extends WhiteEggPlayer");
         }
-        WhiteEggPlayer egg = (WhiteEggPlayer) player;
-        for (WhitePlayer p : WhitePlayerFactory.getPlayers()) {
-            if (!(p instanceof WhiteEggPlayer)) {
-                continue;
-            }
-            WhiteEggPlayer egg2 = (WhiteEggPlayer) p;
-            if (getAddress(egg.getAddress()).equalsIgnoreCase(getAddress(egg2.getAddress()))) {
-                egg.addAccount(p);
-                egg2.addAccount(egg);
-                WhiteEggSubAccountJoinEvent event = new WhiteEggSubAccountJoinEvent(egg2, egg);
-                Util.callEvent(event);
+        WhiteEggPlayer target = (WhiteEggPlayer) player;
+        List<WhitePlayer> result = determine(player.getPlayer()).stream().map(accountUUID -> {
+            WhitePlayer account = WhiteEggAPI.getPlayer(accountUUID);
+            WhiteEggPlayer.class.cast(account).addAccount(player);
+            target.addAccount(account);
+            return account;
+        }).collect(Collectors.toList());
+        WhiteEggSubAccountJoinEvent event = new WhiteEggSubAccountJoinEvent(target, result);
+        Util.callEvent(event);
+    }
+
+    public static List<UUID> determine(Player target) {
+        List<UUID> result = new ArrayList<>();
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (getAddress(target.getAddress()).equalsIgnoreCase(getAddress(online.getAddress()))) {
+                result.add(online.getUniqueId());
             }
         }
+        return result;
     }
 
     private static String getAddress(InetSocketAddress address) {
-        String[] loginAdress = address.getAddress().toString().split("/");
-        loginAdress = loginAdress[1].split(":");
-        return loginAdress[0];
+        return address.getAddress().toString().split("/")[1].split(":")[0];
     }
 
     @Override
