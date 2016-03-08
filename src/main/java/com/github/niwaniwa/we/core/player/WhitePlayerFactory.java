@@ -49,10 +49,11 @@ public class WhitePlayerFactory {
         if (player == null) {
             throw new NullPointerException("player is null");
         }
-        WhiteEggPlayer white = new WhiteEggPlayer(player);
-        white.loadTask();
-        players.add(white);
-        return white;
+        WhiteEggPlayer instance = new WhiteEggPlayer(player);
+        instance.loadTask();
+        players.add(instance);
+        EggPlayer.class.cast(instance).update();
+        return instance;
     }
 
     /**
@@ -81,6 +82,9 @@ public class WhitePlayerFactory {
         }
         if (instance == null) {
             return null;
+        }
+        if (instance instanceof EggPlayer) {
+            EggPlayer.class.cast(instance).update();
         }
         if (!isLock && enable) {
             instance.saveVariable(new Gson().toJson(getInstance(player).serialize()));
