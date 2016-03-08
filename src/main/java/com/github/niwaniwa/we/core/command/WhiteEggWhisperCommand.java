@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 
@@ -14,6 +15,8 @@ import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecu
 import com.github.niwaniwa.we.core.player.WhitePlayer;
 import com.github.niwaniwa.we.core.player.commad.WhiteCommandSender;
 import com.github.niwaniwa.we.core.util.Util;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 /**
  * Whisperのコマンドクラス
@@ -21,8 +24,6 @@ import com.github.niwaniwa.we.core.util.Util;
  * @author nwianiwa
  */
 public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor implements ConsoleCancellable {
-
-    private static final Map<WhitePlayer, WhitePlayer> replay = new HashMap<>();
 
     private final String key = commandMessageKey + ".whisper";
     private final String permission = commandPermission + ".whisper";
@@ -47,29 +48,26 @@ public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor impl
             return true;
         }
         String message = Util.build(args, 1);
-        target.sendMessage(replace(msg.getMessage(target, key + ".format", "", true), player, target, message));
-        player.sendMessage(replace(msg.getMessage(player, key + ".format", "", true), player, target, message));
+        target.sendMessage(replace(msg.getMessage(target, key + ".format", "", true), player, target, message, true));
+        player.sendMessage(replace(msg.getMessage(player, key + ".format", "", true), player, target, message, false));
         target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
-        replay.put(target, player);
+        target.getPlayer().setMetadata("replay",new FixedMetadataValue(WhiteEggCore.getInstance(), player.getFullName()));
+        player.getPlayer().setMetadata("replay",new FixedMetadataValue(WhiteEggCore.getInstance(), target.getFullName()));
         return true;
     }
 
-    private String replace(String s, WhitePlayer from, WhitePlayer to, String message) {
-        return s.replace("%from%", from.getName()).replace("%to%", to.getName()).replace("%message%", message);
+    private String replace(String s, WhitePlayer from, WhitePlayer to, String message, boolean isFrom) {
+        return s.replace("%from%", from.getFullName()).replace("%to%", to.getFullName()).replace("%message%", message).replace("%isfrom%", isFrom ? "from" : "to").replace("%player%", isFrom ? from.getFullName() : to.getFullName()).replace("%command%", getCommandName());
     }
 
     @Override
     public void sendUsing(WhitePlayer sender) {
-        sender.sendMessage("&6! ω !");
+        sender.sendMessage(msg.getMessage(sender, key + ".using", "&f[&6Using&7]", true));
     }
 
     @Override
     public String getPermission() {
         return permission;
-    }
-
-    public static Map<WhitePlayer, WhitePlayer> getPlayer() {
-        return replay;
     }
 
     @Override

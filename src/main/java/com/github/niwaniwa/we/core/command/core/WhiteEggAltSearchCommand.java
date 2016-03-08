@@ -24,6 +24,7 @@ public class WhiteEggAltSearchCommand extends WhiteEggCoreChildCommandExecutor {
 
     private final String permission = commandPermission + ".whiteegg.alt";
     private final String parentCommand = "whiteeggcore";
+    private final String cmdPath = commandMessageKey + ".core.alt";
 
     @SuppressWarnings("deprecation")
     @Override
@@ -52,6 +53,7 @@ public class WhiteEggAltSearchCommand extends WhiteEggCoreChildCommandExecutor {
                             System.out.println("not 36");
                             return;
                         }
+                        sender.sendMessage(msg.getMessage(sender, cmdPath + ".wait", msgPrefix, true));
                         uuid = Bukkit.getOfflinePlayer(UUID.fromString(uuidString)).getUniqueId();
                     } else {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);

@@ -20,7 +20,7 @@ public class WhiteEggSettingCommand extends WhiteEggCoreChildCommandExecutor {
     public boolean onCommand(WhiteCommandSender sender, Command command, String label, String[] args) {
         sender.sendMessage("&7 ----- &6Settings &7-----");
         sender.sendMessage("&7 : &6|  key  | &7: &6| value | &7:");
-        for (Entry<String, Object> entry : WhiteEggCore.getConf().getConfig().getValues(false).entrySet()) {
+        for (Entry<String, Object> entry : WhiteEggCore.getConf().getConfig().getValues(true).entrySet()) {
             sender.sendMessage("&7: &6" + entry.getKey() + " &7: &6" + entry.getValue() + " &7:");
         }
         return true;
