@@ -1,17 +1,5 @@
 package com.github.niwaniwa.we.core;
 
-import java.io.File;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import com.github.niwaniwa.we.core.command.WhiteEggCoreCommandHandler;
 import com.github.niwaniwa.we.core.command.abs.core.WhiteEggCoreBaseCommandExecutor;
 import com.github.niwaniwa.we.core.config.WhiteEggCoreConfig;
@@ -25,12 +13,25 @@ import com.github.niwaniwa.we.core.script.JavaScript;
 import com.github.niwaniwa.we.core.util.Versioning;
 import com.github.niwaniwa.we.core.util.message.LanguageType;
 import com.github.niwaniwa.we.core.util.message.MessageManager;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.File;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * メインクラス
  *
  * @author niwaniwa
  * @version 2.0.0
+ *
+ * created on 2015/08/25
  */
 public class WhiteEggCore extends JavaPlugin {
 
@@ -67,7 +68,7 @@ public class WhiteEggCore extends JavaPlugin {
         instance = this;
         this.versionCheck();
         if (!version.isSupport()) {
-            if(this.isEnabled()){
+            if (this.isEnabled()) {
                 Bukkit.getPluginManager().disablePlugin(this);
             }
             return;
@@ -185,7 +186,8 @@ public class WhiteEggCore extends JavaPlugin {
             pluginManager.disablePlugin(instance);
             return;
         }
-*/      return;
+*/
+        return;
     }
 
     /**
