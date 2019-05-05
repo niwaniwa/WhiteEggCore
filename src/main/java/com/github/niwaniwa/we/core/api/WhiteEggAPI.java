@@ -131,4 +131,5 @@ public abstract class WhiteEggAPI {
     public static WhiteEggAPIImpl getAPI() {
         return instance;
     }
+
 }

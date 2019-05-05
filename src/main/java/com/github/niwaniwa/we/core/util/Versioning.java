@@ -27,7 +27,6 @@ public class Versioning {
             return false;
         }
         javaVersion = Double.valueOf(tempJavaVersion.substring(0, tempJavaVersion.lastIndexOf(".")));
-        // TODO: CraftBukkit
         if (javaVersion <= 1.7) {
             return false;
         }

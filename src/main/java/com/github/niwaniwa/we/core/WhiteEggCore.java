@@ -37,8 +37,8 @@ public class WhiteEggCore extends JavaPlugin {
 
     private static WhiteEggCore instance;
     private static MessageManager messageManager;
-    private static LanguageType defaultLanguage = LanguageType.en_US;
-    ;
+    private static LanguageType defaultLanguage = LanguageType.en_us;
+
     private static WhiteEggCoreConfig config;
     private static DataBase database;
 
@@ -52,11 +52,12 @@ public class WhiteEggCore extends JavaPlugin {
 
     private PluginManager pluginManager = Bukkit.getPluginManager();
     private JavaScript script;
+    private boolean debug = false;
 
     @Override
     public void onLoad() {
         logger = this.getLogger();
-        logger.info("Checking version....");
+        logger.info("Checking server version....");
         version = Versioning.getInstance();
     }
 
@@ -65,7 +66,9 @@ public class WhiteEggCore extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+
         instance = this;
+
         this.versionCheck();
         if (!version.isSupport()) {
             if (this.isEnabled()) {
@@ -131,6 +134,7 @@ public class WhiteEggCore extends JavaPlugin {
 
     private void init() {
         this.saveDefaultConfig();
+        debug = getConfig().getBoolean("debug");
         config = new WhiteEggCoreConfig();
         config.load();
         Initialize init = Initialize.getInstance(this);
@@ -174,7 +178,7 @@ public class WhiteEggCore extends JavaPlugin {
      * バージョンチェック
      */
     private void versionCheck() {
-        if (version.getJavaVersion() < Double.valueOf(Versioning.JAVA_SUPPORT_VERSION)) {
+/*        if (version.getJavaVersion() < Double.valueOf(Versioning.JAVA_SUPPORT_VERSION)) {
             logger.warning("Unsupported Java version >_< : " + version.getJavaVersion());
             logger.warning("Please use 1.8");
             pluginManager.disablePlugin(instance);
@@ -219,5 +223,8 @@ public class WhiteEggCore extends JavaPlugin {
         this.script = s;
     }
 
+    public boolean isDebug(){
+        return debug;
+    }
 
 }

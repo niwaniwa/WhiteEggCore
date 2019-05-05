@@ -1,6 +1,7 @@
 # plugin lock
 lock: false
 warn: true
+debug: false
 # settings...
 setting:
   # database setting

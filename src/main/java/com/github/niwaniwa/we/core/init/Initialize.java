@@ -117,7 +117,9 @@ public class Initialize implements Base, Listener {
             return;
         }
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new Debug(), mainClassInstance);
+        if(mainClassInstance.isDebug()){
+            pm.registerEvents(new Debug(), mainClassInstance);
+        }
         pm.registerEvents(new PlayerListener(), mainClassInstance);
         new ScriptListener();
     }

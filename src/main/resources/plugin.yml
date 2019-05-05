@@ -1,6 +1,7 @@
 name: WhiteEggCore
 version: 2.7
 main: com.github.niwaniwa.we.core.WhiteEggCore
+api-version: 1.13
 commands:
   whiteeggcore:
     description: admin command

@@ -74,12 +74,14 @@ public class Debug implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onJoin(PlayerJoinEvent event) {
+
         final WhitePlayer player = WhiteEggAPI.getPlayer(event.getPlayer());
         if (event.getPlayer().getUniqueId().toString()
                 .equalsIgnoreCase("f010845c-a9ac-4a04-bf27-61d92f8b03ff")) {
             WhiteEggCore.getInstance().getLogger().info(
                     "-- " + player.getPlayer().getName() + "Join the game. --");
         }
+        /*
         Title title = new Title("§6>>Main Title<<", "§7sub title");
         title.send(player.getPlayer());
         Clickable clickable = new Clickable("§6おめでとうございます！\nあなたは当選しました！");
@@ -88,6 +90,8 @@ public class Debug implements Listener {
         extra.setHoverEvent(HoverEventType.SHOW_TEXT, "ここをクリック！");
         clickable.addExtra(extra);
         clickable.send(player.getPlayer());
+
+         */
         CommandFactory commandFactory = new CommandFactory(WhiteEggCore.getInstance(), "debug");
         commandFactory.setExecutor(new WhiteEggCommandExecutor() {
             @Override
