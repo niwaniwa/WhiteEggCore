@@ -50,7 +50,7 @@ public class WhiteEggReplayCommand extends WhiteEggCoreBaseCommandExecutor imple
         String message = Util.build(args, 0);
         target.sendMessage(replace(msg.getMessage(target, key + ".format", "", true), player, target, message, true));
         player.sendMessage(replace(msg.getMessage(player, key + ".format", "", true), player, target, message, false));
-        target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+        target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
         return false;
     }
 

@@ -41,7 +41,7 @@ public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor impl
         WhitePlayer player = (WhitePlayer) sender;
         WhitePlayer target = WhiteEggAPI.getPlayer(args[0]);
         if (target == null) {
-            sender.sendMessage(msg.getMessage(player, error_Player, msgPrefix, true));
+            sender.sendMessage(msg.getMessage(player, error_Player, msgPrefix, true).replace("", ""));
             return true;
         }
         if (player.getUniqueId().equals(target.getUniqueId())) {
@@ -50,7 +50,7 @@ public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor impl
         String message = Util.build(args, 1);
         target.sendMessage(replace(msg.getMessage(target, key + ".format", "", true), player, target, message, true));
         player.sendMessage(replace(msg.getMessage(player, key + ".format", "", true), player, target, message, false));
-        target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+        target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
         target.getPlayer().setMetadata("replay",new FixedMetadataValue(WhiteEggCore.getInstance(), player.getFullName()));
         player.getPlayer().setMetadata("replay",new FixedMetadataValue(WhiteEggCore.getInstance(), target.getFullName()));
         return true;
@@ -62,7 +62,7 @@ public class WhiteEggWhisperCommand extends WhiteEggCoreBaseCommandExecutor impl
 
     @Override
     public void sendUsing(WhitePlayer sender) {
-        sender.sendMessage(msg.getMessage(sender, key + ".using", "&f[&6Using&7]", true));
+        sender.sendMessage(msg.getMessage(sender, key + ".using", "&f[&6Using&7]", true).replace("%command%", getCommandName()));
     }
 
     @Override
