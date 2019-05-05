@@ -6,6 +6,7 @@ whiteegg:
     head:
       using:
         line_1: "指定したプレイヤーの頭を取得します。"
+      fail: "%target%は存在しません。"
     twitter:
       description: "Twitter関連のコマンド"
       notAcccess: "&cアプリ提携をしていないため実行できません。 &7: アプリ提携は/register"

@@ -40,7 +40,7 @@ public class LoadLanguage implements Base {
         if (!manager.getLangs().isEmpty()) {
             return;
         }
-        this.load(manager, LanguageType.ja_JP);
+        this.load(manager, LanguageType.ja_jp);
     }
 
     /**
