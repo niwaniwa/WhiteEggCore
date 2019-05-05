@@ -1,5 +1,7 @@
 package com.github.niwaniwa.we.core.util.lib.clickable;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.util.Extension;
 import com.github.niwaniwa.we.core.util.Reflection;
 import com.google.common.collect.Lists;
@@ -49,6 +51,7 @@ public class Clickable extends Extension {
      *
      * @param extraInstance ChatExtra
      */
+    @Deprecated
     public void addExtra(ChatExtra extraInstance) {
         JsonArray extra = new JsonArray();
         extra.add(extraInstance.toJson());
@@ -57,6 +60,11 @@ public class Clickable extends Extension {
 
     @Override
     public void send(Player player) {
+        if(WhiteEggCore.getInstance().isEnabled()){
+            WhiteEggAPI.getPlayer(player).sendMessage("...現在調整中...");
+            return;
+        }
+
         Class<?> chatSerializer = Reflection.getNMSClass("IChatBaseComponent$ChatSerializer");
         Class<?> iChatBaseComponent = Reflection.getNMSClass("IChatBaseComponent");
         try {

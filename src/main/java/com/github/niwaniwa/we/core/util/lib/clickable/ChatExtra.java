@@ -59,6 +59,7 @@ public class ChatExtra {
      * @param action マウスがテキスト上に載った際の挙動
      * @param value  対応する文字列
      */
+    @Deprecated
     public void setHoverEvent(HoverEventType action, String value) {
         JsonObject hoverEvent = new JsonObject();
         hoverEvent.addProperty("action", action.getType());

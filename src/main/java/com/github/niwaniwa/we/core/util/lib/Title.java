@@ -1,5 +1,7 @@
 package com.github.niwaniwa.we.core.util.lib;
 
+import com.github.niwaniwa.we.core.WhiteEggCore;
+import com.github.niwaniwa.we.core.api.WhiteEggAPI;
 import com.github.niwaniwa.we.core.util.Extension;
 import com.github.niwaniwa.we.core.util.Reflection;
 import org.bukkit.ChatColor;
@@ -7,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 
+@Deprecated
 public class Title extends Extension {
 
     String mainTitle;
@@ -76,6 +79,10 @@ public class Title extends Extension {
 
     @Override
     public void send(Player player) {
+        if(WhiteEggCore.getInstance().isEnabled()){
+            WhiteEggAPI.getPlayer(player).sendMessage("...現在調整中...");
+            return;
+        }
         Class<?> iChatBaseComponentClass = Reflection.getNMSClass("IChatBaseComponent");
         Class<?> enumTitle = Reflection.getNMSClass("PacketPlayOutTitle$EnumTitleAction");
         Object timePacket = Reflection.createPacketInstance("PacketPlayOutTitle", new Class[]{enumTitle, iChatBaseComponentClass, int.class, int.class, int.class}, getTitleEnum("TIMES"), null,
