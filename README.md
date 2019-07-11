@@ -1,4 +1,4 @@
-# WhiteEggCore - v2.7
+# WhiteEggCore - v3.X
 
 このプラグインは[WhiteBird](https://github.com/niwaniwa/WhiteBirdPvP "WhiteBirdPvP")系統の後継版として開発されたBukkit用Pluginです。
 
@@ -36,7 +36,7 @@ consumerSecret | Twitter app | String | null
 ### Script
 JavaScriptを利用してゲーム内に干渉できます
 
-[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script "Script")
+~~[詳細はこちらをご覧ください](https://github.com/niwaniwa/WhiteEggCore/wiki/Script "Script")~~
 
 ### データベースについて
 
@@ -44,7 +44,8 @@ JavaScriptを利用してゲーム内に干渉できます
 
 ## Javadoc
 
- Javadocは[こちら](http://niwaniwa.github.io/javadoc/whiteeggcore/)
+ ~~Javadocは[こちら](http://niwaniwa.github.io/javadoc/whiteeggcore/)~~
+ 現在Javadocはサイト内に設置されていないため閲覧できません。
 
 ## Library
 
@@ -72,7 +73,7 @@ JavaScriptを利用してゲーム内に干渉できます
 
 このプラグインはAPIを利用することが可能です
 
-詳しくは[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください
+~~詳しくは[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/api/WhiteEggAPI.html)をご覧ください~~
 
 ### Eventについて
 
@@ -82,7 +83,7 @@ JavaScriptを利用してゲーム内に干渉できます
 - [WhiteEggPostTweetEvent](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/event/WhiteEggPostTweetEvent.html)
 - [WhiteEggToggleCommandEvent](http://niwaniwa.github.io/javadoc/whiteeggcore/com/github/niwaniwa/we/core/event/WhiteEggToggleCommandEvent.html)
 
-詳細は[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/)をご覧ください
+~~詳細は[Javadoc](http://niwaniwa.github.io/javadoc/whiteeggcore/)をご覧ください~~
 
 ### 言語ファイルについて
 
@@ -91,12 +92,14 @@ JavaScriptを利用してゲーム内に干渉できます
 
 - カラーコードは`&<code>`とすることで装飾が出来ます
 
+
 ## 謝辞
 
 ### アドバイス、修正
 - [Nekoneko](https://www.nekonekoserver.net/)様 [Twitter↗](https://twitter.com/NekonekoServer)
+- [tckz916]()様
 
-御礼を申し上げます
+御礼申し上げます。
 
 
 ## リンク
@@ -106,4 +109,3 @@ Twitter : @[haniwa_koke](https://twitter.com/haniwa_koke "haniwa_koke")
 不備がありましたらこちらへ連絡をしていただけると幸いです
 
 javajava勉強中...
-(1/8 ~ 1/21までのコミットメッセージが荒れていますがご了承ください)
