@@ -4,26 +4,39 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.niwaniwa</groupId>
 	<artifactId>WhiteEggCore</artifactId>
-	<version>2.7</version>
+	<version>3.0</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -32,10 +45,9 @@
 						</goals>
 						<configuration>
 							<artifactSet>
-								<includes>
-									<include>org.twitter4j:*</include>
-									<include>org.mongodb:*</include>
-								</includes>
+								<excludes>
+									<exclude>org.spigotmc:*</exclude>
+								</excludes>
 							</artifactSet>
 						</configuration>
 					</execution>
@@ -45,11 +57,13 @@
 	</build>
 
 	<repositories>
+
+		<!-- Spigot Repo -->
 		<repository>
-			<id>Spigot-repo</id>
-			<name>Spigot Craft Bukkit Maven Repository</name>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
+
 		<repository>
 			<id>twitter4j.org</id>
 			<name>twitter4j.org Repository</name>
@@ -61,29 +75,32 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+
 	</repositories>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
 			<version>1.13.2-R0.1-SNAPSHOT</version>
 		</dependency>
-		<!--
+
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>Spigot-Server</artifactId>
-			<version>1.8.8-R0.1-SNAPSHOT</version>
+			<version>1.13.2-R0.1-R0.1-SNAPSHOT</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/spigot-1.8.8-R0.1-SNAPSHOT.jar</systemPath>
+			<systemPath>${basedir}/lib/spigot-1.13.2-R0.1-SNAPSHOT.jar</systemPath>
 		</dependency>
-		-->
+
 		<dependency>
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
 			<version>[4.0,)</version>
 		</dependency>
 		<!-- database -->
+
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver</artifactId>
