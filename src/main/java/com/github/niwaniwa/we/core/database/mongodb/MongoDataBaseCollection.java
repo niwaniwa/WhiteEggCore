@@ -4,6 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ public class MongoDataBaseCollection {
 
     private MongoDataBaseManager manager;
     private MongoDatabase database;
-    private MongoCollection<Document> colletion;
+    private MongoCollection<Document> collection;
 
-    public MongoDataBaseCollection(MongoDataBaseManager manager, MongoDatabase database, String colletion) {
+    public MongoDataBaseCollection(MongoDataBaseManager manager, MongoDatabase database, String collection) {
         this.manager = manager;
         this.database = database;
-        this.colletion = this.database.getCollection(colletion);
+        this.collection = this.database.getCollection(collection);
     }
 
     public void update(Document document, Document document2) {
@@ -52,7 +53,7 @@ public class MongoDataBaseCollection {
     }
 
     public FindIterable<Document> getDocuments() {
-        return colletion.find();
+        return collection.find();
     }
 
     public Object get(String key) {
@@ -109,11 +110,16 @@ public class MongoDataBaseCollection {
     }
 
     public MongoCollection<Document> getCollection() {
-        return colletion;
+        return collection;
     }
 
     public MongoDataBaseManager getManager() {
         return manager;
+    }
+
+    public void delete(String key, Object value){
+        collection.deleteMany(Filters.eq(key, value.toString()));
+        return;
     }
 
 }
